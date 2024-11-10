@@ -1,0 +1,37 @@
+{
+    "@@locale": "tr_TR",
+    "flow": "Akış",
+    "@flow": {
+        "description": "Ana Sayfa AppBar Başlığı"
+    },
+    "favourites": "Favoriler",
+    "@favourites": {
+        "description": "Favoriler Sayfası AppBar Başlıgı"
+    },
+    "settings": "Ayarlar",
+    "@settings": {
+        "description": "Ayarlar Sayfası AppBar Başlıgı"
+    },
+    "topics": "Kategoriler",
+    "@topics": {
+        "description": "Kategoriler Sayfası AppBar Başlıgı"
+    },
+    "stories": "Günün Hikayesi",
+    "@stories": {
+        "description": "Günün Hikayesi Sayfası AppBar Başlıgı"
+    },
+    "categoriesItem1": "KİŞİSEL GELİŞİM",
+    "categoriesItem2": "ÖZ BAKIM",
+    "categoriesItem3": "ÖZSAYGI-ÖZGÜVEN",
+    "categoriesItem4": "İLİŞKİLER-İLETİŞİM",
+    "categoriesItem5": "ŞÜKRAN",
+    "categoriesItem6": "KARİYER-BAŞARI",
+    "categoriesItem7": "SAĞLIK-İYİLİK",
+    "categoriesItem8": "YARATICILIK-İLHAM",
+    "categoriesItem9": "STRES YÖNETİMİ",
+    "categoriesItem10": "RUHSAL GELİŞİM",
+    "categoriesItem11": "MUTLULUK-NEŞE",
+    "categoriesItem12": "AFFETME-BIRAKMA",
+    "categoriesItem13": "UYKU-DİNLENME",
+    "categoriesItem14": "YAKINDA..."
+}

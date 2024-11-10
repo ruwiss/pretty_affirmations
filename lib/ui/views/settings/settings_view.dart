@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pretty_affirmations/generated/l10n.dart';
 import 'package:pretty_affirmations/ui/widgets/appbar_widget.dart';
 
 class SettingsView extends StatelessWidget {
@@ -6,9 +7,9 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: AppBarWidget(title: 'Ayarlar'),
-      body: Center(
+    return Scaffold(
+      appBar: AppBarWidget(title: S.of(context).settings),
+      body: const Center(
         child: Column(
           children: [],
         ),

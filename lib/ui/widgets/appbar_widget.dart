@@ -3,17 +3,18 @@ import 'package:hayiqu/hayiqu.dart';
 
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final Color? backgroundColor;
-  const AppBarWidget(
-      {super.key,
-      required this.title,
-      this.backgroundColor = Colors.transparent});
+  final bool transparentBg;
+  const AppBarWidget({
+    super.key,
+    required this.title,
+    this.transparentBg = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     final statusbarHeight = MediaQuery.of(context).viewPadding.top;
     return Container(
-      color: backgroundColor,
+      color: transparentBg ? Colors.transparent : context.colors.surface,
       padding: EdgeInsets.only(
           top: statusbarHeight + 15, bottom: 15, left: 60, right: 60),
       child: Container(

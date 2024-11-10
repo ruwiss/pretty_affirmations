@@ -1,28 +1,51 @@
 part of '../common.dart';
 
-enum MenuImage {
-  menu1("assets/images/menu/1.png", "KİŞİSEL GELİŞİM"),
-  menu2("assets/images/menu/2.png", "ÖZ BAKIM"),
-  menu3("assets/images/menu/3.png", "ÖZSAYGI-ÖZGÜVEN"),
-  menu4("assets/images/menu/4.png", "İLİŞKİLER-İLETİŞİM"),
-  menu5("assets/images/menu/5.png", "ŞÜKRAN"),
-  menu6("assets/images/menu/6.png", "KARİYER-BAŞARI"),
-  menu7("assets/images/menu/7.png", "SAĞLIK-İYİLİK"),
-  menu8("assets/images/menu/8.png", "YARATICILIK-İLHAM"),
-  menu9("assets/images/menu/9.png", "STRES YÖNETİMİ"),
-  menu10("assets/images/menu/10.png", "RUHSAL GELİŞİM"),
-  menu11("assets/images/menu/11.png", "MUTLULUK-NEŞE"),
-  menu12("assets/images/menu/12.png", "AFFETME-BIRAKMA"),
-  menu13("assets/images/menu/13.png", "UYKU-DİNLENME"),
-  menu14("assets/images/menu/14.png", "YAKINDA...");
-
-  final String text;
+final class MenuItem {
   final String imagePath;
-  const MenuImage(this.imagePath, this.text);
+  final String text;
+
+  const MenuItem({required this.imagePath, required this.text});
 }
 
 class AppImages {
   AppImages._();
 
-  static String get basePath => "assets/images";
+  static String get _basePath => "assets/images";
+  static String get _menuBasePath => "assets/images/menu";
+
+  static List<MenuItem> menuImages() => [
+        MenuItem(
+            imagePath: "$_menuBasePath/1.png", text: S.current.categoriesItem1),
+        MenuItem(
+            imagePath: "$_menuBasePath/2.png", text: S.current.categoriesItem2),
+        MenuItem(
+            imagePath: "$_menuBasePath/3.png", text: S.current.categoriesItem3),
+        MenuItem(
+            imagePath: "$_menuBasePath/4.png", text: S.current.categoriesItem4),
+        MenuItem(
+            imagePath: "$_menuBasePath/5.png", text: S.current.categoriesItem5),
+        MenuItem(
+            imagePath: "$_menuBasePath/6.png", text: S.current.categoriesItem6),
+        MenuItem(
+            imagePath: "$_menuBasePath/7.png", text: S.current.categoriesItem7),
+        MenuItem(
+            imagePath: "$_menuBasePath/8.png", text: S.current.categoriesItem8),
+        MenuItem(
+            imagePath: "$_menuBasePath/9.png", text: S.current.categoriesItem9),
+        MenuItem(
+            imagePath: "$_menuBasePath/10.png",
+            text: S.current.categoriesItem10),
+        MenuItem(
+            imagePath: "$_menuBasePath/11.png",
+            text: S.current.categoriesItem11),
+        MenuItem(
+            imagePath: "$_menuBasePath/12.png",
+            text: S.current.categoriesItem12),
+        MenuItem(
+            imagePath: "$_menuBasePath/13.png",
+            text: S.current.categoriesItem13),
+        MenuItem(
+            imagePath: "$_menuBasePath/14.png",
+            text: S.current.categoriesItem14),
+      ];
 }

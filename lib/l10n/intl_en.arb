@@ -1,0 +1,37 @@
+{
+    "@@locale": "en",
+    "flow": "Flow",
+    "@flow": {
+        "description": "Home Page Title"
+    },
+    "favourites": "Favourites",
+    "@favourites": {
+        "description": "Favourites Page Title"
+    },
+    "settings": "Settings",
+    "@settings": {
+        "description": "Settings Page Title"
+    },
+    "topics": "Categories",
+    "@topics": {
+        "description": "Categories Page Title"
+    },
+    "stories": "Story of the day",
+    "@stories": {
+        "description": "Stories Page Title"
+    },
+    "categoriesItem1": "Self Development",
+    "categoriesItem2": "Self-Care",
+    "categoriesItem3": "Self-Esteem & Confidence",
+    "categoriesItem4": "Relationships & Communication",
+    "categoriesItem5": "Gratitude",
+    "categoriesItem6": "Career & Success",
+    "categoriesItem7": "Health & Well-Being",
+    "categoriesItem8": "Creativity & Inspiration",
+    "categoriesItem9": "Stress Management",
+    "categoriesItem10": "Spiritual Growth",
+    "categoriesItem11": "Happiness & Joy",
+    "categoriesItem12": "Forgiveness & Letting Go",
+    "categoriesItem13": "Sleep & Rest",
+    "categoriesItem14": "Coming Soon..."
+}

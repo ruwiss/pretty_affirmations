@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hayiqu/hayiqu.dart';
 import 'package:pretty_affirmations/common/common.dart';
+import 'package:pretty_affirmations/generated/l10n.dart';
 import 'package:pretty_affirmations/ui/widgets/appbar_widget.dart';
 
 class TopicsView extends StatelessWidget {
@@ -9,10 +10,7 @@ class TopicsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(
-        title: 'Kategoriler',
-        backgroundColor: context.colors.surface,
-      ),
+      appBar: AppBarWidget(title: S.of(context).topics),
       body: Container(
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -23,17 +21,17 @@ class TopicsView extends StatelessWidget {
             crossAxisSpacing: 25,
             mainAxisExtent: 100,
           ),
-          itemCount: MenuImage.values.length,
+          itemCount: AppImages.menuImages().length,
           itemBuilder: (context, index) {
-            final MenuImage image = MenuImage.values[index];
-            return _menuItem(context, image);
+            final MenuItem item = AppImages.menuImages()[index];
+            return _menuItem(context, item);
           },
         ),
       ),
     );
   }
 
-  Widget _menuItem(BuildContext context, MenuImage image) {
+  Widget _menuItem(BuildContext context, MenuItem item) {
     return InkWell(
       onTap: () {},
       borderRadius: BorderRadius.circular(8),
@@ -43,7 +41,7 @@ class TopicsView extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 5),
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(image.imagePath),
+            image: AssetImage(item.imagePath),
             fit: BoxFit.cover,
           ),
           borderRadius: BorderRadius.circular(8),
@@ -51,7 +49,7 @@ class TopicsView extends StatelessWidget {
         child: Align(
           alignment: Alignment.bottomCenter,
           child: Text(
-            image.text,
+            item.text.toUpperCase(),
             textAlign: TextAlign.center,
             style: TextStyle(
               fontWeight: FontWeight.bold,

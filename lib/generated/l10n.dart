@@ -1,0 +1,269 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'intl/messages_all.dart';
+
+// **************************************************************************
+// Generator: Flutter Intl IDE plugin
+// Made by Localizely
+// **************************************************************************
+
+// ignore_for_file: non_constant_identifier_names, lines_longer_than_80_chars
+// ignore_for_file: join_return_with_assignment, prefer_final_in_for_each
+// ignore_for_file: avoid_redundant_argument_values, avoid_escaping_inner_quotes
+
+class S {
+  S();
+
+  static S? _current;
+
+  static S get current {
+    assert(_current != null,
+        'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.');
+    return _current!;
+  }
+
+  static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
+
+  static Future<S> load(Locale locale) {
+    final name = (locale.countryCode?.isEmpty ?? false)
+        ? locale.languageCode
+        : locale.toString();
+    final localeName = Intl.canonicalizedLocale(name);
+    return initializeMessages(localeName).then((_) {
+      Intl.defaultLocale = localeName;
+      final instance = S();
+      S._current = instance;
+
+      return instance;
+    });
+  }
+
+  static S of(BuildContext context) {
+    final instance = S.maybeOf(context);
+    assert(instance != null,
+        'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?');
+    return instance!;
+  }
+
+  static S? maybeOf(BuildContext context) {
+    return Localizations.of<S>(context, S);
+  }
+
+  /// `Flow`
+  String get flow {
+    return Intl.message(
+      'Flow',
+      name: 'flow',
+      desc: 'Home Page Title',
+      args: [],
+    );
+  }
+
+  /// `Favourites`
+  String get favourites {
+    return Intl.message(
+      'Favourites',
+      name: 'favourites',
+      desc: 'Favourites Page Title',
+      args: [],
+    );
+  }
+
+  /// `Settings`
+  String get settings {
+    return Intl.message(
+      'Settings',
+      name: 'settings',
+      desc: 'Settings Page Title',
+      args: [],
+    );
+  }
+
+  /// `Categories`
+  String get topics {
+    return Intl.message(
+      'Categories',
+      name: 'topics',
+      desc: 'Categories Page Title',
+      args: [],
+    );
+  }
+
+  /// `Story of the day`
+  String get stories {
+    return Intl.message(
+      'Story of the day',
+      name: 'stories',
+      desc: 'Stories Page Title',
+      args: [],
+    );
+  }
+
+  /// `Self Development`
+  String get categoriesItem1 {
+    return Intl.message(
+      'Self Development',
+      name: 'categoriesItem1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Self-Care`
+  String get categoriesItem2 {
+    return Intl.message(
+      'Self-Care',
+      name: 'categoriesItem2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Self-Esteem & Confidence`
+  String get categoriesItem3 {
+    return Intl.message(
+      'Self-Esteem & Confidence',
+      name: 'categoriesItem3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Relationships & Communication`
+  String get categoriesItem4 {
+    return Intl.message(
+      'Relationships & Communication',
+      name: 'categoriesItem4',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gratitude`
+  String get categoriesItem5 {
+    return Intl.message(
+      'Gratitude',
+      name: 'categoriesItem5',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Career & Success`
+  String get categoriesItem6 {
+    return Intl.message(
+      'Career & Success',
+      name: 'categoriesItem6',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Health & Well-Being`
+  String get categoriesItem7 {
+    return Intl.message(
+      'Health & Well-Being',
+      name: 'categoriesItem7',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Creativity & Inspiration`
+  String get categoriesItem8 {
+    return Intl.message(
+      'Creativity & Inspiration',
+      name: 'categoriesItem8',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stress Management`
+  String get categoriesItem9 {
+    return Intl.message(
+      'Stress Management',
+      name: 'categoriesItem9',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Spiritual Growth`
+  String get categoriesItem10 {
+    return Intl.message(
+      'Spiritual Growth',
+      name: 'categoriesItem10',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Happiness & Joy`
+  String get categoriesItem11 {
+    return Intl.message(
+      'Happiness & Joy',
+      name: 'categoriesItem11',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Forgiveness & Letting Go`
+  String get categoriesItem12 {
+    return Intl.message(
+      'Forgiveness & Letting Go',
+      name: 'categoriesItem12',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sleep & Rest`
+  String get categoriesItem13 {
+    return Intl.message(
+      'Sleep & Rest',
+      name: 'categoriesItem13',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Coming Soon...`
+  String get categoriesItem14 {
+    return Intl.message(
+      'Coming Soon...',
+      name: 'categoriesItem14',
+      desc: '',
+      args: [],
+    );
+  }
+}
+
+class AppLocalizationDelegate extends LocalizationsDelegate<S> {
+  const AppLocalizationDelegate();
+
+  List<Locale> get supportedLocales {
+    return const <Locale>[
+      Locale.fromSubtags(languageCode: 'en'),
+      Locale.fromSubtags(languageCode: 'tr', countryCode: 'TR'),
+    ];
+  }
+
+  @override
+  bool isSupported(Locale locale) => _isSupported(locale);
+  @override
+  Future<S> load(Locale locale) => S.load(locale);
+  @override
+  bool shouldReload(AppLocalizationDelegate old) => false;
+
+  bool _isSupported(Locale locale) {
+    for (var supportedLocale in supportedLocales) {
+      if (supportedLocale.languageCode == locale.languageCode) {
+        return true;
+      }
+    }
+    return false;
+  }
+}

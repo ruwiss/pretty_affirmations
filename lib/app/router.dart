@@ -80,7 +80,7 @@ class AppRouter {
           path: favouritesRoute,
           builder: (context, state) => ChangeNotifierProvider(
             create: (_) => FavouritesViewmodel(),
-            child: const FavouriesView(),
+            child: FavouriesView(),
           ),
         )
       ],
