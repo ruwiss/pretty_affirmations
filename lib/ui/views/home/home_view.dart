@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hayiqu/hayiqu.dart';
+import 'package:pretty_affirmations/app/theme.dart';
 import 'package:pretty_affirmations/generated/l10n.dart';
+import 'package:pretty_affirmations/ui/views/stories/stories_view.dart';
 import 'package:pretty_affirmations/ui/widgets/appbar_widget.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'colors.dart';
@@ -18,10 +21,12 @@ class _HomeViewState extends State<HomeView> {
   int _currentColorIndex = 0;
 
   Color _currentColor() {
-    if (_currentColorIndex > HomeViewColors.colors.length - 1) {
+    final List<Color> homeColors = context.read<AppTheme>().homeColors;
+    if (_currentColorIndex > homeColors.length - 1) {
       _currentColorIndex = 0;
     }
-    final color = HomeViewColors.colors[_currentColorIndex];
+
+    final color = homeColors[_currentColorIndex];
     _currentColorIndex++;
     return color;
   }

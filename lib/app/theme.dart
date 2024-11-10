@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hayiqu/hayiqu.dart';
+import 'package:pretty_affirmations/ui/views/home/colors.dart';
 
 class AppTheme extends BaseTheme {
+  List<Color> get homeColors => HomeViewColors.colors;
+
   @override
   ThemeData get lightTheme => ThemeData(
         brightness: Brightness.light,
