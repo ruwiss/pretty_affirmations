@@ -31,6 +31,8 @@ class _HomeViewState extends State<HomeView> {
       appBar: const AppBarWidget(title: 'Akış'),
       extendBodyBehindAppBar: true,
       body: LiquidSwipe(
+        enableLoop: false,
+        onPageChangeCallback: (activePageIndex) {},
         pages: List.generate(
           40,
           (index) => _postPage(

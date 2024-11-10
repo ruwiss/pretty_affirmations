@@ -1,22 +1,28 @@
 part of '../common.dart';
 
+enum MenuImage {
+  menu1("assets/images/menu/1.png", "KİŞİSEL GELİŞİM"),
+  menu2("assets/images/menu/2.png", "ÖZ BAKIM"),
+  menu3("assets/images/menu/3.png", "ÖZSAYGI-ÖZGÜVEN"),
+  menu4("assets/images/menu/4.png", "İLİŞKİLER-İLETİŞİM"),
+  menu5("assets/images/menu/5.png", "ŞÜKRAN"),
+  menu6("assets/images/menu/6.png", "KARİYER-BAŞARI"),
+  menu7("assets/images/menu/7.png", "SAĞLIK-İYİLİK"),
+  menu8("assets/images/menu/8.png", "YARATICILIK-İLHAM"),
+  menu9("assets/images/menu/9.png", "STRES YÖNETİMİ"),
+  menu10("assets/images/menu/10.png", "RUHSAL GELİŞİM"),
+  menu11("assets/images/menu/11.png", "MUTLULUK-NEŞE"),
+  menu12("assets/images/menu/12.png", "AFFETME-BIRAKMA"),
+  menu13("assets/images/menu/13.png", "UYKU-DİNLENME"),
+  menu14("assets/images/menu/14.png", "YAKINDA...");
+
+  final String text;
+  final String imagePath;
+  const MenuImage(this.imagePath, this.text);
+}
+
 class AppImages {
   AppImages._();
 
-  static String get _base => "assets/images";
-
-  static String menuBgImage1 = "$_base/menu_bg_1.png";
-  static String menuBgImage2 = "$_base/menu_bg_2.png";
-  static String menuBgImage3 = "$_base/menu_bg_3.png";
-  static String menuBgImage4 = "$_base/menu_bg_4.png";
-  static String menuBgImage5 = "$_base/menu_bg_5.png";
-  static String menuBgImage6 = "$_base/menu_bg_6.png";
-  static String menuBgImage7 = "$_base/menu_bg_7.png";
-  static String menuBgImage8 = "$_base/menu_bg_8.png";
-  static String menuBgImage9 = "$_base/menu_bg_9.png";
-  static String menuBgImage10 = "$_base/menu_bg_10.png";
-  static String menuBgImage11 = "$_base/menu_bg_11.png";
-  static String menuBgImage12 = "$_base/menu_bg_12.png";
-  static String menuBgImage13 = "$_base/menu_bg_13.png";
-  static String menuBgImage14 = "$_base/menu_bg_14.png";
+  static String get basePath => "assets/images";
 }
