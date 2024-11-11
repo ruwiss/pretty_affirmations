@@ -1,0 +1,50 @@
+{
+    "@@locale": "zh",
+    "flow": "流",
+    "@flow": {
+        "description": "主页标题"
+    },
+    "favourites": "收藏",
+    "@favourites": {
+        "description": "收藏页标题"
+    },
+    "settings": "设置",
+    "@settings": {
+        "description": "设置页标题"
+    },
+    "topics": "分类",
+    "@topics": {
+        "description": "分类页标题"
+    },
+    "stories": "今日故事",
+    "@stories": {
+        "description": "故事页标题"
+    },
+    "categoriesItem1": "自我发展",
+    "categoriesItem2": "自我关怀",
+    "categoriesItem3": "自尊与自信",
+    "categoriesItem4": "关系与沟通",
+    "categoriesItem5": "感恩",
+    "categoriesItem6": "职业与成功",
+    "categoriesItem7": "健康与幸福",
+    "categoriesItem8": "创造力与灵感",
+    "categoriesItem9": "压力管理",
+    "categoriesItem10": "精神成长",
+    "categoriesItem11": "快乐与喜悦",
+    "categoriesItem12": "宽恕与放手",
+    "categoriesItem13": "睡眠与休息",
+    "categoriesItem14": "敬请期待...",
+    "language": "语言",
+    "languageOption": "更改应用语言，以您想要的语言查看肯定句",
+    "reminders": "提醒",
+    "remindersOption": "设置您的提醒，选择最合适的时间段，将肯定句融入日常生活",
+    "leaveComment": "留下评论",
+    "leaveCommentOption": "为我们开发者留下关于应用的评论，帮助我们改进应用",
+    "share": "分享",
+    "shareOption": "与您的朋友和亲人分享我们的应用，为他们的生活带来积极影响",
+    "privacyPolicy": "隐私政策",
+    "privacyPolicyOption": "获取有关我们应用数据安全和隐私政策的详细信息",
+    "termsOfUse": "使用条款",
+    "termsOfUseOption": "阅读使用我们应用所需遵循的条款和条件",
+    "selectLanguage": "选择语言"
+}

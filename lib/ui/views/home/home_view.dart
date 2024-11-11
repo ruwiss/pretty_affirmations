@@ -19,7 +19,7 @@ class _HomeViewState extends State<HomeView> {
   int _currentColorIndex = 0;
 
   Color _currentColor() {
-    final List<Color> homeColors = context.read<AppTheme>().homeColors;
+    final List<Color> homeColors = context.read<AppBase>().homeColors;
     if (_currentColorIndex > homeColors.length - 1) {
       _currentColorIndex = 0;
     }

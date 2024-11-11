@@ -3,17 +3,27 @@ part of '../common.dart';
 class AppVectors {
   AppVectors._();
 
-  static String get _base => "assets/vectors";
+  static const String logo = 'assets/vectors/logo.svg';
+  static const String title = 'assets/vectors/title.svg';
+  static const String splashBgLogo = 'assets/vectors/splash_bg_logo.svg';
+  static const String like = 'assets/vectors/like.svg';
+  static const String quote = 'assets/vectors/quotes.svg';
+  static const String comment = 'assets/vectors/comment.svg';
+  static const String share = 'assets/vectors/share.svg';
+  static const String bookMenu = 'assets/vectors/book_menu.svg';
+  static const String likeMenu = 'assets/vectors/like_menu.svg';
+  static const String settingsMenu = 'assets/vectors/settings_menu.svg';
+  static const String topicsMenu = 'assets/vectors/topics_menu.svg';
 
-  static String logo = '$_base/logo.svg';
-  static String title = '$_base/title.svg';
-  static String splashBgLogo = '$_base/splash_bg_logo.svg';
-  static String like = '$_base/like.svg';
-  static String quote = '$_base/quotes.svg';
-  static String comment = '$_base/comment.svg';
-  static String share = '$_base/share.svg';
-  static String bookMenu = '$_base/book_menu.svg';
-  static String likeMenu = '$_base/like_menu.svg';
-  static String settingsMenu = '$_base/settings_menu.svg';
-  static String topicsMenu = '$_base/topics_menu.svg';
+  /// English
+  static const String flagEN = 'assets/vectors/flags/GB.svg';
+
+  /// Russian
+  static const String flagRU = 'assets/vectors/flags/RU.svg';
+
+  /// Chinese
+  static const String flagCN = 'assets/vectors/flags/CN.svg';
+
+  /// Turkish
+  static const String flagTR = 'assets/vectors/flags/TR.svg';
 }

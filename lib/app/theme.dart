@@ -1,29 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:hayiqu/hayiqu.dart';
+import 'package:pretty_affirmations/services/settings_service.dart';
 import 'package:pretty_affirmations/ui/views/home/colors.dart';
 
-class AppTheme extends BaseTheme {
+class AppBase extends BaseTheme {
+  Locale? locale = getIt<SettingsService>().currentLocale;
+  void changeLocale(Locale locale) async {
+    locale = await getIt<SettingsService>().changeLocale(locale);
+    notifyListeners();
+  }
+
   List<Color> get homeColors => HomeViewColors.colors;
+
+  final _colorPrimary = const Color(0xFF495363).withOpacity(.10);
+  final _colorPrimaryFixed = const Color(0xFFadafb2);
+  final _colorSecondary = const Color(0xFFadafb2);
+  final _colorTertiary = const Color(0XFFf9eaea);
+  final _colorOnSurface = const Color(0xFF495363);
+  final _colorSurface = Colors.white;
 
   @override
   ThemeData get lightTheme => ThemeData(
         brightness: Brightness.light,
-        scaffoldBackgroundColor: Colors.white,
+        scaffoldBackgroundColor: _colorSurface,
         fontFamily: "Calibri",
         colorScheme: ColorScheme.light(
-          primary: const Color(0xFF495363).withOpacity(.10),
-          secondary: const Color(0xFFadafb2),
-          tertiary: const Color(0XFFf9eaea),
-          onSurface: const Color(0xFF495363),
-          surface: Colors.white,
-          primaryFixed: const Color(0xFFadafb2),
+          primary: _colorPrimary,
+          primaryFixed: _colorPrimaryFixed,
+          secondary: _colorSecondary,
+          tertiary: _colorTertiary,
+          onSurface: _colorOnSurface,
+          surface: _colorSurface,
         ),
-        textTheme: const TextTheme(
-          bodyMedium: TextStyle(color: Color(0xFF495363)),
+        textTheme: TextTheme(
+          bodyMedium: TextStyle(color: _colorOnSurface),
         ),
         iconButtonTheme: IconButtonThemeData(
-          style: IconButton.styleFrom(foregroundColor: const Color(0xFFadafb2)),
+          style: IconButton.styleFrom(foregroundColor: _colorSecondary),
         ),
-        iconTheme: const IconThemeData(color: Color(0xFFadafb2)),
+        iconTheme: IconThemeData(color: _colorSecondary),
+        dividerTheme: DividerThemeData(color: _colorPrimary, thickness: 0.5),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: _colorTertiary,
+            foregroundColor: _colorOnSurface,
+            textStyle: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
       );
 }

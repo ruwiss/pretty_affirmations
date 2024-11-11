@@ -10,42 +10,48 @@ final class MenuItem {
 class AppImages {
   AppImages._();
 
-  static String get _basePath => "assets/images";
-  static String get _menuBasePath => "assets/images/menu";
-
   static List<MenuItem> menuImages() => [
         MenuItem(
-            imagePath: "$_menuBasePath/1.png", text: S.current.categoriesItem1),
+            imagePath: "assets/images/menu/1.png",
+            text: S.current.categoriesItem1),
         MenuItem(
-            imagePath: "$_menuBasePath/2.png", text: S.current.categoriesItem2),
+            imagePath: "assets/images/menu/2.png",
+            text: S.current.categoriesItem2),
         MenuItem(
-            imagePath: "$_menuBasePath/3.png", text: S.current.categoriesItem3),
+            imagePath: "assets/images/menu/3.png",
+            text: S.current.categoriesItem3),
         MenuItem(
-            imagePath: "$_menuBasePath/4.png", text: S.current.categoriesItem4),
+            imagePath: "assets/images/menu/4.png",
+            text: S.current.categoriesItem4),
         MenuItem(
-            imagePath: "$_menuBasePath/5.png", text: S.current.categoriesItem5),
+            imagePath: "assets/images/menu/5.png",
+            text: S.current.categoriesItem5),
         MenuItem(
-            imagePath: "$_menuBasePath/6.png", text: S.current.categoriesItem6),
+            imagePath: "assets/images/menu/6.png",
+            text: S.current.categoriesItem6),
         MenuItem(
-            imagePath: "$_menuBasePath/7.png", text: S.current.categoriesItem7),
+            imagePath: "assets/images/menu/7.png",
+            text: S.current.categoriesItem7),
         MenuItem(
-            imagePath: "$_menuBasePath/8.png", text: S.current.categoriesItem8),
+            imagePath: "assets/images/menu/8.png",
+            text: S.current.categoriesItem8),
         MenuItem(
-            imagePath: "$_menuBasePath/9.png", text: S.current.categoriesItem9),
+            imagePath: "assets/images/menu/9.png",
+            text: S.current.categoriesItem9),
         MenuItem(
-            imagePath: "$_menuBasePath/10.png",
+            imagePath: "assets/images/menu/10.png",
             text: S.current.categoriesItem10),
         MenuItem(
-            imagePath: "$_menuBasePath/11.png",
+            imagePath: "assets/images/menu/11.png",
             text: S.current.categoriesItem11),
         MenuItem(
-            imagePath: "$_menuBasePath/12.png",
+            imagePath: "assets/images/menu/12.png",
             text: S.current.categoriesItem12),
         MenuItem(
-            imagePath: "$_menuBasePath/13.png",
+            imagePath: "assets/images/menu/13.png",
             text: S.current.categoriesItem13),
         MenuItem(
-            imagePath: "$_menuBasePath/14.png",
+            imagePath: "assets/images/menu/14.png",
             text: S.current.categoriesItem14),
       ];
 }

@@ -45,5 +45,6 @@
     "privacyPolicy": "Privacy Policy",
     "privacyPolicyOption": "Get detailed information about our app’s data security and privacy policy",
     "termsOfUse": "Terms and Conditions",
-    "termsOfUseOption": "Read the terms and conditions you must follow to use our app"
+    "termsOfUseOption": "Read the terms and conditions you must follow to use our app",
+    "selectLanguage": "Select Language"
 }

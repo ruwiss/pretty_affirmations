@@ -62,6 +62,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "reminders": MessageLookupByLibrary.simpleMessage("Reminders"),
         "remindersOption": MessageLookupByLibrary.simpleMessage(
             "Set your reminders for the most suitable time slot to fit affirmations into your routine"),
+        "selectLanguage":
+            MessageLookupByLibrary.simpleMessage("Select Language"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "share": MessageLookupByLibrary.simpleMessage("Share"),
         "shareOption": MessageLookupByLibrary.simpleMessage(

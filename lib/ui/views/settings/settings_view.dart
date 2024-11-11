@@ -1,11 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:hayiqu/hayiqu.dart';
+import 'package:pretty_affirmations/app/theme.dart';
 import 'package:pretty_affirmations/generated/l10n.dart';
+import 'package:pretty_affirmations/ui/views/settings/widgets/language_dialog.dart';
 import 'package:pretty_affirmations/ui/widgets/appbar_widget.dart';
 import 'package:pretty_affirmations/ui/widgets/bg_image.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
+
+  void _showLanguagePickerDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => FluidDialog(
+        rootPage: FluidDialogPage(
+          alignment: Alignment.center,
+          builder: (context) => LanguageDialog(
+            onLanguageSelect: (locale) =>
+                context.read<AppBase>().changeLocale(locale),
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +43,7 @@ class SettingsView extends StatelessWidget {
         children: [
           _settingOption(
             context,
-            onTap: () {},
+            onTap: () => _showLanguagePickerDialog(context),
             title: S.of(context).language,
             description: S.of(context).languageOption,
           ),

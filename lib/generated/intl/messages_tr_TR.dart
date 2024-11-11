@@ -62,6 +62,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "reminders": MessageLookupByLibrary.simpleMessage("Hatırlatıcılar"),
         "remindersOption": MessageLookupByLibrary.simpleMessage(
             "Olumlamaları rutininize uydurmak için en uygun zaman diliminde hatırlatıcılarınızı ayarlayın"),
+        "selectLanguage": MessageLookupByLibrary.simpleMessage("Dil Seçiniz"),
         "settings": MessageLookupByLibrary.simpleMessage("Ayarlar"),
         "share": MessageLookupByLibrary.simpleMessage("Paylaş"),
         "shareOption": MessageLookupByLibrary.simpleMessage(
