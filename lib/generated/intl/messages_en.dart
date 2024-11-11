@@ -50,8 +50,27 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Stress Management"),
         "favourites": MessageLookupByLibrary.simpleMessage("Favourites"),
         "flow": MessageLookupByLibrary.simpleMessage("Flow"),
+        "language": MessageLookupByLibrary.simpleMessage("Language"),
+        "languageOption": MessageLookupByLibrary.simpleMessage(
+            "Change the application language, see affirmations in the language you want"),
+        "leaveComment": MessageLookupByLibrary.simpleMessage("Leave a Comment"),
+        "leaveCommentOption": MessageLookupByLibrary.simpleMessage(
+            "Leave a comment about the app for us developers and contribute to the improvement of our application"),
+        "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
+        "privacyPolicyOption": MessageLookupByLibrary.simpleMessage(
+            "Get detailed information about our app’s data security and privacy policy"),
+        "reminders": MessageLookupByLibrary.simpleMessage("Reminders"),
+        "remindersOption": MessageLookupByLibrary.simpleMessage(
+            "Set your reminders for the most suitable time slot to fit affirmations into your routine"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "share": MessageLookupByLibrary.simpleMessage("Share"),
+        "shareOption": MessageLookupByLibrary.simpleMessage(
+            "Share our app with your friends and close ones and make a positive impact on their lives"),
         "stories": MessageLookupByLibrary.simpleMessage("Story of the day"),
+        "termsOfUse":
+            MessageLookupByLibrary.simpleMessage("Terms and Conditions"),
+        "termsOfUseOption": MessageLookupByLibrary.simpleMessage(
+            "Read the terms and conditions you must follow to use our app"),
         "topics": MessageLookupByLibrary.simpleMessage("Categories")
       };
 }

@@ -239,6 +239,126 @@ class S {
       args: [],
     );
   }
+
+  /// `Language`
+  String get language {
+    return Intl.message(
+      'Language',
+      name: 'language',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change the application language, see affirmations in the language you want`
+  String get languageOption {
+    return Intl.message(
+      'Change the application language, see affirmations in the language you want',
+      name: 'languageOption',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reminders`
+  String get reminders {
+    return Intl.message(
+      'Reminders',
+      name: 'reminders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Set your reminders for the most suitable time slot to fit affirmations into your routine`
+  String get remindersOption {
+    return Intl.message(
+      'Set your reminders for the most suitable time slot to fit affirmations into your routine',
+      name: 'remindersOption',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Leave a Comment`
+  String get leaveComment {
+    return Intl.message(
+      'Leave a Comment',
+      name: 'leaveComment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Leave a comment about the app for us developers and contribute to the improvement of our application`
+  String get leaveCommentOption {
+    return Intl.message(
+      'Leave a comment about the app for us developers and contribute to the improvement of our application',
+      name: 'leaveCommentOption',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share`
+  String get share {
+    return Intl.message(
+      'Share',
+      name: 'share',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share our app with your friends and close ones and make a positive impact on their lives`
+  String get shareOption {
+    return Intl.message(
+      'Share our app with your friends and close ones and make a positive impact on their lives',
+      name: 'shareOption',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Privacy Policy`
+  String get privacyPolicy {
+    return Intl.message(
+      'Privacy Policy',
+      name: 'privacyPolicy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Get detailed information about our app’s data security and privacy policy`
+  String get privacyPolicyOption {
+    return Intl.message(
+      'Get detailed information about our app’s data security and privacy policy',
+      name: 'privacyPolicyOption',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Terms and Conditions`
+  String get termsOfUse {
+    return Intl.message(
+      'Terms and Conditions',
+      name: 'termsOfUse',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Read the terms and conditions you must follow to use our app`
+  String get termsOfUseOption {
+    return Intl.message(
+      'Read the terms and conditions you must follow to use our app',
+      name: 'termsOfUseOption',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

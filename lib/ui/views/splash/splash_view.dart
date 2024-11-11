@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hayiqu/hayiqu.dart';
 import 'package:pretty_affirmations/common/common.dart';
+import 'package:pretty_affirmations/ui/widgets/bg_image.dart';
 
 import 'splash_viewmodel.dart';
 
@@ -26,18 +27,11 @@ class _SplashViewState extends State<SplashView> {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            _splashBgImage(context),
+            const BgImage(),
             _splashView(context),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _splashBgImage(BuildContext context) {
-    return SvgPicture.asset(
-      AppVectors.splashBgLogo,
-      colorFilter: context.colors.onSurface.withOpacity(.05).withSrcInFilter(),
     );
   }
 

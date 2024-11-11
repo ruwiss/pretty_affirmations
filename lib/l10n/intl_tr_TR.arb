@@ -33,5 +33,17 @@
     "categoriesItem11": "MUTLULUK-NEŞE",
     "categoriesItem12": "AFFETME-BIRAKMA",
     "categoriesItem13": "UYKU-DİNLENME",
-    "categoriesItem14": "YAKINDA..."
+    "categoriesItem14": "YAKINDA...",
+    "language": "Dil",
+    "languageOption": "Uygulama dilini değiştirin, istediğiniz dilde olumlamalar görün",
+    "reminders": "Hatırlatıcılar",
+    "remindersOption": "Olumlamaları rutininize uydurmak için en uygun zaman diliminde hatırlatıcılarınızı ayarlayın",
+    "leaveComment": "Yorum Bırak",
+    "leaveCommentOption": "Biz geliştiricilere uygulama hakkında bir yorum bırakın ve uygulamamızın gelişmesine katkı sağlayın",
+    "share": "Paylaş",
+    "shareOption": "Uygulamamızı arkadaşlarınız ve yakın çevreniz ile paylaşın ve hayatlarına pozitif dokunuşlar yapın",
+    "privacyPolicy": "Gizlilik Politikası",
+    "privacyPolicyOption": "Uygulamamızın veri güvenliği ve gizlilik politikası hakkında detaylı bilgi alın",
+    "termsOfUse": "Şartlar ve Koşullar",
+    "termsOfUseOption": "Uygulamamızı kullanmak için uymanız gereken şartlar ve koşulları okuyun"
 }

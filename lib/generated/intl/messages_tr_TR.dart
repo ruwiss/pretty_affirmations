@@ -49,8 +49,28 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("STRES YÖNETİMİ"),
         "favourites": MessageLookupByLibrary.simpleMessage("Favoriler"),
         "flow": MessageLookupByLibrary.simpleMessage("Akış"),
+        "language": MessageLookupByLibrary.simpleMessage("Dil"),
+        "languageOption": MessageLookupByLibrary.simpleMessage(
+            "Uygulama dilini değiştirin, istediğiniz dilde olumlamalar görün"),
+        "leaveComment": MessageLookupByLibrary.simpleMessage("Yorum Bırak"),
+        "leaveCommentOption": MessageLookupByLibrary.simpleMessage(
+            "Biz geliştiricilere uygulama hakkında bir yorum bırakın ve uygulamamızın gelişmesine katkı sağlayın"),
+        "privacyPolicy":
+            MessageLookupByLibrary.simpleMessage("Gizlilik Politikası"),
+        "privacyPolicyOption": MessageLookupByLibrary.simpleMessage(
+            "Uygulamamızın veri güvenliği ve gizlilik politikası hakkında detaylı bilgi alın"),
+        "reminders": MessageLookupByLibrary.simpleMessage("Hatırlatıcılar"),
+        "remindersOption": MessageLookupByLibrary.simpleMessage(
+            "Olumlamaları rutininize uydurmak için en uygun zaman diliminde hatırlatıcılarınızı ayarlayın"),
         "settings": MessageLookupByLibrary.simpleMessage("Ayarlar"),
+        "share": MessageLookupByLibrary.simpleMessage("Paylaş"),
+        "shareOption": MessageLookupByLibrary.simpleMessage(
+            "Uygulamamızı arkadaşlarınız ve yakın çevreniz ile paylaşın ve hayatlarına pozitif dokunuşlar yapın"),
         "stories": MessageLookupByLibrary.simpleMessage("Günün Hikayesi"),
+        "termsOfUse":
+            MessageLookupByLibrary.simpleMessage("Şartlar ve Koşullar"),
+        "termsOfUseOption": MessageLookupByLibrary.simpleMessage(
+            "Uygulamamızı kullanmak için uymanız gereken şartlar ve koşulları okuyun"),
         "topics": MessageLookupByLibrary.simpleMessage("Kategoriler")
       };
 }

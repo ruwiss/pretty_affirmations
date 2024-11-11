@@ -33,5 +33,17 @@
     "categoriesItem11": "Happiness & Joy",
     "categoriesItem12": "Forgiveness & Letting Go",
     "categoriesItem13": "Sleep & Rest",
-    "categoriesItem14": "Coming Soon..."
+    "categoriesItem14": "Coming Soon...",
+    "language": "Language",
+    "languageOption": "Change the application language, see affirmations in the language you want",
+    "reminders": "Reminders",
+    "remindersOption": "Set your reminders for the most suitable time slot to fit affirmations into your routine",
+    "leaveComment": "Leave a Comment",
+    "leaveCommentOption": "Leave a comment about the app for us developers and contribute to the improvement of our application",
+    "share": "Share",
+    "shareOption": "Share our app with your friends and close ones and make a positive impact on their lives",
+    "privacyPolicy": "Privacy Policy",
+    "privacyPolicyOption": "Get detailed information about our app’s data security and privacy policy",
+    "termsOfUse": "Terms and Conditions",
+    "termsOfUseOption": "Read the terms and conditions you must follow to use our app"
 }
