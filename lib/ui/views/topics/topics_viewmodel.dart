@@ -16,19 +16,19 @@ class TopicsViewmodel extends BaseViewModel {
   List<MenuItem> get menuItems => _menuItems;
 
   void init(BuildContext context) {
-    _listenLocale(context);
-    runBusyFuture(_getTopics(context: context));
+    final locale = context.read<AppBase>().localeStr;
+    runBusyFuture(_getTopics(locale));
+    _listenLocale();
   }
 
   late StreamSubscription<Locale> _localeSubscription;
-  void _listenLocale(BuildContext context) {
+  void _listenLocale() {
     _localeSubscription = _settingsService.localeStream.listen((locale) {
-      runBusyFuture(_getTopics(localeStr: locale.toLocaleStr()));
+      runBusyFuture(_getTopics(locale.toLocaleStr()));
     });
   }
 
-  Future<void> _getTopics({BuildContext? context, String? localeStr}) async {
-    final String locale = localeStr ?? context!.read<AppBase>().localeStr;
+  Future<void> _getTopics(String locale) async {
     _menuItems = await _apiService.getCategories(locale);
   }
 

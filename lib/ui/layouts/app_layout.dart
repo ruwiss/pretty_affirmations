@@ -27,18 +27,21 @@ class AppLayout extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            _menuButton(context, svg: AppVectors.likeMenu, route: '/favourites'),
+            _menuButton(context,
+                svg: AppVectors.likeMenu, route: '/favourites'),
             _menuButton(context, svg: AppVectors.topicsMenu, route: '/topics'),
             _menuButton(context, svg: AppVectors.logo, route: '/home'),
             _menuButton(context, svg: AppVectors.bookMenu, route: '/stories'),
-            _menuButton(context, svg: AppVectors.settingsMenu, route: '/settings'),
+            _menuButton(context,
+                svg: AppVectors.settingsMenu, route: '/settings'),
           ],
         ),
       ),
     );
   }
 
-  Widget _menuButton(BuildContext context, {required String svg, required String route}) {
+  Widget _menuButton(BuildContext context,
+      {required String svg, required String route}) {
     final bool isEnabled = location.startsWith(route);
     final bool isHome = route == '/home';
     return SplashSvgButton(

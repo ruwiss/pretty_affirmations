@@ -109,7 +109,7 @@ class AppRouter {
       path: storiesRoute,
       pageBuilder: (context, state) => _customTransitionPage(
         ChangeNotifierProvider(
-          create: (context) => StoriesViewmodel(),
+          create: (context) => StoriesViewmodel()..init(context),
           child: const StoriesView(),
         ),
       ),
