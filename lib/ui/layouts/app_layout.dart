@@ -4,13 +4,14 @@ import 'package:pretty_affirmations/common/common.dart';
 import 'package:pretty_affirmations/ui/widgets/splash_svg_button.dart';
 
 class AppLayout extends StatelessWidget {
-  final StatefulNavigationShell navigationShell;
-  const AppLayout({super.key, required this.navigationShell});
+  final Widget child;
+  final String location;
+  const AppLayout({super.key, required this.child, required this.location});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: navigationShell,
+      body: child,
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: context.colors.surface,
@@ -26,23 +27,22 @@ class AppLayout extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            _menuButton(context, svg: AppVectors.likeMenu, index: 0),
-            _menuButton(context, svg: AppVectors.topicsMenu, index: 1),
-            _menuButton(context, svg: AppVectors.logo, index: 2),
-            _menuButton(context, svg: AppVectors.bookMenu, index: 3),
-            _menuButton(context, svg: AppVectors.settingsMenu, index: 4),
+            _menuButton(context, svg: AppVectors.likeMenu, route: '/favourites'),
+            _menuButton(context, svg: AppVectors.topicsMenu, route: '/topics'),
+            _menuButton(context, svg: AppVectors.logo, route: '/home'),
+            _menuButton(context, svg: AppVectors.bookMenu, route: '/stories'),
+            _menuButton(context, svg: AppVectors.settingsMenu, route: '/settings'),
           ],
         ),
       ),
     );
   }
 
-  Widget _menuButton(BuildContext context,
-      {required String svg, required int index}) {
-    final bool isEnabled = navigationShell.currentIndex == index;
-    final bool isHome = index == 2;
+  Widget _menuButton(BuildContext context, {required String svg, required String route}) {
+    final bool isEnabled = location.startsWith(route);
+    final bool isHome = route == '/home';
     return SplashSvgButton(
-      onTap: () => navigationShell.goBranch(index, initialLocation: isEnabled),
+      onTap: () => context.go(route),
       svg: svg,
       svgWidth: 40,
       radius: isEnabled ? 0 : 30,

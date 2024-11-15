@@ -22,20 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "categoriesItem1": MessageLookupByLibrary.simpleMessage("自我发展"),
-        "categoriesItem10": MessageLookupByLibrary.simpleMessage("精神成长"),
-        "categoriesItem11": MessageLookupByLibrary.simpleMessage("快乐与喜悦"),
-        "categoriesItem12": MessageLookupByLibrary.simpleMessage("宽恕与放手"),
-        "categoriesItem13": MessageLookupByLibrary.simpleMessage("睡眠与休息"),
-        "categoriesItem14": MessageLookupByLibrary.simpleMessage("敬请期待..."),
-        "categoriesItem2": MessageLookupByLibrary.simpleMessage("自我关怀"),
-        "categoriesItem3": MessageLookupByLibrary.simpleMessage("自尊与自信"),
-        "categoriesItem4": MessageLookupByLibrary.simpleMessage("关系与沟通"),
-        "categoriesItem5": MessageLookupByLibrary.simpleMessage("感恩"),
-        "categoriesItem6": MessageLookupByLibrary.simpleMessage("职业与成功"),
-        "categoriesItem7": MessageLookupByLibrary.simpleMessage("健康与幸福"),
-        "categoriesItem8": MessageLookupByLibrary.simpleMessage("创造力与灵感"),
-        "categoriesItem9": MessageLookupByLibrary.simpleMessage("压力管理"),
+        "comingSoon": MessageLookupByLibrary.simpleMessage("敬请期待..."),
         "favourites": MessageLookupByLibrary.simpleMessage("收藏"),
         "flow": MessageLookupByLibrary.simpleMessage("流"),
         "language": MessageLookupByLibrary.simpleMessage("语言"),

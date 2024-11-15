@@ -19,10 +19,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => AppBase()),
-      ],
+    return ChangeNotifierProvider(
+      create: (_) => AppBase(),
       child: Consumer<AppBase>(
         builder: (context, value, child) {
           return MaterialApp.router(

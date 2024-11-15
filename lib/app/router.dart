@@ -26,138 +26,105 @@ class AppRouter {
   static const String settingsRoute = '/settings';
 
   static final _routerKey = GlobalKey<NavigatorState>();
-  static final _homeKey = GlobalKey<NavigatorState>(debugLabel: 'shellHome');
-  static final _favouritesKey =
-      GlobalKey<NavigatorState>(debugLabel: 'shellFavourites');
-  static final _topicsKey =
-      GlobalKey<NavigatorState>(debugLabel: 'shellTopics');
-  static final _storiesKey =
-      GlobalKey<NavigatorState>(debugLabel: 'shellStories');
-  static final _settingsKey =
-      GlobalKey<NavigatorState>(debugLabel: 'shellSettings');
 
   static final GoRouter router = GoRouter(
     initialLocation: _initialRoute,
     navigatorKey: _routerKey,
     routes: [
       _splashView,
-      StatefulShellRoute.indexedStack(
-        builder: (context, state, navigationShell) {
-          return AppLayout(navigationShell: navigationShell);
+      ShellRoute(
+        builder: (context, state, child) {
+          return AppLayout(location: state.matchedLocation, child: child);
         },
-        branches: [
-          _favouritesBranch(),
-          _topicsBranch(),
-          _homeBranch(),
-          _storiesBranch(),
-          _settingsBranch(),
+        routes: [
+          _favouritesRoute(),
+          _topicsRoute(),
+          _homeRoute(),
+          _storiesRoute(),
+          _settingsRoute(),
         ],
       ),
     ],
   );
 
-  static final GoRoute _splashView = GoRoute(
-    path: splashRoute,
-    pageBuilder: (context, state) => CustomTransitionPage(
-      key: state.pageKey,
-      child: ChangeNotifierProvider<SplashViewmodel>(
-        create: (context) => SplashViewmodel(),
-        child: const SplashView(),
-      ),
+  static CustomTransitionPage _customTransitionPage(Widget child) {
+    return CustomTransitionPage(
+      child: child,
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
           FadeTransition(
         opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
         child: child,
       ),
+    );
+  }
+
+  static final GoRoute _splashView = GoRoute(
+    path: splashRoute,
+    pageBuilder: (context, state) => _customTransitionPage(
+      ChangeNotifierProvider<SplashViewmodel>(
+        create: (context) => SplashViewmodel(),
+        child: const SplashView(),
+      ),
     ),
   );
 
-  static StatefulShellBranch _favouritesBranch() {
-    return StatefulShellBranch(
-      navigatorKey: _favouritesKey,
-      routes: [
-        GoRoute(
-          path: favouritesRoute,
-          builder: (context, state) => ChangeNotifierProvider(
-            create: (_) => FavouritesViewmodel(),
-            child: FavouriesView(),
-          ),
-        )
-      ],
+  static GoRoute _favouritesRoute() {
+    return GoRoute(
+      path: favouritesRoute,
+      pageBuilder: (context, state) => _customTransitionPage(
+        ChangeNotifierProvider(
+          create: (context) => FavouritesViewmodel(),
+          child: FavouriesView(),
+        ),
+      ),
     );
   }
 
-  static StatefulShellBranch _topicsBranch() {
-    return StatefulShellBranch(
-      navigatorKey: _topicsKey,
-      routes: [
-        GoRoute(
-          path: topicsRoute,
-          builder: (context, state) => ChangeNotifierProvider(
-            create: (_) => TopicsViewmodel(),
-            child: const TopicsView(),
-          ),
-        )
-      ],
+  static GoRoute _topicsRoute() {
+    return GoRoute(
+      path: topicsRoute,
+      pageBuilder: (context, state) => _customTransitionPage(
+        ChangeNotifierProvider<TopicsViewmodel>(
+          create: (_) => TopicsViewmodel()..init(context),
+          child: const TopicsView(),
+        ),
+      ),
     );
   }
 
-  static StatefulShellBranch _homeBranch() {
-    return StatefulShellBranch(
-      navigatorKey: _homeKey,
-      routes: [
-        GoRoute(
-          path: homeRoute,
-          builder: (context, state) => ChangeNotifierProvider(
-            create: (_) => HomeViewModel(),
-            child: const HomeView(),
-          ),
-          pageBuilder: (context, state) => CustomTransitionPage(
-            key: state.pageKey,
-            child: ChangeNotifierProvider<HomeViewModel>(
-              create: (context) => HomeViewModel(),
-              child: const HomeView(),
-            ),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) =>
-                    FadeTransition(
-              opacity:
-                  CurveTween(curve: Curves.easeInOutCirc).animate(animation),
-              child: child,
-            ),
-          ),
-        )
-      ],
+  static GoRoute _homeRoute() {
+    return GoRoute(
+      path: homeRoute,
+      pageBuilder: (context, state) => _customTransitionPage(
+        ChangeNotifierProvider(
+          create: (_) => HomeViewModel(),
+          child: const HomeView(),
+        ),
+      ),
     );
   }
 
-  static StatefulShellBranch _storiesBranch() {
-    return StatefulShellBranch(
-      navigatorKey: _storiesKey,
-      routes: [
-        GoRoute(
-          path: storiesRoute,
-          builder: (context, state) => ChangeNotifierProvider(
-            create: (_) => StoriesViewmodel(),
-            child: const StoriesView(),
-          ),
-        )
-      ],
+  static GoRoute _storiesRoute() {
+    return GoRoute(
+      path: storiesRoute,
+      pageBuilder: (context, state) => _customTransitionPage(
+        ChangeNotifierProvider(
+          create: (context) => StoriesViewmodel(),
+          child: const StoriesView(),
+        ),
+      ),
     );
   }
 
-  static StatefulShellBranch _settingsBranch() {
-    return StatefulShellBranch(
-      navigatorKey: _settingsKey,
-      routes: [
-        GoRoute(
-          path: settingsRoute,
-          builder: (context, state) => ChangeNotifierProvider(
-            create: (_) => SettingsViewmodel(),
-            child: const SettingsView(),
-          ),
-        )
-      ],
+  static GoRoute _settingsRoute() {
+    return GoRoute(
+      path: settingsRoute,
+      pageBuilder: (context, state) => _customTransitionPage(
+        ChangeNotifierProvider(
+          create: (context) => SettingsViewmodel(),
+          child: const SettingsView(),
+        ),
+      ),
     );
   }
 }

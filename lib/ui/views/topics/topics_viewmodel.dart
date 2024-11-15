@@ -1,3 +1,40 @@
-import 'package:hayiqu/hayiqu.dart';
+import 'dart:async';
 
-class TopicsViewmodel extends BaseViewModel {}
+import 'package:flutter/material.dart';
+import 'package:hayiqu/hayiqu.dart';
+import 'package:pretty_affirmations/app/theme.dart';
+import 'package:pretty_affirmations/common/extensions/string_extensions.dart';
+import 'package:pretty_affirmations/models/menu_item.dart';
+import 'package:pretty_affirmations/services/api_service.dart';
+import 'package:pretty_affirmations/services/settings_service.dart';
+
+class TopicsViewmodel extends BaseViewModel {
+  final _apiService = getIt<ApiService>();
+  final _settingsService = getIt<SettingsService>();
+  List<MenuItem> _menuItems = [];
+
+  List<MenuItem> get menuItems => _menuItems;
+
+  void init(BuildContext context) {
+    _listenLocale(context);
+    runBusyFuture(_getTopics(context: context));
+  }
+
+  late StreamSubscription<Locale> _localeSubscription;
+  void _listenLocale(BuildContext context) {
+    _localeSubscription = _settingsService.localeStream.listen((locale) {
+      runBusyFuture(_getTopics(localeStr: locale.toLocaleStr()));
+    });
+  }
+
+  Future<void> _getTopics({BuildContext? context, String? localeStr}) async {
+    final String locale = localeStr ?? context!.read<AppBase>().localeStr;
+    _menuItems = await _apiService.getCategories(locale);
+  }
+
+  @override
+  void dispose() {
+    _localeSubscription.cancel();
+    super.dispose();
+  }
+}

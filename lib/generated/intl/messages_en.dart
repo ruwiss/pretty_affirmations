@@ -22,32 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "categoriesItem1":
-            MessageLookupByLibrary.simpleMessage("Self Development"),
-        "categoriesItem10":
-            MessageLookupByLibrary.simpleMessage("Spiritual Growth"),
-        "categoriesItem11":
-            MessageLookupByLibrary.simpleMessage("Happiness & Joy"),
-        "categoriesItem12":
-            MessageLookupByLibrary.simpleMessage("Forgiveness & Letting Go"),
-        "categoriesItem13":
-            MessageLookupByLibrary.simpleMessage("Sleep & Rest"),
-        "categoriesItem14":
-            MessageLookupByLibrary.simpleMessage("Coming Soon..."),
-        "categoriesItem2": MessageLookupByLibrary.simpleMessage("Self-Care"),
-        "categoriesItem3":
-            MessageLookupByLibrary.simpleMessage("Self-Esteem & Confidence"),
-        "categoriesItem4": MessageLookupByLibrary.simpleMessage(
-            "Relationships & Communication"),
-        "categoriesItem5": MessageLookupByLibrary.simpleMessage("Gratitude"),
-        "categoriesItem6":
-            MessageLookupByLibrary.simpleMessage("Career & Success"),
-        "categoriesItem7":
-            MessageLookupByLibrary.simpleMessage("Health & Well-Being"),
-        "categoriesItem8":
-            MessageLookupByLibrary.simpleMessage("Creativity & Inspiration"),
-        "categoriesItem9":
-            MessageLookupByLibrary.simpleMessage("Stress Management"),
+        "comingSoon": MessageLookupByLibrary.simpleMessage("Coming Soon..."),
         "favourites": MessageLookupByLibrary.simpleMessage("Favourites"),
         "flow": MessageLookupByLibrary.simpleMessage("Flow"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),

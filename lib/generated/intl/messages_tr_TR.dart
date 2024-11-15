@@ -22,31 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "categoriesItem1":
-            MessageLookupByLibrary.simpleMessage("KİŞİSEL GELİŞİM"),
-        "categoriesItem10":
-            MessageLookupByLibrary.simpleMessage("RUHSAL GELİŞİM"),
-        "categoriesItem11":
-            MessageLookupByLibrary.simpleMessage("MUTLULUK-NEŞE"),
-        "categoriesItem12":
-            MessageLookupByLibrary.simpleMessage("AFFETME-BIRAKMA"),
-        "categoriesItem13":
-            MessageLookupByLibrary.simpleMessage("UYKU-DİNLENME"),
-        "categoriesItem14": MessageLookupByLibrary.simpleMessage("YAKINDA..."),
-        "categoriesItem2": MessageLookupByLibrary.simpleMessage("ÖZ BAKIM"),
-        "categoriesItem3":
-            MessageLookupByLibrary.simpleMessage("ÖZSAYGI-ÖZGÜVEN"),
-        "categoriesItem4":
-            MessageLookupByLibrary.simpleMessage("İLİŞKİLER-İLETİŞİM"),
-        "categoriesItem5": MessageLookupByLibrary.simpleMessage("ŞÜKRAN"),
-        "categoriesItem6":
-            MessageLookupByLibrary.simpleMessage("KARİYER-BAŞARI"),
-        "categoriesItem7":
-            MessageLookupByLibrary.simpleMessage("SAĞLIK-İYİLİK"),
-        "categoriesItem8":
-            MessageLookupByLibrary.simpleMessage("YARATICILIK-İLHAM"),
-        "categoriesItem9":
-            MessageLookupByLibrary.simpleMessage("STRES YÖNETİMİ"),
+        "comingSoon": MessageLookupByLibrary.simpleMessage("YAKINDA..."),
         "favourites": MessageLookupByLibrary.simpleMessage("Favoriler"),
         "flow": MessageLookupByLibrary.simpleMessage("Akış"),
         "language": MessageLookupByLibrary.simpleMessage("Dil"),

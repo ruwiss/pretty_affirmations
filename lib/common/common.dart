@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pretty_affirmations/generated/l10n.dart';
 
 
 part 'constants/images.dart';

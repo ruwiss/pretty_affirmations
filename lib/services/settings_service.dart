@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 import 'package:pretty_affirmations/generated/l10n.dart';
 import 'package:pretty_affirmations/models/app_settings/app_settings.dart';
@@ -7,6 +8,11 @@ class SettingsService {
   SettingsService() {
     _init();
   }
+  // StreamController to notify listeners about locale changes
+  final _localeController = StreamController<Locale>.broadcast();
+
+  // Expose a stream that listeners can subscribe to
+  Stream<Locale> get localeStream => _localeController.stream;
 
   final Configuration _config =
       Configuration.local([AppSettings.schema], schemaVersion: 2);
@@ -41,6 +47,14 @@ class SettingsService {
       _settings.countryCode = locale.countryCode;
     });
     await S.load(locale);
+
+    // Notify listeners that the locale has changed
+    _localeController.add(locale);
     return locale;
+  }
+
+  // Close the stream controller when no longer needed
+  void dispose() {
+    _localeController.close();
   }
 }
