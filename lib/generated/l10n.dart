@@ -239,6 +239,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Categories`
+  String get selectCategory {
+    return Intl.message(
+      'Categories',
+      name: 'selectCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select the categories you'd like to see in the app. We'll show you content tailored to your preferences`
+  String get selectCategoryOption {
+    return Intl.message(
+      'Select the categories you\'d like to see in the app. We\'ll show you content tailored to your preferences',
+      name: 'selectCategoryOption',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Apply`
+  String get ok {
+    return Intl.message(
+      'Apply',
+      name: 'ok',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please restart the application for the changes to take effect`
+  String get applyInfo {
+    return Intl.message(
+      'Please restart the application for the changes to take effect',
+      name: 'applyInfo',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

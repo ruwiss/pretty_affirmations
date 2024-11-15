@@ -33,5 +33,10 @@
     "privacyPolicyOption": "Uygulamamızın veri güvenliği ve gizlilik politikası hakkında detaylı bilgi alın",
     "termsOfUse": "Şartlar ve Koşullar",
     "termsOfUseOption": "Uygulamamızı kullanmak için uymanız gereken şartlar ve koşulları okuyun",
-    "selectLanguage": "Dil Seçiniz"
+    "selectLanguage": "Dil Seçiniz",
+    "selectCategory": "Kategoriler",
+    "selectCategoryOption": "Uygulamada görmek istediğiniz kategorileri seçin. Sizin için istediğiniz türde içerikler göstereceğiz",
+    "cancel": "İptal",
+    "ok": "Tamam",
+    "applyInfo": "Değişikliklerin geçerli olabilmesi için uygulamayı yeniden başlatınız"
 }

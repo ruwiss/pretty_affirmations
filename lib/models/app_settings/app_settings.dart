@@ -6,4 +6,5 @@ part 'app_settings.realm.dart';
 class _AppSettings {
   String? localeStr;
   String? countryCode;
+  late List<String> unselectedTopics;
 }

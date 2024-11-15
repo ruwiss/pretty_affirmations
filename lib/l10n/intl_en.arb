@@ -33,5 +33,10 @@
     "privacyPolicyOption": "Get detailed information about our app’s data security and privacy policy",
     "termsOfUse": "Terms and Conditions",
     "termsOfUseOption": "Read the terms and conditions you must follow to use our app",
-    "selectLanguage": "Select Language"
+    "selectLanguage": "Select Language",
+    "selectCategory": "Categories",
+    "selectCategoryOption": "Select the categories you'd like to see in the app. We'll show you content tailored to your preferences",
+    "cancel": "Cancel",
+    "ok": "Apply",
+    "applyInfo": "Please restart the application for the changes to take effect"
 }

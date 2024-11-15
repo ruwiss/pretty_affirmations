@@ -22,6 +22,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "applyInfo": MessageLookupByLibrary.simpleMessage(
+            "Please restart the application for the changes to take effect"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "comingSoon": MessageLookupByLibrary.simpleMessage("Coming Soon..."),
         "favourites": MessageLookupByLibrary.simpleMessage("Favourites"),
         "flow": MessageLookupByLibrary.simpleMessage("Flow"),
@@ -31,12 +34,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "leaveComment": MessageLookupByLibrary.simpleMessage("Leave a Comment"),
         "leaveCommentOption": MessageLookupByLibrary.simpleMessage(
             "Leave a comment about the app for us developers and contribute to the improvement of our application"),
+        "ok": MessageLookupByLibrary.simpleMessage("Apply"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
         "privacyPolicyOption": MessageLookupByLibrary.simpleMessage(
             "Get detailed information about our app’s data security and privacy policy"),
         "reminders": MessageLookupByLibrary.simpleMessage("Reminders"),
         "remindersOption": MessageLookupByLibrary.simpleMessage(
             "Set your reminders for the most suitable time slot to fit affirmations into your routine"),
+        "selectCategory": MessageLookupByLibrary.simpleMessage("Categories"),
+        "selectCategoryOption": MessageLookupByLibrary.simpleMessage(
+            "Select the categories you\'d like to see in the app. We\'ll show you content tailored to your preferences"),
         "selectLanguage":
             MessageLookupByLibrary.simpleMessage("Select Language"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),

@@ -12,9 +12,12 @@ class AppSettings extends _AppSettings
   AppSettings({
     String? localeStr,
     String? countryCode,
+    Iterable<String> unselectedTopics = const [],
   }) {
     RealmObjectBase.set(this, 'localeStr', localeStr);
     RealmObjectBase.set(this, 'countryCode', countryCode);
+    RealmObjectBase.set<RealmList<String>>(
+        this, 'unselectedTopics', RealmList<String>(unselectedTopics));
   }
 
   AppSettings._();
@@ -33,6 +36,14 @@ class AppSettings extends _AppSettings
       RealmObjectBase.set(this, 'countryCode', value);
 
   @override
+  RealmList<String> get unselectedTopics =>
+      RealmObjectBase.get<String>(this, 'unselectedTopics')
+          as RealmList<String>;
+  @override
+  set unselectedTopics(covariant RealmList<String> value) =>
+      throw RealmUnsupportedSetError();
+
+  @override
   Stream<RealmObjectChanges<AppSettings>> get changes =>
       RealmObjectBase.getChanges<AppSettings>(this);
 
@@ -48,6 +59,7 @@ class AppSettings extends _AppSettings
     return <String, dynamic>{
       'localeStr': localeStr.toEJson(),
       'countryCode': countryCode.toEJson(),
+      'unselectedTopics': unselectedTopics.toEJson(),
     };
   }
 
@@ -57,6 +69,7 @@ class AppSettings extends _AppSettings
     return AppSettings(
       localeStr: fromEJson(ejson['localeStr']),
       countryCode: fromEJson(ejson['countryCode']),
+      unselectedTopics: fromEJson(ejson['unselectedTopics']),
     );
   }
 
@@ -67,6 +80,8 @@ class AppSettings extends _AppSettings
         ObjectType.realmObject, AppSettings, 'AppSettings', [
       SchemaProperty('localeStr', RealmPropertyType.string, optional: true),
       SchemaProperty('countryCode', RealmPropertyType.string, optional: true),
+      SchemaProperty('unselectedTopics', RealmPropertyType.string,
+          collectionType: RealmCollectionType.list),
     ]);
   }();
 

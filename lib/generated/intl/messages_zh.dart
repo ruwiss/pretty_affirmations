@@ -22,6 +22,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "applyInfo": MessageLookupByLibrary.simpleMessage("请重新启动应用以使更改生效"),
+        "cancel": MessageLookupByLibrary.simpleMessage("取消"),
         "comingSoon": MessageLookupByLibrary.simpleMessage("敬请期待..."),
         "favourites": MessageLookupByLibrary.simpleMessage("收藏"),
         "flow": MessageLookupByLibrary.simpleMessage("流"),
@@ -31,12 +33,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "leaveComment": MessageLookupByLibrary.simpleMessage("留下评论"),
         "leaveCommentOption":
             MessageLookupByLibrary.simpleMessage("为我们开发者留下关于应用的评论，帮助我们改进应用"),
+        "ok": MessageLookupByLibrary.simpleMessage("应用"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("隐私政策"),
         "privacyPolicyOption":
             MessageLookupByLibrary.simpleMessage("获取有关我们应用数据安全和隐私政策的详细信息"),
         "reminders": MessageLookupByLibrary.simpleMessage("提醒"),
         "remindersOption":
             MessageLookupByLibrary.simpleMessage("设置您的提醒，选择最合适的时间段，将肯定句融入日常生活"),
+        "selectCategory": MessageLookupByLibrary.simpleMessage("分类"),
+        "selectCategoryOption": MessageLookupByLibrary.simpleMessage(
+            "请选择您希望在应用中看到的分类。我们将为您推荐符合您喜好的内容"),
         "selectLanguage": MessageLookupByLibrary.simpleMessage("选择语言"),
         "settings": MessageLookupByLibrary.simpleMessage("设置"),
         "share": MessageLookupByLibrary.simpleMessage("分享"),

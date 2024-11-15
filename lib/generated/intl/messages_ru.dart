@@ -22,6 +22,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "applyInfo": MessageLookupByLibrary.simpleMessage(
+            "Пожалуйста, перезапустите приложение, чтобы изменения вступили в силу"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Отмена"),
         "comingSoon": MessageLookupByLibrary.simpleMessage("Скоро будет..."),
         "favourites": MessageLookupByLibrary.simpleMessage("Избранное"),
         "flow": MessageLookupByLibrary.simpleMessage("Поток"),
@@ -32,6 +35,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Оставить комментарий"),
         "leaveCommentOption": MessageLookupByLibrary.simpleMessage(
             "Оставьте комментарий о приложении для разработчиков и помогите улучшить его"),
+        "ok": MessageLookupByLibrary.simpleMessage("Применить"),
         "privacyPolicy":
             MessageLookupByLibrary.simpleMessage("Политика конфиденциальности"),
         "privacyPolicyOption": MessageLookupByLibrary.simpleMessage(
@@ -39,6 +43,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "reminders": MessageLookupByLibrary.simpleMessage("Напоминания"),
         "remindersOption": MessageLookupByLibrary.simpleMessage(
             "Установите напоминания на удобное время, чтобы встроить утверждения в свой распорядок"),
+        "selectCategory": MessageLookupByLibrary.simpleMessage("Категории"),
+        "selectCategoryOption": MessageLookupByLibrary.simpleMessage(
+            "Выберите категории, которые хотите видеть в приложении. Мы покажем вам контент, соответствующий вашим предпочтениям"),
         "selectLanguage": MessageLookupByLibrary.simpleMessage("Выберите язык"),
         "settings": MessageLookupByLibrary.simpleMessage("Настройки"),
         "share": MessageLookupByLibrary.simpleMessage("Поделиться"),

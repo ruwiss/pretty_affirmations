@@ -33,5 +33,10 @@
     "privacyPolicyOption": "获取有关我们应用数据安全和隐私政策的详细信息",
     "termsOfUse": "使用条款",
     "termsOfUseOption": "阅读使用我们应用所需遵循的条款和条件",
-    "selectLanguage": "选择语言"
+    "selectLanguage": "选择语言",
+    "selectCategory": "分类",
+    "selectCategoryOption": "请选择您希望在应用中看到的分类。我们将为您推荐符合您喜好的内容",
+    "cancel": "取消",
+    "ok": "应用",
+    "applyInfo": "请重新启动应用以使更改生效"
 }

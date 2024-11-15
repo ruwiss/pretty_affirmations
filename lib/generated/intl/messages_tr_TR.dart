@@ -22,6 +22,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "applyInfo": MessageLookupByLibrary.simpleMessage(
+            "Değişikliklerin geçerli olabilmesi için uygulamayı yeniden başlatınız"),
+        "cancel": MessageLookupByLibrary.simpleMessage("İptal"),
         "comingSoon": MessageLookupByLibrary.simpleMessage("YAKINDA..."),
         "favourites": MessageLookupByLibrary.simpleMessage("Favoriler"),
         "flow": MessageLookupByLibrary.simpleMessage("Akış"),
@@ -31,6 +34,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "leaveComment": MessageLookupByLibrary.simpleMessage("Yorum Bırak"),
         "leaveCommentOption": MessageLookupByLibrary.simpleMessage(
             "Biz geliştiricilere uygulama hakkında bir yorum bırakın ve uygulamamızın gelişmesine katkı sağlayın"),
+        "ok": MessageLookupByLibrary.simpleMessage("Tamam"),
         "privacyPolicy":
             MessageLookupByLibrary.simpleMessage("Gizlilik Politikası"),
         "privacyPolicyOption": MessageLookupByLibrary.simpleMessage(
@@ -38,6 +42,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "reminders": MessageLookupByLibrary.simpleMessage("Hatırlatıcılar"),
         "remindersOption": MessageLookupByLibrary.simpleMessage(
             "Olumlamaları rutininize uydurmak için en uygun zaman diliminde hatırlatıcılarınızı ayarlayın"),
+        "selectCategory": MessageLookupByLibrary.simpleMessage("Kategoriler"),
+        "selectCategoryOption": MessageLookupByLibrary.simpleMessage(
+            "Uygulamada görmek istediğiniz kategorileri seçin. Sizin için istediğiniz türde içerikler göstereceğiz"),
         "selectLanguage": MessageLookupByLibrary.simpleMessage("Dil Seçiniz"),
         "settings": MessageLookupByLibrary.simpleMessage("Ayarlar"),
         "share": MessageLookupByLibrary.simpleMessage("Paylaş"),
