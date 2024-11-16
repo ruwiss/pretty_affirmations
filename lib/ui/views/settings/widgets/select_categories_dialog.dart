@@ -19,8 +19,9 @@ class SelectCategoriesDialog extends StatefulWidget {
         rootPage: FluidDialogPage(
           alignment: Alignment.center,
           builder: (context) => FutureBuilder(
-            future: getIt<ApiService>()
-                .getCategories(context.read<AppBase>().localeStr),
+            future: getIt<ApiService>().getCategories(
+                context.read<AppBase>().localeStr,
+                filtered: false),
             builder: (context, snapshot) {
               return snapshot.asWidget(
                 context: context,
