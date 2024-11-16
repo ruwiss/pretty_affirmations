@@ -31,98 +31,58 @@ class AppRouter {
     initialLocation: _initialRoute,
     navigatorKey: _routerKey,
     routes: [
-      _splashView,
+      _buildRoute(
+          splashRoute, (context) => SplashViewmodel(), const SplashView()),
       ShellRoute(
-        builder: (context, state, child) {
-          return AppLayout(location: state.matchedLocation, child: child);
-        },
+        builder: (context, state, child) =>
+            AppLayout(location: state.matchedLocation, child: child),
         routes: [
-          _favouritesRoute(),
-          _topicsRoute(),
-          _homeRoute(),
-          _storiesRoute(),
-          _settingsRoute(),
+          _buildRoute(
+            favouritesRoute,
+            (context) => FavouritesViewmodel(),
+            FavouriesView(),
+          ),
+          _buildRoute(
+            topicsRoute,
+            (context) => TopicsViewmodel()..init(context),
+            const TopicsView(),
+          ),
+          _buildRoute(
+            homeRoute,
+            (context) => HomeViewModel(),
+            const HomeView(),
+          ),
+          _buildRoute(
+            storiesRoute,
+            (context) => StoriesViewmodel()..init(context),
+            const StoriesView(),
+          ),
+          _buildRoute(
+            settingsRoute,
+            (context) => SettingsViewmodel(),
+            const SettingsView(),
+          ),
         ],
       ),
     ],
   );
 
-  static CustomTransitionPage _customTransitionPage(Widget child) {
-    return CustomTransitionPage(
-      child: child,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
-        child: child,
-      ),
-    );
-  }
-
-  static final GoRoute _splashView = GoRoute(
-    path: splashRoute,
-    pageBuilder: (context, state) => _customTransitionPage(
-      ChangeNotifierProvider<SplashViewmodel>(
-        create: (context) => SplashViewmodel(),
-        child: const SplashView(),
-      ),
-    ),
-  );
-
-  static GoRoute _favouritesRoute() {
+  static GoRoute _buildRoute<T extends ChangeNotifier>(
+    String path,
+    T Function(BuildContext) createViewModel,
+    Widget child,
+  ) {
     return GoRoute(
-      path: favouritesRoute,
-      pageBuilder: (context, state) => _customTransitionPage(
-        ChangeNotifierProvider(
-          create: (context) => FavouritesViewmodel(),
-          child: FavouriesView(),
+      path: path,
+      pageBuilder: (context, state) => CustomTransitionPage(
+        child: ChangeNotifierProvider<T>(
+          create: createViewModel,
+          child: child,
         ),
-      ),
-    );
-  }
-
-  static GoRoute _topicsRoute() {
-    return GoRoute(
-      path: topicsRoute,
-      pageBuilder: (context, state) => _customTransitionPage(
-        ChangeNotifierProvider<TopicsViewmodel>(
-          create: (_) => TopicsViewmodel()..init(context),
-          child: const TopicsView(),
-        ),
-      ),
-    );
-  }
-
-  static GoRoute _homeRoute() {
-    return GoRoute(
-      path: homeRoute,
-      pageBuilder: (context, state) => _customTransitionPage(
-        ChangeNotifierProvider(
-          create: (_) => HomeViewModel(),
-          child: const HomeView(),
-        ),
-      ),
-    );
-  }
-
-  static GoRoute _storiesRoute() {
-    return GoRoute(
-      path: storiesRoute,
-      pageBuilder: (context, state) => _customTransitionPage(
-        ChangeNotifierProvider(
-          create: (context) => StoriesViewmodel()..init(context),
-          child: const StoriesView(),
-        ),
-      ),
-    );
-  }
-
-  static GoRoute _settingsRoute() {
-    return GoRoute(
-      path: settingsRoute,
-      pageBuilder: (context, state) => _customTransitionPage(
-        ChangeNotifierProvider(
-          create: (context) => SettingsViewmodel(),
-          child: const SettingsView(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(
+          opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+          child: child,
         ),
       ),
     );

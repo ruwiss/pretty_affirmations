@@ -7,7 +7,7 @@ class ApiService {
   final HttpService _http = getIt<HttpService>();
   final SettingsService _settings = getIt<SettingsService>();
 
-  Future<List<MenuItem>> getCategories(String locale) async {
+  Future<List<MenuItem>> getCategories(String locale, {bool filtered = true}) async {
     final unselectedTopics = _settings.getUnselectedTopics();
     final Result result = await _http.get('/categories.php?lang=$locale');
 
@@ -15,6 +15,7 @@ class ApiService {
       final categories = (result.value!.data['data'] as List)
           .map((e) => MenuItem.fromMap(e))
           .toList();
+      if (filtered) return categories;
       return categories.where((e) => !unselectedTopics.contains(e.id)).toList();
     } else {
       result.error.toString().log();
