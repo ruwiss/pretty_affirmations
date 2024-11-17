@@ -4,7 +4,7 @@ import 'package:hayiqu/hayiqu.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:pretty_affirmations/app/locator.dart';
 import 'package:pretty_affirmations/app/router.dart';
-import 'package:pretty_affirmations/app/theme.dart';
+import 'package:pretty_affirmations/app/base.dart';
 import 'generated/l10n.dart';
 
 void main() async {

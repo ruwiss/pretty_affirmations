@@ -1,4 +1,5 @@
 import 'package:hayiqu/hayiqu.dart';
+import 'package:pretty_affirmations/models/affirmation.dart';
 import 'package:pretty_affirmations/models/menu_item.dart';
 import 'package:pretty_affirmations/models/story.dart';
 import 'package:pretty_affirmations/services/settings_service.dart';
@@ -10,7 +11,7 @@ class ApiService {
   Future<List<MenuItem>> getCategories(String locale,
       {bool filtered = true}) async {
     final unselectedTopics = _settings.getUnselectedTopics();
-    final Result result = await _http.get('/categories.php?lang=$locale');
+    final result = await _http.get('/categories.php?lang=$locale');
 
     if (result.hasValue) {
       final categories = (result.value!.data['data'] as List)
@@ -25,13 +26,31 @@ class ApiService {
   }
 
   Future<Story> getDailyStory(String locale) async {
-    final Result result = await _http.get('/daily-story.php?lang=$locale');
+    final result = await _http.get('/daily-story.php?lang=$locale');
 
     if (result.hasValue) {
       return Story.fromMap(result.value!.data['data']);
     } else {
       result.error.toString().log();
       throw result.error!;
+    }
+  }
+
+  Future<Affirmations?> getAffirmations({
+    int page = 0,
+    required String locale,
+  }) async {
+    final Iterable<String> categories =
+        await getCategories(locale).then((e) => e.map((i) => i.id));
+    final result = await _http.get(
+        '/affirmations.php?lang=$locale&categories=${categories.join(",")}&page=$page');
+
+    if (result.hasValue) {
+      final Map<String, dynamic> data = result.value!.data;
+      final affirmations = Affirmations.fromMap(data);
+      return affirmations;
+    } else {
+      return null;
     }
   }
 }

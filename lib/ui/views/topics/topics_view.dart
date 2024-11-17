@@ -19,19 +19,16 @@ class TopicsView extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Consumer<TopicsViewmodel>(
           builder: (context, value, child) {
-            if (value.isBusy) {
-              return TopicsMenuGrid(
-                itemCount: 14,
-                itemBuilder: (context, i) => TopicsMenuItem(
-                  item: MenuItem.comingSoon(),
-                  skeletonEnabled: true,
-                ),
-              );
-            } else {
-              return TopicsMenuGrid(
+            return Skeletonizer(
+              enabled: value.isBusy,
+              child: TopicsMenuGrid(
                 itemCount: value.menuItems.length + 1,
                 itemBuilder: (context, i) {
-                  if (i != value.menuItems.length) {
+                  if (value.isBusy) {
+                    return const Skeleton.replace(
+                      child: Placeholder(),
+                    );
+                  } else if (i != value.menuItems.length) {
                     final MenuItem item = value.menuItems[i];
                     return TopicsMenuItem(item: item);
                   } else {
@@ -41,8 +38,8 @@ class TopicsView extends StatelessWidget {
                     );
                   }
                 },
-              );
-            }
+              ),
+            );
           },
         ),
       ),

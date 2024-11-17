@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hayiqu/hayiqu.dart';
-import 'package:pretty_affirmations/app/theme.dart';
+import 'package:pretty_affirmations/app/base.dart';
 import 'package:pretty_affirmations/generated/l10n.dart';
 import 'package:pretty_affirmations/models/menu_item.dart';
 import 'package:pretty_affirmations/services/api_service.dart';
@@ -103,9 +103,11 @@ class _SelectCategoriesDialogState extends State<SelectCategoriesDialog> {
               ),
               const Gap(15),
               ElevatedButton(
-                child: Text(S.of(context).ok),
-                onPressed: () => widget.onApply?.call(_unselectedTopics),
-              ),
+                  onPressed: () => widget.onApply?.call(_unselectedTopics),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue.shade100,
+                  ),
+                  child: Text(S.of(context).ok)),
             ],
           )
         ],

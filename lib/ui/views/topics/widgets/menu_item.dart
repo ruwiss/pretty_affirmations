@@ -15,34 +15,27 @@ class TopicsMenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SkeletonLoader(
-      loading: skeletonEnabled,
-      startColor: context.colors.surface,
-      endColor: context.colors.tertiary,
-      child: skeletonEnabled
-          ? _view(context)
-          : InkWell(
-              onTap: disabled ? null : () {},
-              borderRadius: BorderRadius.circular(8),
-              highlightColor: context.colors.tertiary.withOpacity(.2),
-              radius: 200,
-              child: Ink(
-                padding: const EdgeInsets.only(bottom: 5),
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: switch (item.imageType) {
-                      MenuItemImageType.asset => AssetImage(item.imageUrl),
-                      MenuItemImageType.network =>
-                        CachedNetworkImageProvider(item.imageUrl),
-                    },
-                    fit: BoxFit.cover,
-                  ),
-                  borderRadius: BorderRadius.circular(8),
+    return InkWell(
+            onTap: disabled ? null : () {},
+            borderRadius: BorderRadius.circular(8),
+            highlightColor: context.colors.tertiary.withOpacity(.2),
+            radius: 200,
+            child: Ink(
+              padding: const EdgeInsets.only(bottom: 5),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: switch (item.imageType) {
+                    MenuItemImageType.asset => AssetImage(item.imageUrl),
+                    MenuItemImageType.network =>
+                      CachedNetworkImageProvider(item.imageUrl),
+                  },
+                  fit: BoxFit.cover,
                 ),
-                child: _view(context),
+                borderRadius: BorderRadius.circular(8),
               ),
+              child: _view(context),
             ),
-    );
+          );
   }
 
   Align _view(BuildContext context) {

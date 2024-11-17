@@ -414,10 +414,10 @@ packages:
     dependency: "direct main"
     description:
       name: hayiqu
-      sha256: "46ad3af1a432edf6f9a57686578ae907de2d2cd264f5a8d6f02dbea271acb6ae"
+      sha256: "5f53509092efa7c8b0aeb9e3e79cb71bf8e6c5aa78bc0f80a7ea9f486a8f3217"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.9"
+    version: "1.1.0"
   http:
     dependency: transitive
     description:
@@ -834,6 +834,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  skeletonizer:
+    dependency: transitive
+    description:
+      name: skeletonizer
+      sha256: "3b202e4fa9c49b017d368fb0e570d4952bcd19972b67b2face071bdd68abbfae"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.2"
   sky_engine:
     dependency: transitive
     description: flutter

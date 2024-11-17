@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:hayiqu/hayiqu.dart';
-import 'package:pretty_affirmations/app/theme.dart';
+import 'package:pretty_affirmations/app/base.dart';
 import 'package:pretty_affirmations/common/extensions/string_extensions.dart';
 import 'package:pretty_affirmations/models/menu_item.dart';
 import 'package:pretty_affirmations/services/api_service.dart';

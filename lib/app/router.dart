@@ -49,7 +49,9 @@ class AppRouter {
           ),
           _buildRoute(
             homeRoute,
-            (context) => HomeViewModel(),
+            (context) {
+              return HomeViewModel()..init(context);
+            },
             const HomeView(),
           ),
           _buildRoute(

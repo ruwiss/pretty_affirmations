@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hayiqu/hayiqu.dart';
 import 'package:pretty_affirmations/common/extensions/string_extensions.dart';
+import 'package:pretty_affirmations/models/affirmation.dart';
 import 'package:pretty_affirmations/services/settings_service.dart';
 import 'package:pretty_affirmations/ui/views/home/colors.dart';
 
@@ -8,6 +9,8 @@ class AppBase extends BaseTheme {
   Locale? locale = getIt<SettingsService>().currentLocale;
 
   String get localeStr => locale.toLocaleStr();
+
+  late final Affirmations affirmations;
 
   void changeLocale(Locale locale) async {
     this.locale = locale;
