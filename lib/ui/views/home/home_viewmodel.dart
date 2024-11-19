@@ -11,9 +11,7 @@ class HomeViewModel extends BaseViewModel {
   final BuildContext context;
   HomeViewModel(this.context, this.affirmationCategory) {
     _init(context);
-    if (affirmationCategory != null) {
-      runBusyFuture(_getAffirmations());
-    }
+    runBusyFuture(_getAffirmations());
   }
 
   final _apiService = getIt.get<ApiService>();

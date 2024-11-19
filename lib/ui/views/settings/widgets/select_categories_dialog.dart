@@ -130,7 +130,7 @@ class _SelectCategoriesDialogState extends State<SelectCategoriesDialog> {
           ),
           trailing: Icon(
             isSelected ? Icons.check_box : Icons.check_box_outline_blank,
-            color: isSelected ? Colors.green : null,
+            color: isSelected ? Colors.blueGrey.shade400 : null,
             size: 28,
           ),
         ),
