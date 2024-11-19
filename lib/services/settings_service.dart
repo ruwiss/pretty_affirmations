@@ -15,7 +15,7 @@ class SettingsService {
   Stream<Locale> get localeStream => _localeController.stream;
 
   final Configuration _config =
-      Configuration.local([AppSettings.schema], schemaVersion: 3);
+      Configuration.local([AppSettings.schema], schemaVersion: 4);
   late final Realm _realm;
   late AppSettings _settings;
 
@@ -62,6 +62,16 @@ class SettingsService {
       _settings.unselectedTopics.clear();
       _settings.unselectedTopics.addAll(topics);
     });
+  }
+
+  void setLastReadAffirmationId(String id) {
+    _realm.write(() {
+      _settings.lastReadAffirmationId = id;
+    });
+  }
+
+  String? getLastReadAffirmationId() {
+    return _settings.lastReadAffirmationId;
   }
 
   // Close the stream controller when no longer needed

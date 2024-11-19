@@ -42,8 +42,10 @@ class ApiService {
   }) async {
     final Iterable<String> categories =
         await getCategories(locale).then((e) => e.map((i) => i.id));
+    final lastReadAffirmationId = _settings.getLastReadAffirmationId();
     final result = await _http.get(
-        '/affirmations.php?lang=$locale&categories=${categories.join(",")}&page=$page');
+      '/affirmations.php?lang=$locale&categories=${categories.join(",")}&page=$page&lastId=$lastReadAffirmationId',
+    );
 
     if (result.hasValue) {
       final Map<String, dynamic> data = result.value!.data;

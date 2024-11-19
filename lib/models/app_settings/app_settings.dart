@@ -7,4 +7,5 @@ class _AppSettings {
   String? localeStr;
   String? countryCode;
   late List<String> unselectedTopics;
+  String? lastReadAffirmationId;
 }
