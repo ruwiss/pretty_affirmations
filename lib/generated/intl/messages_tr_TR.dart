@@ -20,6 +20,9 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'tr_TR';
 
+  static String m0(appUrl) =>
+      "Bu uygulamayı kontrol edin: ${appUrl}\n\nHedeflerinizde tutunmak ve motivasyonunuzu korumak için olumlamalar sağlar.";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "applyInfo": MessageLookupByLibrary.simpleMessage(
@@ -54,6 +57,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "share": MessageLookupByLibrary.simpleMessage("Paylaş"),
         "shareOption": MessageLookupByLibrary.simpleMessage(
             "Uygulamamızı arkadaşlarınız ve yakın çevreniz ile paylaşın ve hayatlarına pozitif dokunuşlar yapın"),
+        "shareText": m0,
         "stories": MessageLookupByLibrary.simpleMessage("Günün Hikayesi"),
         "termsOfUse":
             MessageLookupByLibrary.simpleMessage("Şartlar ve Koşullar"),

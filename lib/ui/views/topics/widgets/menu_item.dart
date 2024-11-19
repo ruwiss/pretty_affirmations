@@ -25,17 +25,34 @@ class TopicsMenuItem extends StatelessWidget {
       child: Ink(
         padding: const EdgeInsets.only(bottom: 5),
         decoration: BoxDecoration(
-          image: DecorationImage(
-            image: switch (item.imageType) {
-              MenuItemImageType.asset => AssetImage(item.imageUrl),
-              MenuItemImageType.network =>
-                CachedNetworkImageProvider(item.imageUrl),
-            },
-            fit: BoxFit.cover,
-          ),
           borderRadius: BorderRadius.circular(8),
         ),
-        child: _view(context),
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: switch (item.imageType) {
+                  MenuItemImageType.asset => FadeInImage(
+                      placeholder:
+                          const AssetImage('assets/images/placeholder.jpeg'),
+                      image: AssetImage(item.imageUrl),
+                      fit: BoxFit.cover,
+                    ),
+                  MenuItemImageType.network => CachedNetworkImage(
+                      imageUrl: item.imageUrl,
+                      fit: BoxFit.cover,
+                      fadeInDuration: const Duration(milliseconds: 500),
+                      placeholder: (context, url) => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                },
+              ),
+            ),
+            _view(context),
+          ],
+        ),
       ),
     );
   }

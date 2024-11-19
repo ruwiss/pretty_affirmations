@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hayiqu/hayiqu.dart';
 import 'package:pretty_affirmations/app/base.dart';
+import 'package:pretty_affirmations/common/common.dart';
+import 'package:pretty_affirmations/generated/l10n.dart';
 import 'package:pretty_affirmations/models/affirmation.dart';
 import 'package:pretty_affirmations/models/favourites/favourites.dart';
 import 'package:pretty_affirmations/models/menu_item.dart';
 import 'package:pretty_affirmations/services/api_service.dart';
 import 'package:pretty_affirmations/services/favourites_service.dart';
 import 'package:pretty_affirmations/services/settings_service.dart';
+import 'package:share_plus/share_plus.dart';
 
 class HomeViewModel extends BaseViewModel {
   final MenuItem? affirmationCategory;
@@ -23,8 +26,8 @@ class HomeViewModel extends BaseViewModel {
   final PageController _pageController = PageController();
   PageController get pageController => _pageController;
 
-  late Affirmations _affirmations;
-  Affirmations get affirmations => _affirmations;
+  Affirmations? _affirmations;
+  Affirmations get affirmations => _affirmations!;
 
   late final String _localeStr;
   bool _isLoading = false;
@@ -40,8 +43,8 @@ class HomeViewModel extends BaseViewModel {
   }
 
   void _clearAffirmations() {
-    _affirmations.data.clear();
-    _affirmations.total = 0;
+    _affirmations?.data.clear();
+    _affirmations?.total = 0;
   }
 
   Future<void> _getAffirmations({int page = 0}) async {
@@ -62,17 +65,17 @@ class HomeViewModel extends BaseViewModel {
       return;
     }
 
-    _affirmations
+    _affirmations!
       ..data.addAll(affirmations.data)
       ..page = affirmations.page
-      ..total = _affirmations.total + affirmations.total;
+      ..total = _affirmations!.total + affirmations.total;
 
     _isLoading = false;
     notifyListeners();
   }
 
   bool showGoToFirstPageButton(index) =>
-      _hasReachedEnd && index >= _affirmations.data.length - 1;
+      _hasReachedEnd && index >= _affirmations!.data.length - 1;
 
   void goToFirstPage() {
     _pageController.animateToPage(
@@ -83,10 +86,10 @@ class HomeViewModel extends BaseViewModel {
   }
 
   void onPageIndexChanged(int index) async {
-    if (!_hasReachedEnd && index >= _affirmations.data.length - 2) {
-      await _getAffirmations(page: _affirmations.page + 1);
+    if (!_hasReachedEnd && index >= _affirmations!.data.length - 2) {
+      await _getAffirmations(page: _affirmations!.page + 1);
     }
-    final currentAffirmation = _affirmations.data[index];
+    final currentAffirmation = _affirmations!.data[index];
     _settingsService.setLastReadAffirmationId(
       currentAffirmation.id,
       categoryKey: affirmationCategory?.categoryKey,
@@ -100,6 +103,14 @@ class HomeViewModel extends BaseViewModel {
 
   bool isFavourite(Affirmation affirmation) =>
       _favourites.any((favourite) => favourite.id == affirmation.id);
+
+  void onShareTap(BuildContext context, Affirmation affirmation) {
+    Share.share("""
+"${affirmation.content}"
+
+${S.of(context).shareText(kAppUrl)}
+""");
+  }
 
   @override
   void dispose() {

@@ -309,6 +309,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Check out this app: {appUrl}\n\nIt provides affirmations to stick to your goals and stay motivated.`
+  String shareText(String appUrl) {
+    return Intl.message(
+      'Check out this app: $appUrl\n\nIt provides affirmations to stick to your goals and stay motivated.',
+      name: 'shareText',
+      desc: '',
+      args: [appUrl],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

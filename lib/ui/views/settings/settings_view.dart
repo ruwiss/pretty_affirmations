@@ -6,6 +6,8 @@ import 'package:pretty_affirmations/ui/views/settings/widgets/select_categories_
 import 'package:pretty_affirmations/ui/widgets/appbar_widget.dart';
 import 'package:pretty_affirmations/ui/widgets/bg_image.dart';
 
+import 'settings_viewmodel.dart';
+
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
 
@@ -23,6 +25,7 @@ class SettingsView extends StatelessWidget {
   }
 
   Center _settingsView(BuildContext context) {
+    final viewModel = context.read<SettingsViewmodel>();
     return Center(
       child: ListView(
         children: [
@@ -46,13 +49,13 @@ class SettingsView extends StatelessWidget {
           ),
           _settingOption(
             context,
-            onTap: () {},
+            onTap: viewModel.onLeaveComment,
             title: S.of(context).leaveComment,
             description: S.of(context).leaveCommentOption,
           ),
           _settingOption(
             context,
-            onTap: () {},
+            onTap: () => viewModel.onShareTap(context),
             title: S.of(context).share,
             description: S.of(context).shareOption,
           ),

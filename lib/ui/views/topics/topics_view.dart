@@ -20,14 +20,13 @@ class TopicsView extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Consumer<TopicsViewmodel>(
           builder: (context, value, child) {
-            return Skeletonizer(
-              enabled: value.isBusy,
+            return AnimatedOpacity(
+              opacity: value.isBusy ? 0 : 1,
+              duration: const Duration(milliseconds: 500),
               child: TopicsMenuGrid(
                 itemCount: value.menuItems.length + 1,
                 itemBuilder: (context, i) {
-                  if (value.isBusy) {
-                    return const Skeleton.replace(child: Placeholder());
-                  } else if (i != value.menuItems.length) {
+                  if (i != value.menuItems.length) {
                     final MenuItem item = value.menuItems[i];
                     return TopicsMenuItem(
                       item: item,

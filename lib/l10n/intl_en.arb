@@ -40,5 +40,13 @@
     "ok": "Apply",
     "applyInfo": "Please restart the application for the changes to take effect",
     "noFavourites": "You have no favourites",
-    "noAffirmations": "There are no affirmations in this category yet"
+    "noAffirmations": "There are no affirmations in this category yet",
+    "shareText": "Check out this app: {appUrl}\n\nIt provides affirmations to stick to your goals and stay motivated.",
+    "@shareText": {
+        "placeholders": {
+            "appUrl": {
+                "type": "String"
+            }
+        }
+    }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hayiqu/hayiqu.dart';
 import 'package:pretty_affirmations/generated/l10n.dart';
-import 'package:pretty_affirmations/models/favourite_item.dart';
 import 'package:pretty_affirmations/models/favourites/favourites.dart';
 import 'package:pretty_affirmations/ui/views/favourites/favourites_viewmodel.dart';
 import 'package:pretty_affirmations/ui/widgets/appbar_widget.dart';
@@ -31,23 +30,19 @@ class FavouriesView extends StatelessWidget {
                 itemCount: value.favourites.length,
                 itemBuilder: (context, index) {
                   final favourite = value.favourites[index];
-                  return ListTile(
-                    title: Text(
-                      favourite.content,
-                      style: const TextStyle(fontSize: 18),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    subtitle: Text(
-                      favourite.dateTime.yearAbbrMonthDay,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w300,
-                        color: context.colors.primaryFixed,
-                      ),
-                    ),
-                    trailing: _actionButtons(context,
-                        value: value, favourite: favourite),
+                  return TweenAnimationBuilder<double>(
+                    tween: Tween(begin: 1.0, end: 0.0),
+                    duration: Duration(milliseconds: 500 + (index * 100)),
+                    builder: (context, value, child) {
+                      return Transform.translate(
+                        offset: Offset(0, value * 50),
+                        child: Opacity(
+                          opacity: 1 - value,
+                          child: child,
+                        ),
+                      );
+                    },
+                    child: _favouriteTile(favourite, context, value),
                   );
                 },
               );
@@ -55,6 +50,30 @@ class FavouriesView extends StatelessWidget {
           },
         ),
       ),
+    );
+  }
+
+  Widget _favouriteTile(
+    Favourites favourite,
+    BuildContext context,
+    FavouritesViewmodel value,
+  ) {
+    return ListTile(
+      title: Text(
+        favourite.content,
+        style: const TextStyle(fontSize: 18),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ),
+      subtitle: Text(
+        favourite.dateTime.yearAbbrMonthDay,
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w300,
+          color: context.colors.primaryFixed,
+        ),
+      ),
+      trailing: _actionButtons(context, value: value, favourite: favourite),
     );
   }
 
@@ -75,7 +94,7 @@ class FavouriesView extends StatelessWidget {
         if (choice == FavouritesPopupEntry.delete) {
           value.onDeleteTap(favourite);
         } else if (choice == FavouritesPopupEntry.share) {
-          value.onShareTap(favourite);
+          value.onShareTap(context, favourite);
         }
       },
       menuPadding: EdgeInsets.zero,

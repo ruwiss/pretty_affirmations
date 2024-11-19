@@ -40,5 +40,13 @@
     "ok": "应用",
     "applyInfo": "请重新启动应用以使更改生效",
     "noFavourites": "您还没有收藏",
-    "noAffirmations": "此类别中还没有肯定句"
+    "noAffirmations": "此类别中还没有肯定句",
+    "shareText": "看看这个应用程序：{appUrl}\n\n它提供肯定语，帮助您坚持目标并保持动力。",
+    "@shareText": {
+        "placeholders": {
+            "appUrl": {
+                "type": "String"
+            }
+        }
+    }
 }

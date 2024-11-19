@@ -40,5 +40,13 @@
     "ok": "Tamam",
     "applyInfo": "Değişikliklerin geçerli olabilmesi için uygulamayı yeniden başlatınız",
     "noFavourites": "Favorileriniz yok",
-    "noAffirmations": "Bu kategoriye ait olumlamalar henüz yok"
+    "noAffirmations": "Bu kategoriye ait olumlamalar henüz yok",
+    "shareText": "Bu uygulamayı kontrol edin: {appUrl}\n\nHedeflerinizde tutunmak ve motivasyonunuzu korumak için olumlamalar sağlar.",
+    "@shareText": {
+        "placeholders": {
+            "appUrl": {
+                "type": "String"
+            }
+        }
+    }
 }

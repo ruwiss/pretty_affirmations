@@ -35,7 +35,8 @@ class HomeView extends StatelessWidget {
                         viewModel: value,
                         isFavourite: value.isFavourite(affirmation),
                         onLikeTap: () => value.toggleFavourite(affirmation),
-                        onShareTap: () {},
+                        onShareTap: () =>
+                            value.onShareTap(context, affirmation),
                       );
                     },
                   ),

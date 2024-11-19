@@ -45,7 +45,7 @@ class AppRouter {
           _buildRoute(
             favouritesRoute,
             (context, extra) => FavouritesViewmodel(),
-            FavouriesView(),
+            const FavouriesView(),
           ),
           _buildRoute(
             topicsRoute,
