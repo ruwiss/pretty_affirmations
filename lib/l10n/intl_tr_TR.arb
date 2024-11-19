@@ -38,5 +38,7 @@
     "selectCategoryOption": "Uygulamada görmek istediğiniz kategorileri seçin. Sizin için istediğiniz türde içerikler göstereceğiz",
     "cancel": "İptal",
     "ok": "Tamam",
-    "applyInfo": "Değişikliklerin geçerli olabilmesi için uygulamayı yeniden başlatınız"
+    "applyInfo": "Değişikliklerin geçerli olabilmesi için uygulamayı yeniden başlatınız",
+    "noFavourites": "Favorileriniz yok",
+    "noAffirmations": "Bu kategoriye ait olumlamalar henüz yok"
 }

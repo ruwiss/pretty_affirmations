@@ -12,11 +12,17 @@ class PostPage extends StatefulWidget {
   final int index;
   final Affirmation affirmation;
   final HomeViewModel viewModel;
+  final VoidCallback? onLikeTap;
+  final VoidCallback? onShareTap;
+  final bool isFavourite;
   const PostPage({
     super.key,
     required this.index,
     required this.affirmation,
     required this.viewModel,
+    this.onLikeTap,
+    this.onShareTap,
+    this.isFavourite = false,
   });
 
   @override
@@ -89,12 +95,13 @@ class _PostPageState extends State<PostPage>
                     ),
                   ),
                   ActionButtons(
-                    onLikeTap: () {},
-                    onShareTap: () {},
+                    onLikeTap: widget.onLikeTap,
+                    onShareTap: widget.onShareTap,
                     showFirstPageButton:
                         widget.viewModel.showGoToFirstPageButton(widget.index),
                     onFirstPageTap: widget.viewModel.goToFirstPage,
                     reversedColor: _isReversed,
+                    isFavourite: widget.isFavourite,
                   ),
                 ],
               ),

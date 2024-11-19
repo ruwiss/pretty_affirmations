@@ -1,4 +1,4 @@
-package com.example.pretty_affirmations
+package com.prettycat.affirmations
 
 import io.flutter.embedding.android.FlutterActivity
 

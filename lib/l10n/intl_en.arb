@@ -38,5 +38,7 @@
     "selectCategoryOption": "Select the categories you'd like to see in the app. We'll show you content tailored to your preferences",
     "cancel": "Cancel",
     "ok": "Apply",
-    "applyInfo": "Please restart the application for the changes to take effect"
+    "applyInfo": "Please restart the application for the changes to take effect",
+    "noFavourites": "You have no favourites",
+    "noAffirmations": "There are no affirmations in this category yet"
 }

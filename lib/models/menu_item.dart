@@ -1,3 +1,4 @@
+import 'package:pretty_affirmations/common/common.dart';
 import 'package:pretty_affirmations/generated/l10n.dart';
 
 enum MenuItemImageType { network, asset }
@@ -21,7 +22,7 @@ final class MenuItem {
       : id = map['id'],
         categoryKey = map['category_key'],
         imageUrl =
-            'https://api.caltikoc.com.tr/affirmations/${map['image_url']}',
+            '$kBaseUrl${map['image_url']}',
         name = map['name'],
         imageType = MenuItemImageType.network;
 
@@ -31,4 +32,5 @@ final class MenuItem {
         imageUrl = 'assets/images/menu/14.png',
         name = S.current.comingSoon,
         imageType = MenuItemImageType.asset;
+        
 }

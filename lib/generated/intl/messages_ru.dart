@@ -35,6 +35,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Оставить комментарий"),
         "leaveCommentOption": MessageLookupByLibrary.simpleMessage(
             "Оставьте комментарий о приложении для разработчиков и помогите улучшить его"),
+        "noAffirmations": MessageLookupByLibrary.simpleMessage(
+            "В этой категории пока нет утверждений"),
+        "noFavourites":
+            MessageLookupByLibrary.simpleMessage("У вас нет избранного"),
         "ok": MessageLookupByLibrary.simpleMessage("Применить"),
         "privacyPolicy":
             MessageLookupByLibrary.simpleMessage("Политика конфиденциальности"),

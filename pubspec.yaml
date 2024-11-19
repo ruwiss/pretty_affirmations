@@ -39,6 +39,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   realm: ^20.0.0
+  share_plus: ^10.1.2
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   flutter_test:

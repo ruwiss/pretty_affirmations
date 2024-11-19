@@ -34,6 +34,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "leaveComment": MessageLookupByLibrary.simpleMessage("Yorum Bırak"),
         "leaveCommentOption": MessageLookupByLibrary.simpleMessage(
             "Biz geliştiricilere uygulama hakkında bir yorum bırakın ve uygulamamızın gelişmesine katkı sağlayın"),
+        "noAffirmations": MessageLookupByLibrary.simpleMessage(
+            "Bu kategoriye ait olumlamalar henüz yok"),
+        "noFavourites":
+            MessageLookupByLibrary.simpleMessage("Favorileriniz yok"),
         "ok": MessageLookupByLibrary.simpleMessage("Tamam"),
         "privacyPolicy":
             MessageLookupByLibrary.simpleMessage("Gizlilik Politikası"),

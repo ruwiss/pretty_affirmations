@@ -7,6 +7,7 @@ class AppVectors {
   static const String title = 'assets/vectors/title.svg';
   static const String splashBgLogo = 'assets/vectors/splash_bg_logo.svg';
   static const String like = 'assets/vectors/like.svg';
+  static const String liked = 'assets/vectors/liked.svg';
   static const String quote = 'assets/vectors/quotes.svg';
   static const String comment = 'assets/vectors/comment.svg';
   static const String share = 'assets/vectors/share.svg';

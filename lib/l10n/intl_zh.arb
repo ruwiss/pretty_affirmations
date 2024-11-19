@@ -38,5 +38,7 @@
     "selectCategoryOption": "请选择您希望在应用中看到的分类。我们将为您推荐符合您喜好的内容",
     "cancel": "取消",
     "ok": "应用",
-    "applyInfo": "请重新启动应用以使更改生效"
+    "applyInfo": "请重新启动应用以使更改生效",
+    "noFavourites": "您还没有收藏",
+    "noAffirmations": "此类别中还没有肯定句"
 }

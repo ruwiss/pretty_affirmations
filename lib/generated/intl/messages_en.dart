@@ -34,6 +34,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "leaveComment": MessageLookupByLibrary.simpleMessage("Leave a Comment"),
         "leaveCommentOption": MessageLookupByLibrary.simpleMessage(
             "Leave a comment about the app for us developers and contribute to the improvement of our application"),
+        "noAffirmations": MessageLookupByLibrary.simpleMessage(
+            "There are no affirmations in this category yet"),
+        "noFavourites":
+            MessageLookupByLibrary.simpleMessage("You have no favourites"),
         "ok": MessageLookupByLibrary.simpleMessage("Apply"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
         "privacyPolicyOption": MessageLookupByLibrary.simpleMessage(

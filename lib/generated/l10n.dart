@@ -289,6 +289,26 @@ class S {
       args: [],
     );
   }
+
+  /// `You have no favourites`
+  String get noFavourites {
+    return Intl.message(
+      'You have no favourites',
+      name: 'noFavourites',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There are no affirmations in this category yet`
+  String get noAffirmations {
+    return Intl.message(
+      'There are no affirmations in this category yet',
+      name: 'noAffirmations',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

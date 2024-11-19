@@ -8,12 +8,16 @@ class ActionButton extends StatelessWidget {
   final String? svg;
   final IconData? icon;
   final bool reversedColor;
+  final Color? color;
+  final Color? colorReversed;
   const ActionButton({
     super.key,
     this.svg,
     this.icon,
     this.onTap,
     this.reversedColor = false,
+    this.color,
+    this.colorReversed,
   });
 
   @override
@@ -24,8 +28,9 @@ class ActionButton extends StatelessWidget {
         icon: Icon(
           icon,
           size: 30,
-          color:
-              reversedColor ? context.colors.surface : context.colors.onSurface,
+          color: reversedColor
+              ? colorReversed ?? context.colors.surface
+              : color ?? context.colors.onSurface,
         ),
       );
     } else {
@@ -35,8 +40,10 @@ class ActionButton extends StatelessWidget {
         svgWidth: 30,
         radius: 25,
         colorFilter: reversedColor
-            ? context.colors.surface.withSrcInFilter()
-            : context.colors.onSurface.withSrcInFilter(),
+            ? colorReversed?.withSrcInFilter() ??
+                context.colors.surface.withSrcInFilter()
+            : color?.withSrcInFilter() ??
+                context.colors.onSurface.withSrcInFilter(),
       );
     }
   }
@@ -48,6 +55,7 @@ class ActionButtons extends StatelessWidget {
   final VoidCallback? onFirstPageTap;
   final bool reversedColor;
   final bool showFirstPageButton;
+  final bool isFavourite;
   const ActionButtons({
     super.key,
     this.onLikeTap,
@@ -55,6 +63,7 @@ class ActionButtons extends StatelessWidget {
     this.onFirstPageTap,
     this.reversedColor = false,
     this.showFirstPageButton = false,
+    this.isFavourite = false,
   });
 
   @override
@@ -73,9 +82,10 @@ class ActionButtons extends StatelessWidget {
             const Gap(10),
           ],
           ActionButton(
-            svg: AppVectors.like,
+            svg: isFavourite ? AppVectors.liked : AppVectors.like,
             onTap: onLikeTap,
             reversedColor: reversedColor,
+            color: isFavourite ? Colors.red : null,
           ),
           const Gap(10),
           ActionButton(

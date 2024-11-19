@@ -10,32 +10,48 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeViewModel>(builder: (context, value, child) {
-      return Scaffold(
-        appBar: AppBarWidget(
-          title: value.affirmationCategory?.name ?? S.of(context).flow,
-          transparentBg: true,
-        ),
-        extendBodyBehindAppBar: true,
-        body: !value.isBusy && value.affirmations.data.isEmpty
-            ? const Center(child: Icon(Icons.note, size: 150))
-            : Skeletonizer(
-                enabled: value.isBusy,
-                child: PageView.builder(
-                  controller: value.pageController,
-                  pageSnapping: true,
-                  onPageChanged: value.onPageIndexChanged,
-                  itemCount: value.affirmations.data.length,
-                  itemBuilder: (context, index) {
-                    return PostPage(
-                      index: index,
-                      affirmation: value.affirmations.data[index],
-                      viewModel: value,
-                    );
-                  },
+    return Consumer<HomeViewModel>(
+      builder: (context, value, child) {
+        return Scaffold(
+          appBar: AppBarWidget(
+            title: value.affirmationCategory?.name ?? S.of(context).flow,
+            transparentBg: true,
+          ),
+          extendBodyBehindAppBar: true,
+          body: !value.isBusy && value.affirmations.data.isEmpty
+              ? _noAffirmationsView(context)
+              : Skeletonizer(
+                  enabled: value.isBusy,
+                  child: PageView.builder(
+                    controller: value.pageController,
+                    pageSnapping: true,
+                    onPageChanged: value.onPageIndexChanged,
+                    itemCount: value.affirmations.data.length,
+                    itemBuilder: (context, index) {
+                      final affirmation = value.affirmations.data[index];
+                      return PostPage(
+                        index: index,
+                        affirmation: affirmation,
+                        viewModel: value,
+                        isFavourite: value.isFavourite(affirmation),
+                        onLikeTap: () => value.toggleFavourite(affirmation),
+                        onShareTap: () {},
+                      );
+                    },
+                  ),
                 ),
-              ),
-      );
-    });
+        );
+      },
+    );
+  }
+
+  Center _noAffirmationsView(BuildContext context) {
+    return Center(
+      child: Text(
+        S.of(context).noAffirmations,
+        textAlign: TextAlign.center,
+        style: const TextStyle(fontSize: 26),
+      ),
+    );
   }
 }

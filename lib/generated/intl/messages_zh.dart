@@ -33,6 +33,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "leaveComment": MessageLookupByLibrary.simpleMessage("留下评论"),
         "leaveCommentOption":
             MessageLookupByLibrary.simpleMessage("为我们开发者留下关于应用的评论，帮助我们改进应用"),
+        "noAffirmations": MessageLookupByLibrary.simpleMessage("此类别中还没有肯定句"),
+        "noFavourites": MessageLookupByLibrary.simpleMessage("您还没有收藏"),
         "ok": MessageLookupByLibrary.simpleMessage("应用"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("隐私政策"),
         "privacyPolicyOption":
