@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:hayiqu/hayiqu.dart';
+import 'package:pretty_affirmations/models/menu_item.dart';
 import 'package:pretty_affirmations/ui/layouts/app_layout.dart';
 import 'package:pretty_affirmations/ui/views/favourites/favouries_view.dart';
 import 'package:pretty_affirmations/ui/views/favourites/favourites_viewmodel.dart';
@@ -31,37 +32,39 @@ class AppRouter {
     initialLocation: _initialRoute,
     navigatorKey: _routerKey,
     routes: [
-      _buildRoute(
-          splashRoute, (context) => SplashViewmodel(), const SplashView()),
+      _buildRoute(splashRoute, (context, extra) => SplashViewmodel(),
+          const SplashView()),
       ShellRoute(
-        builder: (context, state, child) =>
-            AppLayout(location: state.matchedLocation, child: child),
+        builder: (context, state, child) {
+          return AppLayout(
+            location: state.matchedLocation,
+            child: child,
+          );
+        },
         routes: [
           _buildRoute(
             favouritesRoute,
-            (context) => FavouritesViewmodel(),
+            (context, extra) => FavouritesViewmodel(),
             FavouriesView(),
           ),
           _buildRoute(
             topicsRoute,
-            (context) => TopicsViewmodel()..init(context),
+            (context, extra) => TopicsViewmodel()..init(context),
             const TopicsView(),
           ),
           _buildRoute(
             homeRoute,
-            (context) {
-              return HomeViewModel()..init(context);
-            },
+            (context, extra) => HomeViewModel(context, extra as MenuItem?),
             const HomeView(),
           ),
           _buildRoute(
             storiesRoute,
-            (context) => StoriesViewmodel()..init(context),
+            (context, extra) => StoriesViewmodel()..init(context),
             const StoriesView(),
           ),
           _buildRoute(
             settingsRoute,
-            (context) => SettingsViewmodel(),
+            (context, extra) => SettingsViewmodel(),
             const SettingsView(),
           ),
         ],
@@ -71,14 +74,14 @@ class AppRouter {
 
   static GoRoute _buildRoute<T extends ChangeNotifier>(
     String path,
-    T Function(BuildContext) createViewModel,
+    T Function(BuildContext, Object?) createViewModel,
     Widget child,
   ) {
     return GoRoute(
       path: path,
       pageBuilder: (context, state) => CustomTransitionPage(
         child: ChangeNotifierProvider<T>(
-          create: createViewModel,
+          create: (context) => createViewModel(context, state.extra),
           child: child,
         ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) =>

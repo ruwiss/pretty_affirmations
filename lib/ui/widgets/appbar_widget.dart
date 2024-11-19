@@ -15,18 +15,17 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     final statusbarHeight = MediaQuery.of(context).viewPadding.top;
     return Container(
       color: transparentBg ? Colors.transparent : context.colors.surface,
+      constraints: const BoxConstraints(maxHeight: 115),
       padding: EdgeInsets.only(
           top: statusbarHeight + 15, bottom: 15, left: 60, right: 60),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
           color: context.colors.primary,
           borderRadius: BorderRadius.circular(20),
         ),
-        child: Text(
-          title,
-          textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 26),
+        child: FittedBox(
+          child: Text(title, textAlign: TextAlign.center),
         ),
       ),
     );

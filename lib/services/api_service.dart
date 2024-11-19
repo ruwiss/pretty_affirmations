@@ -39,12 +39,21 @@ class ApiService {
   Future<Affirmations?> getAffirmations({
     int page = 0,
     required String locale,
+    String? categoryFilter,
   }) async {
-    final Iterable<String> categories =
-        await getCategories(locale).then((e) => e.map((i) => i.id));
+    if (categoryFilter == null) {
+      final Iterable<String> categories =
+          await getCategories(locale).then((e) => e.map((i) => i.id));
+      categoryFilter = categories.join(",");
+    }
+
     final lastReadAffirmationId = _settings.getLastReadAffirmationId();
+
+    final String lastIdParam =
+        lastReadAffirmationId != null ? '&lastId=$lastReadAffirmationId' : '';
+
     final result = await _http.get(
-      '/affirmations.php?lang=$locale&categories=${categories.join(",")}&page=$page&lastId=$lastReadAffirmationId',
+      '/affirmations.php?lang=$locale&categories=$categoryFilter&page=$page$lastIdParam',
     );
 
     if (result.hasValue) {

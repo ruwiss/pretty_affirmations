@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:hayiqu/hayiqu.dart';
+import 'package:pretty_affirmations/app/router.dart';
 import 'package:pretty_affirmations/common/common.dart';
 import 'package:pretty_affirmations/ui/widgets/splash_svg_button.dart';
 
 class AppLayout extends StatelessWidget {
   final Widget child;
   final String location;
-  const AppLayout({super.key, required this.child, required this.location});
+  const AppLayout({
+    super.key,
+    required this.child,
+    required this.location,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +48,7 @@ class AppLayout extends StatelessWidget {
   Widget _menuButton(BuildContext context,
       {required String svg, required String route}) {
     final bool isEnabled = location.startsWith(route);
-    final bool isHome = route == '/home';
+    final bool isHome = route == AppRouter.homeRoute;
     return SplashSvgButton(
       onTap: () => context.go(route),
       svg: svg,

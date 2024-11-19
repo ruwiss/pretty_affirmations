@@ -20,7 +20,8 @@ final class MenuItem {
   MenuItem.fromMap(Map<String, dynamic> map)
       : id = map['id'],
         categoryKey = map['category_key'],
-        imageUrl = 'https://api.caltikoc.com.tr/${map['image_url']}',
+        imageUrl =
+            'https://api.caltikoc.com.tr/affirmations/${map['image_url']}',
         name = map['name'],
         imageType = MenuItemImageType.network;
 

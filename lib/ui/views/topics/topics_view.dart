@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hayiqu/hayiqu.dart';
+import 'package:pretty_affirmations/app/router.dart';
 import 'package:pretty_affirmations/generated/l10n.dart';
 import 'package:pretty_affirmations/models/menu_item.dart';
 import 'package:pretty_affirmations/ui/views/topics/topics_viewmodel.dart';
@@ -25,12 +26,15 @@ class TopicsView extends StatelessWidget {
                 itemCount: value.menuItems.length + 1,
                 itemBuilder: (context, i) {
                   if (value.isBusy) {
-                    return const Skeleton.replace(
-                      child: Placeholder(),
-                    );
+                    return const Skeleton.replace(child: Placeholder());
                   } else if (i != value.menuItems.length) {
                     final MenuItem item = value.menuItems[i];
-                    return TopicsMenuItem(item: item);
+                    return TopicsMenuItem(
+                      item: item,
+                      onTap: () {
+                        context.go(AppRouter.homeRoute, extra: item);
+                      },
+                    );
                   } else {
                     return TopicsMenuItem(
                       item: MenuItem.comingSoon(),
