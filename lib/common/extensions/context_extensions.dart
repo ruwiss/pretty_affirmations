@@ -13,7 +13,7 @@ extension GoRouterExtension on GoRouter {
   }
 }
 
-extension ResponsiveValue on BuildContext {
+extension ResponsiveExtension on BuildContext {
   double responsive(num value) {
     final width = MediaQuery.of(this).size.width;
     final height = MediaQuery.of(this).size.height;

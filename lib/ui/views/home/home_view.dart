@@ -14,7 +14,6 @@ class HomeView extends StatelessWidget {
       builder: (context, viewModel, _) => Scaffold(
         appBar: AppBarWidget(
           title: viewModel.affirmationCategory?.name ?? S.of(context).flow,
-          transparentBg: true,
         ),
         extendBodyBehindAppBar: true,
         body: _buildBody(context, viewModel),
