@@ -6,40 +6,41 @@ import 'package:pretty_affirmations/models/app_settings/app_settings.dart';
 import 'package:realm/realm.dart';
 
 class SettingsService {
-  SettingsService() {
-    _init();
-  }
-  // StreamController to notify listeners about locale changes
+  late final Realm _realm;
+  late AppSettings _settings;
   final _localeController = StreamController<Locale>.broadcast();
-
-  // Expose a stream that listeners can subscribe to
-  Stream<Locale> get localeStream => _localeController.stream;
-
   final Configuration _config = Configuration.local(
     [AppSettings.schema, AffirmationLastReads.schema],
     schemaVersion: 1,
   );
-  late final Realm _realm;
-  late AppSettings _settings;
 
-  void _init() {
+  Stream<Locale> get localeStream => _localeController.stream;
+
+  SettingsService() {
+    _initializeRealm();
+  }
+
+  void _initializeRealm() {
     _realm = Realm(_config);
-    _settings = _realm.all<AppSettings>().isNotEmpty
+    _settings = _getOrCreateSettings();
+  }
+
+  AppSettings _getOrCreateSettings() {
+    return _realm.all<AppSettings>().isNotEmpty
         ? _realm.all<AppSettings>().single
         : _createDefaultSettings();
   }
 
   AppSettings _createDefaultSettings() {
     final settings = AppSettings();
-    _realm.write(() {
-      _realm.add(settings);
-    });
+    _realm.write(() => _realm.add(settings));
     return settings;
   }
 
   Locale? get currentLocale {
-    if (_settings.localeStr != null) {
-      return Locale(_settings.localeStr!, _settings.countryCode);
+    final localeStr = _settings.localeStr;
+    if (localeStr != null) {
+      return Locale(localeStr, _settings.countryCode);
     }
     return null;
   }
@@ -49,48 +50,49 @@ class SettingsService {
       _settings.localeStr = locale.languageCode;
       _settings.countryCode = locale.countryCode;
     });
-    await S.load(locale);
 
-    // Notify listeners that the locale has changed
+    await S.load(locale);
     _localeController.add(locale);
+
     return locale;
   }
 
-  List<String> getUnselectedTopics() {
-    return _settings.unselectedTopics.toList();
-  }
+  List<String> getUnselectedTopics() => _settings.unselectedTopics.toList();
 
   void setUnselectedTopics(List<String> topics) {
     _realm.write(() {
-      _settings.unselectedTopics.clear();
-      _settings.unselectedTopics.addAll(topics);
+      _settings.unselectedTopics
+        ..clear()
+        ..addAll(topics);
     });
   }
 
   void setLastReadAffirmationId(String id, {String? categoryKey}) {
-    categoryKey ??= 'all';
-    final results = _realm
-        .all<AffirmationLastReads>()
-        .query(r'categoryKey == $0', [categoryKey]);
+    final key = categoryKey ?? 'all';
+    final results = _getLastReadsByCategory(key);
 
     _realm.write(() {
       if (results.isNotEmpty) {
         results.single.lastReadId = id;
       } else {
-        _realm.add(AffirmationLastReads(id, categoryKey: categoryKey!));
+        _realm.add(AffirmationLastReads(id, categoryKey: key));
       }
     });
   }
 
   String? getLastReadAffirmationId({String? categoryKey}) {
-    categoryKey ??= 'all';
-    final result = _realm
-        .all<AffirmationLastReads>()
-        .query(r'categoryKey == $0', [categoryKey]);
+    final key = categoryKey ?? 'all';
+    final result = _getLastReadsByCategory(key);
     return result.isEmpty ? null : result.single.lastReadId;
   }
 
-  // Close the stream controller when no longer needed
+  RealmResults<AffirmationLastReads> _getLastReadsByCategory(
+      String categoryKey) {
+    return _realm
+        .all<AffirmationLastReads>()
+        .query(r'categoryKey == $0', [categoryKey]);
+  }
+
   void dispose() {
     _localeController.close();
   }

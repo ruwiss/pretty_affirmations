@@ -28,6 +28,13 @@ class MyApp extends StatelessWidget {
             routerConfig: AppRouter.router,
             theme: value.lightTheme,
             locale: value.locale,
+            builder: (context, child) {
+              return MediaQuery(
+                data: MediaQuery.of(context)
+                    .copyWith(textScaler: const TextScaler.linear(1.0)),
+                child: child!,
+              );
+            },
             localizationsDelegates: const [
               S.delegate,
               GlobalMaterialLocalizations.delegate,

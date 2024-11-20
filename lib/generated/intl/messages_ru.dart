@@ -29,6 +29,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Пожалуйста, перезапустите приложение, чтобы изменения вступили в силу"),
         "cancel": MessageLookupByLibrary.simpleMessage("Отмена"),
         "comingSoon": MessageLookupByLibrary.simpleMessage("Скоро будет..."),
+        "delete": MessageLookupByLibrary.simpleMessage("Удалить"),
         "favourites": MessageLookupByLibrary.simpleMessage("Избранное"),
         "flow": MessageLookupByLibrary.simpleMessage("Поток"),
         "language": MessageLookupByLibrary.simpleMessage("Язык"),

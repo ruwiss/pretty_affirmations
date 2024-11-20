@@ -9,6 +9,7 @@ class SplashSvgButton extends StatelessWidget {
   final ColorFilter? colorFilter;
   final EdgeInsets? padding;
   final Function(BuildContext context, Widget child)? builder;
+
   const SplashSvgButton({
     super.key,
     this.onTap,
@@ -20,8 +21,21 @@ class SplashSvgButton extends StatelessWidget {
     this.builder,
   });
 
+  Widget _buildIcon() {
+    return Padding(
+      padding: padding ?? const EdgeInsets.all(18),
+      child: SvgPicture.asset(
+        svg,
+        colorFilter: colorFilter,
+        width: svgWidth,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final icon = _buildIcon();
+
     return Material(
       color: Colors.transparent,
       child: InkResponse(
@@ -30,18 +44,7 @@ class SplashSvgButton extends StatelessWidget {
         hoverColor: Colors.transparent,
         splashColor: Colors.transparent,
         focusColor: Colors.transparent,
-        child: builder != null ? builder!(context, _icon()) : _icon(),
-      ),
-    );
-  }
-
-  Padding _icon() {
-    return Padding(
-      padding: padding ?? const EdgeInsets.all(18),
-      child: SvgPicture.asset(
-        svg,
-        colorFilter: colorFilter,
-        width: svgWidth,
+        child: builder != null ? builder!(context, icon) : icon,
       ),
     );
   }

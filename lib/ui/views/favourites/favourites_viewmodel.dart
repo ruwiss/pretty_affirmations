@@ -33,4 +33,6 @@ class FavouritesViewmodel extends BaseViewModel {
 ${S.of(context).shareText(kAppUrl)}
 """);
   }
+
+  
 }

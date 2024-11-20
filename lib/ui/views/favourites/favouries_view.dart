@@ -5,12 +5,20 @@ import 'package:pretty_affirmations/models/favourites/favourites.dart';
 import 'package:pretty_affirmations/ui/views/favourites/favourites_viewmodel.dart';
 import 'package:pretty_affirmations/ui/widgets/appbar_widget.dart';
 
-enum FavouritesPopupEntry {
-  delete("Kaldır"),
-  share("Paylaş");
+import 'widgets/popup_favourite.dart';
 
-  final String text;
-  const FavouritesPopupEntry(this.text);
+enum FavouritesPopupEntry {
+  delete,
+  share;
+
+  String text(BuildContext context) {
+    switch (this) {
+      case FavouritesPopupEntry.delete:
+        return S.of(context).delete;
+      case FavouritesPopupEntry.share:
+        return S.of(context).share;
+    }
+  }
 }
 
 class FavouriesView extends StatelessWidget {
@@ -59,6 +67,7 @@ class FavouriesView extends StatelessWidget {
     FavouritesViewmodel value,
   ) {
     return ListTile(
+      onTap: () => PopupFavourite.show(context, favourite),
       title: Text(
         favourite.content,
         style: const TextStyle(fontSize: 18),
@@ -103,7 +112,7 @@ class FavouriesView extends StatelessWidget {
           return PopupMenuItem<FavouritesPopupEntry>(
             value: choice,
             child: Text(
-              choice.text,
+              choice.text(context),
               style: const TextStyle(fontSize: 18),
             ),
           );

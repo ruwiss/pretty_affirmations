@@ -15,6 +15,44 @@ class TopicsMenuItem extends StatelessWidget {
     this.onTap,
   });
 
+  Widget _buildImage() {
+    return Positioned.fill(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: switch (item.imageType) {
+          MenuItemImageType.asset => FadeInImage(
+              placeholder: const AssetImage('assets/images/placeholder.jpeg'),
+              image: AssetImage(item.imageUrl),
+              fit: BoxFit.cover,
+            ),
+          MenuItemImageType.network => CachedNetworkImage(
+              imageUrl: item.imageUrl,
+              fit: BoxFit.cover,
+              fadeInDuration: const Duration(milliseconds: 500),
+              placeholder: (context, url) => const Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+        },
+      ),
+    );
+  }
+
+  Widget _buildTitle(BuildContext context) {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Text(
+        item.name.toUpperCase(),
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: context.colors.surface,
+          fontSize: context.width < 400 ? 16 : 19,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -29,44 +67,9 @@ class TopicsMenuItem extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            Positioned.fill(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: switch (item.imageType) {
-                  MenuItemImageType.asset => FadeInImage(
-                      placeholder:
-                          const AssetImage('assets/images/placeholder.jpeg'),
-                      image: AssetImage(item.imageUrl),
-                      fit: BoxFit.cover,
-                    ),
-                  MenuItemImageType.network => CachedNetworkImage(
-                      imageUrl: item.imageUrl,
-                      fit: BoxFit.cover,
-                      fadeInDuration: const Duration(milliseconds: 500),
-                      placeholder: (context, url) => const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    ),
-                },
-              ),
-            ),
-            _view(context),
+            _buildImage(),
+            _buildTitle(context),
           ],
-        ),
-      ),
-    );
-  }
-
-  Align _view(BuildContext context) {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: Text(
-        item.name.toUpperCase(),
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: context.colors.surface,
-          fontSize: 19,
         ),
       ),
     );

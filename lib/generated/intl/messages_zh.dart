@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "applyInfo": MessageLookupByLibrary.simpleMessage("请重新启动应用以使更改生效"),
         "cancel": MessageLookupByLibrary.simpleMessage("取消"),
         "comingSoon": MessageLookupByLibrary.simpleMessage("敬请期待..."),
+        "delete": MessageLookupByLibrary.simpleMessage("删除"),
         "favourites": MessageLookupByLibrary.simpleMessage("收藏"),
         "flow": MessageLookupByLibrary.simpleMessage("流"),
         "language": MessageLookupByLibrary.simpleMessage("语言"),

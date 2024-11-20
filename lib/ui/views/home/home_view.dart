@@ -11,42 +11,59 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<HomeViewModel>(
-      builder: (context, value, child) {
-        return Scaffold(
-          appBar: AppBarWidget(
-            title: value.affirmationCategory?.name ?? S.of(context).flow,
-            transparentBg: true,
-          ),
-          extendBodyBehindAppBar: true,
-          body: !value.isBusy && value.affirmations.data.isEmpty
-              ? _noAffirmationsView(context)
-              : Skeletonizer(
-                  enabled: value.isBusy,
-                  child: PageView.builder(
-                    controller: value.pageController,
-                    pageSnapping: true,
-                    onPageChanged: value.onPageIndexChanged,
-                    itemCount: value.affirmations.data.length,
-                    itemBuilder: (context, index) {
-                      final affirmation = value.affirmations.data[index];
-                      return PostPage(
-                        index: index,
-                        affirmation: affirmation,
-                        viewModel: value,
-                        isFavourite: value.isFavourite(affirmation),
-                        onLikeTap: () => value.toggleFavourite(affirmation),
-                        onShareTap: () =>
-                            value.onShareTap(context, affirmation),
-                      );
-                    },
-                  ),
-                ),
-        );
-      },
+      builder: (context, viewModel, _) => Scaffold(
+        appBar: AppBarWidget(
+          title: viewModel.affirmationCategory?.name ?? S.of(context).flow,
+          transparentBg: true,
+        ),
+        extendBodyBehindAppBar: true,
+        body: _buildBody(context, viewModel),
+      ),
     );
   }
 
-  Center _noAffirmationsView(BuildContext context) {
+  Widget _buildBody(BuildContext context, HomeViewModel viewModel) {
+    if (!viewModel.isBusy && viewModel.affirmations.data.isEmpty) {
+      return _buildEmptyView(context);
+    }
+
+    return _buildAffirmationsList(viewModel);
+  }
+
+  Widget _buildAffirmationsList(HomeViewModel viewModel) {
+    return Skeletonizer(
+      enabled: viewModel.isBusy,
+      child: PageView.builder(
+        controller: viewModel.pageController,
+        pageSnapping: true,
+        onPageChanged: viewModel.onPageIndexChanged,
+        itemCount: viewModel.affirmations.data.length,
+        itemBuilder: (context, index) => _buildAffirmationPage(
+          context,
+          viewModel,
+          index,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAffirmationPage(
+    BuildContext context,
+    HomeViewModel viewModel,
+    int index,
+  ) {
+    final affirmation = viewModel.affirmations.data[index];
+    return PostPage(
+      index: index,
+      affirmation: affirmation,
+      viewModel: viewModel,
+      isFavourite: viewModel.isFavourite(affirmation),
+      onLikeTap: () => viewModel.toggleFavourite(affirmation),
+      onShareTap: () => viewModel.onShareTap(context, affirmation),
+    );
+  }
+
+  Widget _buildEmptyView(BuildContext context) {
     return Center(
       child: Text(
         S.of(context).noAffirmations,

@@ -29,6 +29,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Değişikliklerin geçerli olabilmesi için uygulamayı yeniden başlatınız"),
         "cancel": MessageLookupByLibrary.simpleMessage("İptal"),
         "comingSoon": MessageLookupByLibrary.simpleMessage("YAKINDA..."),
+        "delete": MessageLookupByLibrary.simpleMessage("Kaldır"),
         "favourites": MessageLookupByLibrary.simpleMessage("Favoriler"),
         "flow": MessageLookupByLibrary.simpleMessage("Akış"),
         "language": MessageLookupByLibrary.simpleMessage("Dil"),

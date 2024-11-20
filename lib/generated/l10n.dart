@@ -180,6 +180,16 @@ class S {
     );
   }
 
+  /// `Delete`
+  String get delete {
+    return Intl.message(
+      'Delete',
+      name: 'delete',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Share our app with your friends and close ones and make a positive impact on their lives`
   String get shareOption {
     return Intl.message(

@@ -11,6 +11,36 @@ import 'package:pretty_affirmations/ui/widgets/appbar_widget.dart';
 class TopicsView extends StatelessWidget {
   const TopicsView({super.key});
 
+  Widget _buildMenuItem(BuildContext context, MenuItem item,
+      {bool disabled = false}) {
+    return TopicsMenuItem(
+      item: item,
+      disabled: disabled,
+      onTap:
+          disabled ? null : () => context.go(AppRouter.homeRoute, extra: item),
+    );
+  }
+
+  Widget _buildBody(BuildContext context, TopicsViewmodel viewModel) {
+    return AnimatedOpacity(
+      opacity: viewModel.isBusy ? 0 : 1,
+      duration: const Duration(milliseconds: 500),
+      child: TopicsMenuGrid(
+        itemCount: viewModel.menuItems.length + 1,
+        itemBuilder: (context, index) {
+          if (index == viewModel.menuItems.length) {
+            return _buildMenuItem(
+              context,
+              MenuItem.comingSoon(),
+              disabled: true,
+            );
+          }
+          return _buildMenuItem(context, viewModel.menuItems[index]);
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,31 +49,7 @@ class TopicsView extends StatelessWidget {
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Consumer<TopicsViewmodel>(
-          builder: (context, value, child) {
-            return AnimatedOpacity(
-              opacity: value.isBusy ? 0 : 1,
-              duration: const Duration(milliseconds: 500),
-              child: TopicsMenuGrid(
-                itemCount: value.menuItems.length + 1,
-                itemBuilder: (context, i) {
-                  if (i != value.menuItems.length) {
-                    final MenuItem item = value.menuItems[i];
-                    return TopicsMenuItem(
-                      item: item,
-                      onTap: () {
-                        context.go(AppRouter.homeRoute, extra: item);
-                      },
-                    );
-                  } else {
-                    return TopicsMenuItem(
-                      item: MenuItem.comingSoon(),
-                      disabled: true,
-                    );
-                  }
-                },
-              ),
-            );
-          },
+          builder: (context, viewModel, _) => _buildBody(context, viewModel),
         ),
       ),
     );

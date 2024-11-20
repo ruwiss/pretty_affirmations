@@ -4,7 +4,15 @@ import 'package:pretty_affirmations/common/common.dart';
 
 class QuoteIcon extends StatelessWidget {
   final bool reversedColor;
-  const QuoteIcon({super.key, this.reversedColor = false});
+
+  const QuoteIcon({
+    super.key,
+    this.reversedColor = false,
+  });
+
+  Color _getIconColor(BuildContext context) {
+    return reversedColor ? context.colors.surface : context.colors.onSurface;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,9 +20,7 @@ class QuoteIcon extends StatelessWidget {
       padding: const EdgeInsets.only(top: 5),
       child: SvgPicture.asset(
         AppVectors.quote,
-        colorFilter: reversedColor
-            ? context.colors.surface.withSrcInFilter()
-            : context.colors.onSurface.withSrcInFilter(),
+        colorFilter: _getIconColor(context).withSrcInFilter(),
         width: 60,
       ),
     );

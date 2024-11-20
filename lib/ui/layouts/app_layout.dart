@@ -17,58 +17,77 @@ class AppLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: child,
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: context.colors.surface,
-          boxShadow: [
-            BoxShadow(
-              color: context.colors.primary.withOpacity(.06),
-              spreadRadius: 2,
-              blurRadius: 4,
-              offset: const Offset(0, -3),
-            ),
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _menuButton(context,
-                svg: AppVectors.likeMenu, route: '/favourites'),
-            _menuButton(context, svg: AppVectors.topicsMenu, route: '/topics'),
-            _menuButton(context, svg: AppVectors.logo, route: '/home'),
-            _menuButton(context, svg: AppVectors.bookMenu, route: '/stories'),
-            _menuButton(context,
-                svg: AppVectors.settingsMenu, route: '/settings'),
-          ],
-        ),
+      bottomNavigationBar: _buildBottomNavigationBar(context),
+    );
+  }
+
+  Widget _buildBottomNavigationBar(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: context.colors.surface,
+        boxShadow: [
+          BoxShadow(
+            color: context.colors.primary.withOpacity(.06),
+            spreadRadius: 2,
+            blurRadius: 4,
+            offset: const Offset(0, -3),
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: _buildNavigationButtons(context),
       ),
     );
   }
 
-  Widget _menuButton(BuildContext context,
-      {required String svg, required String route}) {
+  List<Widget> _buildNavigationButtons(BuildContext context) {
+    final navigationItems = [
+      (svg: AppVectors.likeMenu, route: '/favourites'),
+      (svg: AppVectors.topicsMenu, route: '/topics'),
+      (svg: AppVectors.logo, route: '/home'),
+      (svg: AppVectors.bookMenu, route: '/stories'),
+      (svg: AppVectors.settingsMenu, route: '/settings'),
+    ];
+
+    return navigationItems
+        .map((item) => _buildNavigationButton(
+              context,
+              svg: item.svg,
+              route: item.route,
+            ))
+        .toList();
+  }
+
+  Widget _buildNavigationButton(
+    BuildContext context, {
+    required String svg,
+    required String route,
+  }) {
     final bool isEnabled = location.startsWith(route);
     final bool isHome = route == AppRouter.homeRoute;
+
     return SplashSvgButton(
       onTap: () => context.go(route),
       svg: svg,
-      svgWidth: 40,
-      radius: isEnabled ? 0 : 30,
+      svgWidth: 36,
+      radius: isEnabled ? 0 : 28,
       colorFilter: isEnabled
           ? context.colors.onSurface.withSrcInFilter()
           : context.colors.primaryFixed.withSrcInFilter(),
       builder: (context, child) => AnimatedScale(
-        scale: isEnabled
-            ? isHome
-                ? 1.3
-                : .9
-            : isHome
-                ? 1.1
-                : .7,
+        scale: _calculateButtonScale(isEnabled, isHome),
         duration: const Duration(milliseconds: 200),
         curve: Curves.easeInOut,
         child: child,
       ),
     );
+  }
+
+  double _calculateButtonScale(bool isEnabled, bool isHome) {
+    if (isEnabled) {
+      return isHome ? 1.3 : 0.85;
+    }
+    return isHome ? 1.0 : 0.65;
   }
 }

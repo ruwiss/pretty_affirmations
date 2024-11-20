@@ -9,8 +9,12 @@ class SplashViewmodel extends BaseViewModel {
   final _apiService = getIt.get<ApiService>();
 
   void init(BuildContext context) {
-    _getAffirmations(context).then((data) {
+    Future.wait([
+      _getAffirmations(context),
+      Future.delayed(const Duration(milliseconds: 1500)),
+    ]).then((results) {
       if (context.mounted) {
+        final data = results[0] as Affirmations;
         context.go(AppRouter.homeRoute);
         context.read<AppBase>().affirmations = data;
       }

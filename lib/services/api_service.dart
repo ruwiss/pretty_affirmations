@@ -10,29 +10,35 @@ class ApiService {
 
   Future<List<MenuItem>> getCategories(String locale,
       {bool filtered = true}) async {
-    final unselectedTopics = _settings.getUnselectedTopics();
-    final result = await _http.get('/categories.php?lang=$locale');
+    try {
+      final result = await _http.get('/categories.php?lang=$locale');
 
-    if (result.hasValue) {
+      if (!result.hasValue) throw result.error!;
+
       final categories = (result.value!.data['data'] as List)
           .map((e) => MenuItem.fromMap(e))
           .toList();
+
       if (!filtered) return categories;
+
+      final unselectedTopics = _settings.getUnselectedTopics();
       return categories.where((e) => !unselectedTopics.contains(e.id)).toList();
-    } else {
-      result.error.toString().log();
-      throw result.error!;
+    } catch (e) {
+      e.toString().log();
+      rethrow;
     }
   }
 
   Future<Story> getDailyStory(String locale) async {
-    final result = await _http.get('/daily-story.php?lang=$locale');
+    try {
+      final result = await _http.get('/daily-story.php?lang=$locale');
 
-    if (result.hasValue) {
+      if (!result.hasValue) throw result.error!;
+
       return Story.fromMap(result.value!.data['data']);
-    } else {
-      result.error.toString().log();
-      throw result.error!;
+    } catch (e) {
+      e.toString().log();
+      rethrow;
     }
   }
 
@@ -41,27 +47,31 @@ class ApiService {
     required String locale,
     String? categoryFilter,
   }) async {
-    if (categoryFilter == null) {
-      final Iterable<String> categories =
-          await getCategories(locale).then((e) => e.map((i) => i.id));
-      categoryFilter = categories.join(",");
-    }
+    try {
+      final String categories =
+          categoryFilter ?? await _getCategoryFilterString(locale);
+      final String lastIdParam = await _getLastReadIdParam();
 
-    final lastReadAffirmationId = _settings.getLastReadAffirmationId();
+      final result = await _http.get(
+        '/affirmations.php?lang=$locale&categories=$categories&page=$page$lastIdParam',
+      );
 
-    final String lastIdParam =
-        lastReadAffirmationId != null ? '&lastId=$lastReadAffirmationId' : '';
+      if (!result.hasValue) return null;
 
-    final result = await _http.get(
-      '/affirmations.php?lang=$locale&categories=$categoryFilter&page=$page$lastIdParam',
-    );
-
-    if (result.hasValue) {
-      final Map<String, dynamic> data = result.value!.data;
-      final affirmations = Affirmations.fromMap(data);
-      return affirmations;
-    } else {
+      return Affirmations.fromMap(result.value!.data);
+    } catch (e) {
+      e.toString().log();
       return null;
     }
+  }
+
+  Future<String> _getCategoryFilterString(String locale) async {
+    final categories = await getCategories(locale);
+    return categories.map((e) => e.id).join(',');
+  }
+
+  Future<String> _getLastReadIdParam() async {
+    final lastReadId = _settings.getLastReadAffirmationId();
+    return lastReadId != null ? '&lastId=$lastReadId' : '';
   }
 }

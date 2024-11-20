@@ -29,6 +29,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Please restart the application for the changes to take effect"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "comingSoon": MessageLookupByLibrary.simpleMessage("Coming Soon..."),
+        "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "favourites": MessageLookupByLibrary.simpleMessage("Favourites"),
         "flow": MessageLookupByLibrary.simpleMessage("Flow"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),

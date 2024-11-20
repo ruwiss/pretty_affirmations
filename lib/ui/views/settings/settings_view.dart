@@ -18,66 +18,66 @@ class SettingsView extends StatelessWidget {
       body: Stack(
         children: [
           const BgImage(),
-          _settingsView(context),
+          _buildSettingsList(context),
         ],
       ),
     );
   }
 
-  Center _settingsView(BuildContext context) {
+  Widget _buildSettingsList(BuildContext context) {
     final viewModel = context.read<SettingsViewmodel>();
-    return Center(
-      child: ListView(
-        children: [
-          _settingOption(
-            context,
-            onTap: () => LanguageDialog.show(context),
-            title: S.of(context).language,
-            description: S.of(context).languageOption,
-          ),
-          _settingOption(
-            context,
-            onTap: () => SelectCategoriesDialog.show(context),
-            title: S.of(context).selectCategory,
-            description: S.of(context).selectCategoryOption,
-          ),
-          _settingOption(
-            context,
-            onTap: () {},
-            title: S.of(context).reminders,
-            description: S.of(context).remindersOption,
-          ),
-          _settingOption(
-            context,
-            onTap: viewModel.onLeaveComment,
-            title: S.of(context).leaveComment,
-            description: S.of(context).leaveCommentOption,
-          ),
-          _settingOption(
-            context,
-            onTap: () => viewModel.onShareTap(context),
-            title: S.of(context).share,
-            description: S.of(context).shareOption,
-          ),
-          _settingOption(
-            context,
-            onTap: () {},
-            title: S.of(context).privacyPolicy,
-            description: S.of(context).privacyPolicyOption,
-          ),
-          _settingOption(
-            context,
-            onTap: () {},
-            title: S.of(context).termsOfUse,
-            description: S.of(context).termsOfUseOption,
-          ),
-        ],
-      ),
+    final s = S.of(context);
+
+    return ListView(
+      children: [
+        _buildSettingTile(
+          context: context,
+          onTap: () => LanguageDialog.show(context),
+          title: s.language,
+          description: s.languageOption,
+        ),
+        _buildSettingTile(
+          context: context,
+          onTap: () => SelectCategoriesDialog.show(context),
+          title: s.selectCategory,
+          description: s.selectCategoryOption,
+        ),
+        _buildSettingTile(
+          context: context,
+          onTap: () {},
+          title: s.reminders,
+          description: s.remindersOption,
+        ),
+        _buildSettingTile(
+          context: context,
+          onTap: viewModel.onLeaveComment,
+          title: s.leaveComment,
+          description: s.leaveCommentOption,
+        ),
+        _buildSettingTile(
+          context: context,
+          onTap: () => viewModel.onShareTap(context),
+          title: s.share,
+          description: s.shareOption,
+        ),
+        _buildSettingTile(
+          context: context,
+          onTap: () {},
+          title: s.privacyPolicy,
+          description: s.privacyPolicyOption,
+        ),
+        _buildSettingTile(
+          context: context,
+          onTap: () {},
+          title: s.termsOfUse,
+          description: s.termsOfUseOption,
+        ),
+      ],
     );
   }
 
-  ListTile _settingOption(
-    BuildContext context, {
+  Widget _buildSettingTile({
+    required BuildContext context,
     required String title,
     required String description,
     VoidCallback? onTap,

@@ -15,6 +15,7 @@ class PostPage extends StatefulWidget {
   final VoidCallback? onLikeTap;
   final VoidCallback? onShareTap;
   final bool isFavourite;
+
   const PostPage({
     super.key,
     required this.index,
@@ -31,22 +32,19 @@ class PostPage extends StatefulWidget {
 
 class _PostPageState extends State<PostPage>
     with SingleTickerProviderStateMixin {
+  late final AnimationController _animationController;
+  late final Animation<double> _animation;
   late Color _currentColor;
   bool _isReversed = false;
-  late AnimationController _animationController;
-  late Animation<double> _animation;
-
-  void _setCurrentColor() {
-    final List<Color> homeColors = context.read<AppBase>().homeColors;
-    _currentColor = homeColors[widget.index % homeColors.length];
-    _isReversed = _currentColor.computeLuminance() < .5;
-    setState(() {});
-  }
 
   @override
   void initState() {
     super.initState();
+    _initializeAnimation();
     _setCurrentColor();
+  }
+
+  void _initializeAnimation() {
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
@@ -58,30 +56,28 @@ class _PostPageState extends State<PostPage>
     _animationController.forward();
   }
 
+  void _setCurrentColor() {
+    final List<Color> homeColors = context.read<AppBase>().homeColors;
+    _currentColor = homeColors[widget.index % homeColors.length];
+    _isReversed = _currentColor.computeLuminance() < .5;
+    setState(() {});
+  }
+
   @override
   void dispose() {
     _animationController.dispose();
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-          padding: const EdgeInsets.only(top: 120),
-          color: _currentColor,
-          alignment: Alignment.center,
-          child: FadeTransition(
-            opacity: _animation,
-            child: SlideTransition(
-              position: Tween<Offset>(
-                begin: const Offset(0.0, 0.2),
-                end: Offset.zero,
-              ).animate(_animation),
+  Widget _buildContent() {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: constraints.maxHeight,
+            ),
+            child: IntrinsicHeight(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -105,6 +101,32 @@ class _PostPageState extends State<PostPage>
                   ),
                 ],
               ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+          padding: const EdgeInsets.only(top: 120),
+          color: _currentColor,
+          alignment: Alignment.center,
+          child: FadeTransition(
+            opacity: _animation,
+            child: SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(0.0, 0.2),
+                end: Offset.zero,
+              ).animate(_animation),
+              child: _buildContent(),
             ),
           ),
         ),
