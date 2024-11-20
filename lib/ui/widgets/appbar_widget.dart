@@ -34,7 +34,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
           overflow: TextOverflow.fade,
           style: TextStyle(
             fontWeight: FontWeight.w500,
-            fontSize: context.responsive(26),
+            fontSize: context.responsive(27),
           ),
         ),
       ),

@@ -31,8 +31,17 @@ class LanguageDialog extends StatefulWidget {
 }
 
 class _LanguageDialogState extends State<LanguageDialog> {
-  Locale get _getCurrentLocale =>
+  Locale get _currentLocale =>
       getIt<SettingsService>().currentLocale ?? Locale(Intl.getCurrentLocale());
+
+  void _handleLanguageSelect(BuildContext context, AppLanguage language) {
+    final bool isCurrent = _currentLocale.languageCode == language.languageCode;
+    Navigator.pop(context);
+    if (!isCurrent) {
+      widget.onLanguageSelect?.call(language.getLocale);
+      context.go(AppRouter.splashRoute);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,61 +51,61 @@ class _LanguageDialogState extends State<LanguageDialog> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            S.of(context).selectLanguage,
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Divider(color: context.colors.primary, thickness: 2),
+          _buildHeader(context),
           const Gap(10),
-          _languageItem(
-            context,
-            appLanguage: AppLanguage.en,
-          ),
-          _languageItem(
-            context,
-            appLanguage: AppLanguage.zh,
-          ),
-          _languageItem(
-            context,
-            appLanguage: AppLanguage.ru,
-          ),
-          _languageItem(
-            context,
-            appLanguage: AppLanguage.tr,
+          ...AppLanguage.values.map(
+            (lang) => _LanguageItem(
+              language: lang,
+              isSelected: _currentLocale.languageCode == lang.languageCode,
+              onTap: () => _handleLanguageSelect(context, lang),
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _languageItem(
-    BuildContext context, {
-    required AppLanguage appLanguage,
-  }) {
-    final bool isCurrent =
-        _getCurrentLocale.languageCode == appLanguage.languageCode;
+  Widget _buildHeader(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          S.of(context).selectLanguage,
+          style: const TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Divider(color: context.colors.primary, thickness: 2),
+      ],
+    );
+  }
+}
 
+class _LanguageItem extends StatelessWidget {
+  final AppLanguage language;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const _LanguageItem({
+    required this.language,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         ListTile(
-          onTap: () {
-            Navigator.pop(context);
-            if (!isCurrent) {
-              widget.onLanguageSelect?.call(appLanguage.getLocale);
-              context.go(AppRouter.splashRoute);
-            }
-          },
-          leading: SvgPicture.asset(appLanguage.svg, height: 30),
+          onTap: onTap,
+          leading: SvgPicture.asset(language.svg, height: 30),
           title: Text(
-            appLanguage.name,
+            language.name,
             style: const TextStyle(fontSize: 22),
           ),
           trailing: Icon(
-            isCurrent ? Icons.check_circle_rounded : Icons.circle_outlined,
-            color: isCurrent ? Colors.redAccent : null,
+            isSelected ? Icons.check_circle_rounded : Icons.circle_outlined,
+            color: isSelected ? Colors.redAccent : null,
           ),
         ),
         const Divider()

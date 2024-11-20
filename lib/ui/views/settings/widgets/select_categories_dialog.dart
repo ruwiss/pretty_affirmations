@@ -9,41 +9,49 @@ import 'package:pretty_affirmations/services/settings_service.dart';
 class SelectCategoriesDialog extends StatefulWidget {
   final Function(List<String> unselectedTopics)? onApply;
   final List<MenuItem> menuItems;
-  const SelectCategoriesDialog(
-      {super.key, this.onApply, required this.menuItems});
+  const SelectCategoriesDialog({
+    super.key,
+    this.onApply,
+    required this.menuItems,
+  });
 
-  static void show(BuildContext context) {
-    showDialog(
+  static Future<void> show(BuildContext context) async {
+    await showDialog(
       context: context,
       builder: (context) => FluidDialog(
         rootPage: FluidDialogPage(
           alignment: Alignment.center,
-          builder: (context) => FutureBuilder(
-            future: getIt<ApiService>().getCategories(
-                context.read<AppBase>().localeStr,
-                filtered: false),
-            builder: (context, snapshot) {
-              return snapshot.asWidget(
-                context: context,
-                onWaiting: (context) => const Padding(
-                  padding: EdgeInsets.all(5),
-                  child: CircularProgressIndicator.adaptive(),
-                ),
-                onData: (context, data) => SelectCategoriesDialog(
-                  menuItems: data,
-                  onApply: (unselectedTopics) {
-                    getIt<SettingsService>()
-                        .setUnselectedTopics(unselectedTopics);
-                    DialogNavigator.of(context).push(
-                      FluidDialogPage(builder: (context) => const _ApplyInfo()),
-                    );
-                  },
-                ),
-              );
-            },
-          ),
+          builder: (context) => _buildDialogContent(context),
         ),
       ),
+    );
+  }
+
+  static Widget _buildDialogContent(BuildContext context) {
+    return FutureBuilder(
+      future: getIt<ApiService>().getCategories(
+        context.read<AppBase>().localeStr,
+        filtered: false,
+      ),
+      builder: (context, snapshot) {
+        return snapshot.asWidget(
+          context: context,
+          onWaiting: (context) => const _LoadingIndicator(),
+          onData: (context, data) => SelectCategoriesDialog(
+            menuItems: data,
+            onApply: (unselectedTopics) =>
+                _handleApply(context, unselectedTopics),
+          ),
+        );
+      },
+    );
+  }
+
+  static void _handleApply(
+      BuildContext context, List<String> unselectedTopics) {
+    getIt<SettingsService>().setUnselectedTopics(unselectedTopics);
+    DialogNavigator.of(context).push(
+      FluidDialogPage(builder: (context) => const _ApplyInfo()),
     );
   }
 
@@ -51,22 +59,35 @@ class SelectCategoriesDialog extends StatefulWidget {
   State<SelectCategoriesDialog> createState() => _SelectCategoriesDialogState();
 }
 
+class _LoadingIndicator extends StatelessWidget {
+  const _LoadingIndicator();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.all(5),
+      child: CircularProgressIndicator.adaptive(),
+    );
+  }
+}
+
 class _SelectCategoriesDialogState extends State<SelectCategoriesDialog> {
-  List<String> _unselectedTopics = [];
+  late List<String> _unselectedTopics;
 
   @override
   void initState() {
-    _unselectedTopics = getIt<SettingsService>().getUnselectedTopics();
     super.initState();
+    _unselectedTopics = getIt<SettingsService>().getUnselectedTopics();
   }
 
   void _toggleUnselected(String id) {
-    if (_unselectedTopics.contains(id)) {
-      _unselectedTopics.remove(id);
-    } else {
-      _unselectedTopics.add(id);
-    }
-    setState(() {});
+    setState(() {
+      if (_unselectedTopics.contains(id)) {
+        _unselectedTopics.remove(id);
+      } else {
+        _unselectedTopics.add(id);
+      }
+    });
   }
 
   @override
@@ -77,53 +98,82 @@ class _SelectCategoriesDialogState extends State<SelectCategoriesDialog> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            S.of(context).selectCategory,
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Divider(color: context.colors.primary, thickness: 2),
-          Flexible(
-            child: ListView.builder(
-              itemCount: widget.menuItems.length,
-              shrinkWrap: true,
-              itemBuilder: (c, i) =>
-                  _categoryItem(c, item: widget.menuItems[i]),
-            ),
-          ),
+          _buildHeader(context),
+          _buildCategoriesList(),
           const Gap(10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              ElevatedButton(
-                child: Text(S.of(context).cancel),
-                onPressed: () => Navigator.pop(context),
-              ),
-              const Gap(15),
-              ElevatedButton(
-                  onPressed: () => widget.onApply?.call(_unselectedTopics),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue.shade100,
-                  ),
-                  child: Text(S.of(context).ok)),
-            ],
-          )
+          _buildActionButtons(context),
         ],
       ),
     );
   }
 
-  Widget _categoryItem(
-    BuildContext context, {
-    required MenuItem item,
-  }) {
-    final bool isSelected = !_unselectedTopics.contains(item.id);
+  Widget _buildHeader(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          S.of(context).selectCategory,
+          style: const TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Divider(color: context.colors.primary, thickness: 2),
+      ],
+    );
+  }
+
+  Widget _buildCategoriesList() {
+    return Flexible(
+      child: ListView.builder(
+        itemCount: widget.menuItems.length,
+        shrinkWrap: true,
+        itemBuilder: (context, index) => _CategoryItem(
+          item: widget.menuItems[index],
+          isSelected: !_unselectedTopics.contains(widget.menuItems[index].id),
+          onTap: () => _toggleUnselected(widget.menuItems[index].id),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildActionButtons(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        ElevatedButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text(S.of(context).cancel),
+        ),
+        const Gap(15),
+        ElevatedButton(
+          onPressed: () => widget.onApply?.call(_unselectedTopics),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue.shade100,
+          ),
+          child: Text(S.of(context).ok),
+        ),
+      ],
+    );
+  }
+}
+
+class _CategoryItem extends StatelessWidget {
+  final MenuItem item;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const _CategoryItem({
+    required this.item,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         ListTile(
-          onTap: () => _toggleUnselected(item.id),
+          onTap: onTap,
           title: Text(
             item.name,
             style: const TextStyle(fontSize: 22),
@@ -152,8 +202,11 @@ class _ApplyInfo extends StatelessWidget {
         CircleAvatar(
           radius: 30,
           backgroundColor: context.colors.tertiary,
-          child:
-              Icon(Icons.check, color: context.colors.primaryFixed, size: 50),
+          child: Icon(
+            Icons.check,
+            color: context.colors.primaryFixed,
+            size: 50,
+          ),
         ),
         Container(
           constraints: const BoxConstraints(minWidth: 340),
