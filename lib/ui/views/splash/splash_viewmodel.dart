@@ -4,6 +4,7 @@ import 'package:pretty_affirmations/app/router.dart';
 import 'package:pretty_affirmations/app/base.dart';
 import 'package:pretty_affirmations/models/affirmation.dart';
 import 'package:pretty_affirmations/services/api_service.dart';
+import 'package:pretty_affirmations/services/settings_service.dart';
 
 class SplashViewmodel extends BaseViewModel {
   final _apiService = getIt.get<ApiService>();
@@ -19,6 +20,8 @@ class SplashViewmodel extends BaseViewModel {
         context.read<AppBase>().affirmations = data;
       }
     });
+
+    "Reklamlar Etkin: ${getIt<SettingsService>().getAdsEnabled()}".log();
   }
 
   Future<Affirmations> _getAffirmations(BuildContext context) async {

@@ -1,5 +1,6 @@
 import 'package:hayiqu/hayiqu.dart';
 import 'package:pretty_affirmations/models/affirmation.dart';
+import 'package:pretty_affirmations/models/app_settings/remote_settings.dart';
 import 'package:pretty_affirmations/models/menu_item.dart';
 import 'package:pretty_affirmations/models/story.dart';
 import 'package:pretty_affirmations/services/settings_service.dart';
@@ -87,4 +88,12 @@ class ApiService {
   }
 
   void dailyEntry(String locale) => _http.post("/daily-entry.php?lang=$locale");
+
+  Future<RemoteSettings> getRemoteSettings() async {
+    final result = await _http.get('/settings.php');
+
+    if (!result.hasValue) throw result.error!;
+
+    return RemoteSettings.fromMap(result.value!.data['data']);
+  }
 }

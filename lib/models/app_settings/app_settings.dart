@@ -12,4 +12,6 @@ class _AppSettings {
 
   int dailyNotificationCount = 3;
   DateTime? nextFetchNotificationDate;
+
+  bool adsEnabled = false;
 }

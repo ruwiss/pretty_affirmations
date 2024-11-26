@@ -17,10 +17,12 @@ class AppSettings extends _AppSettings
     Iterable<String> unselectedTopics = const [],
     int dailyNotificationCount = 3,
     DateTime? nextFetchNotificationDate,
+    bool adsEnabled = false,
   }) {
     if (!_defaultsSet) {
       _defaultsSet = RealmObjectBase.setDefaults<AppSettings>({
         'dailyNotificationCount': 3,
+        'adsEnabled': false,
       });
     }
     RealmObjectBase.set(this, 'localeStr', localeStr);
@@ -30,6 +32,7 @@ class AppSettings extends _AppSettings
     RealmObjectBase.set(this, 'dailyNotificationCount', dailyNotificationCount);
     RealmObjectBase.set(
         this, 'nextFetchNotificationDate', nextFetchNotificationDate);
+    RealmObjectBase.set(this, 'adsEnabled', adsEnabled);
   }
 
   AppSettings._();
@@ -71,6 +74,11 @@ class AppSettings extends _AppSettings
       RealmObjectBase.set(this, 'nextFetchNotificationDate', value);
 
   @override
+  bool get adsEnabled => RealmObjectBase.get<bool>(this, 'adsEnabled') as bool;
+  @override
+  set adsEnabled(bool value) => RealmObjectBase.set(this, 'adsEnabled', value);
+
+  @override
   Stream<RealmObjectChanges<AppSettings>> get changes =>
       RealmObjectBase.getChanges<AppSettings>(this);
 
@@ -89,6 +97,7 @@ class AppSettings extends _AppSettings
       'unselectedTopics': unselectedTopics.toEJson(),
       'dailyNotificationCount': dailyNotificationCount.toEJson(),
       'nextFetchNotificationDate': nextFetchNotificationDate.toEJson(),
+      'adsEnabled': adsEnabled.toEJson(),
     };
   }
 
@@ -102,6 +111,7 @@ class AppSettings extends _AppSettings
       dailyNotificationCount:
           fromEJson(ejson['dailyNotificationCount'], defaultValue: 3),
       nextFetchNotificationDate: fromEJson(ejson['nextFetchNotificationDate']),
+      adsEnabled: fromEJson(ejson['adsEnabled'], defaultValue: false),
     );
   }
 
@@ -117,6 +127,7 @@ class AppSettings extends _AppSettings
       SchemaProperty('dailyNotificationCount', RealmPropertyType.int),
       SchemaProperty('nextFetchNotificationDate', RealmPropertyType.timestamp,
           optional: true),
+      SchemaProperty('adsEnabled', RealmPropertyType.bool),
     ]);
   }();
 

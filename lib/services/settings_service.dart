@@ -107,7 +107,11 @@ class SettingsService {
     _realm.write(() => _settings.nextFetchNotificationDate = date);
   }
 
+  void setAdsEnabled(bool enabled) {
+    _realm.write(() => _settings.adsEnabled = enabled);
+  }
 
+  bool getAdsEnabled() => _settings.adsEnabled;
 
   void dispose() {
     _localeController.close();

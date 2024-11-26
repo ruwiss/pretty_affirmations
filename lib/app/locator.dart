@@ -12,7 +12,12 @@ Future<void> registerDependencies() async {
   getIt<HttpService>().setBaseUrl(kApiUrl);
 
   // Api Service
-  getIt.registerLazySingleton(() => ApiService());
+  getIt.registerSingletonAsync<ApiService>(() async {
+    final apiService = ApiService();
+    final settings = await apiService.getRemoteSettings();
+    getIt<SettingsService>().setAdsEnabled(settings.adsEnabled);
+    return apiService;
+  });
 
   // Favourites Service
   getIt.registerLazySingleton(() => FavouritesService());
