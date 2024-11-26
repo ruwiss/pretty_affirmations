@@ -24,6 +24,7 @@ class SplashViewmodel extends BaseViewModel {
   Future<Affirmations> _getAffirmations(BuildContext context) async {
     final locale = context.read<AppBase>().localeStr;
     final affirmations = await _apiService.getAffirmations(locale: locale);
+    _apiService.dailyEntry(locale);
     return affirmations!;
   }
 }

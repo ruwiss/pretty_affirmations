@@ -85,4 +85,6 @@ class ApiService {
 
     return Affirmations.fromMap(result.value!.data);
   }
+
+  void dailyEntry(String locale) => _http.post("/daily-entry.php?lang=$locale");
 }
