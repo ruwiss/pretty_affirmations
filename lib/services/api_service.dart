@@ -9,6 +9,7 @@ class ApiService {
   final HttpService _http = getIt<HttpService>();
   final SettingsService _settings = getIt<SettingsService>();
 
+  // Kategorileri getiren fonksiyon
   Future<List<MenuItem>> getCategories(String locale,
       {bool filtered = true}) async {
     try {
@@ -20,8 +21,10 @@ class ApiService {
           .map((e) => MenuItem.fromMap(e))
           .toList();
 
+      // Filtreleme istenmediyse tüm kategorileri döndür
       if (!filtered) return categories;
 
+      // Seçilmemiş konuları al ve filtreleme yap
       final unselectedTopics = _settings.getUnselectedTopics();
       return categories.where((e) => !unselectedTopics.contains(e.id)).toList();
     } catch (e) {
@@ -30,6 +33,7 @@ class ApiService {
     }
   }
 
+  // Günlük hikayeyi getiren fonksiyon
   Future<Story> getDailyStory(String locale) async {
     try {
       final result = await _http.get('/daily-story.php?lang=$locale');
@@ -43,6 +47,7 @@ class ApiService {
     }
   }
 
+  // Olumlamaları getiren fonksiyon
   Future<Affirmations?> getAffirmations({
     int page = 0,
     required String locale,
@@ -66,16 +71,19 @@ class ApiService {
     }
   }
 
+  // Kategori dizesini oluşturan yardımcı fonksiyon
   Future<String> _getCategoriesString(String locale) async {
     final categories = await getCategories(locale);
     return categories.map((e) => e.id).join(',');
   }
 
+  // Son okunan olumlamanın ID'sini parametre olarak döndüren yardımcı fonksiyon
   Future<String> _getLastReadIdParam() async {
     final lastReadId = _settings.getLastReadAffirmationId();
     return lastReadId != null ? '&lastId=$lastReadId' : '';
   }
 
+  // Rastgele olumlamaları getiren fonksiyon
   Future<Affirmations?> getRandomAffirmations({required String locale}) async {
     final String categories = await _getCategoriesString(locale);
     final result = await _http.get(
@@ -87,8 +95,10 @@ class ApiService {
     return Affirmations.fromMap(result.value!.data);
   }
 
+  // Günlük giriş için sayaç tutan fonksiyon
   void dailyEntry(String locale) => _http.post("/daily-entry.php?lang=$locale");
 
+  // API'dan uygulama ayarlarını getiren fonksiyon
   Future<RemoteSettings> getRemoteSettings() async {
     final result = await _http.get('/settings.php');
 

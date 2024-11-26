@@ -5,10 +5,9 @@ const String channelKey = 'affirmation_alert_0';
 
 class NotificationController {
   NotificationController._();
-  static ReceivedAction? initialAction;
 
   ///  *********************************************
-  ///     INITIALIZATIONS
+  ///     BAŞLATMA
   ///  *********************************************
   ///
   static Future<void> initializeLocalNotifications() async {
@@ -29,10 +28,6 @@ class NotificationController {
           )
         ],
         debug: true);
-
-    // Get initial notification action is optional
-    initialAction = await AwesomeNotifications()
-        .getInitialNotificationAction(removeFromActionEvents: false);
   }
 
   static Future<void> clearAllScheduledNotifications() async {

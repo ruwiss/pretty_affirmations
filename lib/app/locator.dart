@@ -14,7 +14,9 @@ Future<void> registerDependencies() async {
   // Api Service
   getIt.registerSingletonAsync<ApiService>(() async {
     final apiService = ApiService();
+    // API üzerindeki ayarları al
     final settings = await apiService.getRemoteSettings();
+    // Uygulama ayarlarına kaydet
     getIt<SettingsService>().setAdsEnabled(settings.adsEnabled);
     return apiService;
   });

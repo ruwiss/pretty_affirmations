@@ -11,7 +11,9 @@ class SplashViewmodel extends BaseViewModel {
 
   void init(BuildContext context) {
     Future.wait([
+      // olumlamaları al (senkron)
       _getAffirmations(context),
+      // en az 1,5 saniye beklet
       Future.delayed(const Duration(milliseconds: 1500)),
     ]).then((results) {
       if (context.mounted) {
@@ -25,8 +27,11 @@ class SplashViewmodel extends BaseViewModel {
   }
 
   Future<Affirmations> _getAffirmations(BuildContext context) async {
+    // cihaz dilini al
     final locale = context.read<AppBase>().localeStr;
+    // olumlamaları getir
     final affirmations = await _apiService.getAffirmations(locale: locale);
+    // günlük girişi kaydet
     _apiService.dailyEntry(locale);
     return affirmations!;
   }
