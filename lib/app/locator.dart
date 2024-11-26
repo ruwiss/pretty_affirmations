@@ -2,6 +2,7 @@ import 'package:hayiqu/hayiqu.dart';
 import 'package:pretty_affirmations/common/common.dart';
 import 'package:pretty_affirmations/services/api_service.dart';
 import 'package:pretty_affirmations/services/favourites_service.dart';
+import 'package:pretty_affirmations/services/schedule_service.dart';
 import 'package:pretty_affirmations/services/settings_service.dart';
 
 Future<void> registerDependencies() async {
@@ -15,6 +16,9 @@ Future<void> registerDependencies() async {
 
   // Favourites Service
   getIt.registerLazySingleton(() => FavouritesService());
+
+  // Schedule Service
+  getIt.registerLazySingleton(() => ScheduleService());
 
   // Wait for all services to be ready
   await getIt.allReady();

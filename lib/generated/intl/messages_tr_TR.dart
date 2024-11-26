@@ -29,6 +29,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Değişikliklerin geçerli olabilmesi için uygulamayı yeniden başlatınız"),
         "cancel": MessageLookupByLibrary.simpleMessage("İptal"),
         "comingSoon": MessageLookupByLibrary.simpleMessage("YAKINDA..."),
+        "dailyNotificationSetting":
+            MessageLookupByLibrary.simpleMessage("Günlük Bildirim Sayısı"),
         "delete": MessageLookupByLibrary.simpleMessage("Kaldır"),
         "favourites": MessageLookupByLibrary.simpleMessage("Favoriler"),
         "flow": MessageLookupByLibrary.simpleMessage("Akış"),
@@ -42,6 +44,22 @@ class MessageLookup extends MessageLookupByLibrary {
             "Bu kategoriye ait olumlamalar henüz yok"),
         "noFavourites":
             MessageLookupByLibrary.simpleMessage("Favorileriniz yok"),
+        "notificationTitle1":
+            MessageLookupByLibrary.simpleMessage("Ben Hazırım!"),
+        "notificationTitle2":
+            MessageLookupByLibrary.simpleMessage("Bir Dakika!"),
+        "notificationTitle3":
+            MessageLookupByLibrary.simpleMessage("Başlıyorum"),
+        "notificationTitle4":
+            MessageLookupByLibrary.simpleMessage("Kendimdeyim"),
+        "notificationTitle5":
+            MessageLookupByLibrary.simpleMessage("Dinlenme Vakti"),
+        "notificationTitle6":
+            MessageLookupByLibrary.simpleMessage("Fark Yarat"),
+        "notificationTitle7":
+            MessageLookupByLibrary.simpleMessage("Günün Olumlaması"),
+        "notificationTitle8":
+            MessageLookupByLibrary.simpleMessage("Senin için bir olumlama"),
         "ok": MessageLookupByLibrary.simpleMessage("Tamam"),
         "privacyPolicy":
             MessageLookupByLibrary.simpleMessage("Gizlilik Politikası"),

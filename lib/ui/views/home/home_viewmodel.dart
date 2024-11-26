@@ -8,6 +8,7 @@ import 'package:pretty_affirmations/models/favourites/favourites.dart';
 import 'package:pretty_affirmations/models/menu_item.dart';
 import 'package:pretty_affirmations/services/api_service.dart';
 import 'package:pretty_affirmations/services/favourites_service.dart';
+import 'package:pretty_affirmations/services/schedule_service.dart';
 import 'package:pretty_affirmations/services/settings_service.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -22,6 +23,7 @@ class HomeViewModel extends BaseViewModel {
   final _apiService = getIt.get<ApiService>();
   final _settingsService = getIt.get<SettingsService>();
   final _favouritesService = getIt.get<FavouritesService>();
+  final _scheduleService = getIt.get<ScheduleService>();
 
   final PageController _pageController = PageController();
   PageController get pageController => _pageController;
@@ -40,6 +42,7 @@ class HomeViewModel extends BaseViewModel {
     _localeStr = appBase.localeStr;
     _affirmations = appBase.affirmations;
     _favourites = _favouritesService.getFavourites();
+    _scheduleService.checkAndScheduleAffirmations();
   }
 
   void _clearAffirmations() {

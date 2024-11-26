@@ -9,15 +9,27 @@ part of 'app_settings.dart';
 // ignore_for_file: type=lint
 class AppSettings extends _AppSettings
     with RealmEntity, RealmObjectBase, RealmObject {
+  static var _defaultsSet = false;
+
   AppSettings({
     String? localeStr,
     String? countryCode,
     Iterable<String> unselectedTopics = const [],
+    int dailyNotificationCount = 3,
+    DateTime? nextFetchNotificationDate,
   }) {
+    if (!_defaultsSet) {
+      _defaultsSet = RealmObjectBase.setDefaults<AppSettings>({
+        'dailyNotificationCount': 3,
+      });
+    }
     RealmObjectBase.set(this, 'localeStr', localeStr);
     RealmObjectBase.set(this, 'countryCode', countryCode);
     RealmObjectBase.set<RealmList<String>>(
         this, 'unselectedTopics', RealmList<String>(unselectedTopics));
+    RealmObjectBase.set(this, 'dailyNotificationCount', dailyNotificationCount);
+    RealmObjectBase.set(
+        this, 'nextFetchNotificationDate', nextFetchNotificationDate);
   }
 
   AppSettings._();
@@ -44,6 +56,21 @@ class AppSettings extends _AppSettings
       throw RealmUnsupportedSetError();
 
   @override
+  int get dailyNotificationCount =>
+      RealmObjectBase.get<int>(this, 'dailyNotificationCount') as int;
+  @override
+  set dailyNotificationCount(int value) =>
+      RealmObjectBase.set(this, 'dailyNotificationCount', value);
+
+  @override
+  DateTime? get nextFetchNotificationDate =>
+      RealmObjectBase.get<DateTime>(this, 'nextFetchNotificationDate')
+          as DateTime?;
+  @override
+  set nextFetchNotificationDate(DateTime? value) =>
+      RealmObjectBase.set(this, 'nextFetchNotificationDate', value);
+
+  @override
   Stream<RealmObjectChanges<AppSettings>> get changes =>
       RealmObjectBase.getChanges<AppSettings>(this);
 
@@ -60,6 +87,8 @@ class AppSettings extends _AppSettings
       'localeStr': localeStr.toEJson(),
       'countryCode': countryCode.toEJson(),
       'unselectedTopics': unselectedTopics.toEJson(),
+      'dailyNotificationCount': dailyNotificationCount.toEJson(),
+      'nextFetchNotificationDate': nextFetchNotificationDate.toEJson(),
     };
   }
 
@@ -70,6 +99,9 @@ class AppSettings extends _AppSettings
       localeStr: fromEJson(ejson['localeStr']),
       countryCode: fromEJson(ejson['countryCode']),
       unselectedTopics: fromEJson(ejson['unselectedTopics']),
+      dailyNotificationCount:
+          fromEJson(ejson['dailyNotificationCount'], defaultValue: 3),
+      nextFetchNotificationDate: fromEJson(ejson['nextFetchNotificationDate']),
     );
   }
 
@@ -82,6 +114,9 @@ class AppSettings extends _AppSettings
       SchemaProperty('countryCode', RealmPropertyType.string, optional: true),
       SchemaProperty('unselectedTopics', RealmPropertyType.string,
           collectionType: RealmCollectionType.list),
+      SchemaProperty('dailyNotificationCount', RealmPropertyType.int),
+      SchemaProperty('nextFetchNotificationDate', RealmPropertyType.timestamp,
+          optional: true),
     ]);
   }();
 

@@ -49,5 +49,15 @@
                 "type": "String"
             }
         }
-    }
+    },
+    "dailyNotificationSetting": "Daily Notification Count",
+    "notificationTitle1": "One Moment!",
+    "notificationTitle2": "Starting Now",
+    "notificationTitle3": "My True Self",
+    "notificationTitle4": "Centered in Me",
+    "notificationTitle5": "Time to Rest",
+    "notificationTitle6": "Make a Difference",
+    "notificationTitle7": "Affirmation of the Day",
+    "notificationTitle8": "An Affirmation for You",
+    "notificationTitle9": "I'm Ready!"
 }

@@ -26,11 +26,11 @@ class AppRouter {
   static const String storiesRoute = '/stories';
   static const String settingsRoute = '/settings';
 
-  static final _routerKey = GlobalKey<NavigatorState>();
+  static final routerKey = GlobalKey<NavigatorState>();
 
   static final GoRouter router = GoRouter(
     initialLocation: _initialRoute,
-    navigatorKey: _routerKey,
+    navigatorKey: routerKey,
     routes: [
       _buildRoute(splashRoute, (context, extra) => SplashViewmodel(),
           const SplashView()),

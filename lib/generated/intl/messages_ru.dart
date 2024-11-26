@@ -29,6 +29,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Пожалуйста, перезапустите приложение, чтобы изменения вступили в силу"),
         "cancel": MessageLookupByLibrary.simpleMessage("Отмена"),
         "comingSoon": MessageLookupByLibrary.simpleMessage("Скоро будет..."),
+        "dailyNotificationSetting": MessageLookupByLibrary.simpleMessage(
+            "Количество ежедневных уведомлений"),
         "delete": MessageLookupByLibrary.simpleMessage("Удалить"),
         "favourites": MessageLookupByLibrary.simpleMessage("Избранное"),
         "flow": MessageLookupByLibrary.simpleMessage("Поток"),
@@ -43,6 +45,21 @@ class MessageLookup extends MessageLookupByLibrary {
             "В этой категории пока нет утверждений"),
         "noFavourites":
             MessageLookupByLibrary.simpleMessage("У вас нет избранного"),
+        "notificationTitle1":
+            MessageLookupByLibrary.simpleMessage("Одну минуту!"),
+        "notificationTitle2": MessageLookupByLibrary.simpleMessage("Я начинаю"),
+        "notificationTitle3":
+            MessageLookupByLibrary.simpleMessage("Моя сущность"),
+        "notificationTitle4": MessageLookupByLibrary.simpleMessage("Я в себе"),
+        "notificationTitle5":
+            MessageLookupByLibrary.simpleMessage("Время отдохнуть"),
+        "notificationTitle6":
+            MessageLookupByLibrary.simpleMessage("Создавай разницу"),
+        "notificationTitle7":
+            MessageLookupByLibrary.simpleMessage("Аффирмация дня"),
+        "notificationTitle8":
+            MessageLookupByLibrary.simpleMessage("Аффирмация для тебя"),
+        "notificationTitle9": MessageLookupByLibrary.simpleMessage("Я готов!"),
         "ok": MessageLookupByLibrary.simpleMessage("Применить"),
         "privacyPolicy":
             MessageLookupByLibrary.simpleMessage("Политика конфиденциальности"),

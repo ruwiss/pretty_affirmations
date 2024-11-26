@@ -49,7 +49,7 @@ class ApiService {
   }) async {
     try {
       final String categories =
-          categoryFilter ?? await _getCategoryFilterString(locale);
+          categoryFilter ?? await _getCategoriesString(locale);
       final String lastIdParam = await _getLastReadIdParam();
 
       final result = await _http.get(
@@ -65,7 +65,7 @@ class ApiService {
     }
   }
 
-  Future<String> _getCategoryFilterString(String locale) async {
+  Future<String> _getCategoriesString(String locale) async {
     final categories = await getCategories(locale);
     return categories.map((e) => e.id).join(',');
   }
@@ -73,5 +73,16 @@ class ApiService {
   Future<String> _getLastReadIdParam() async {
     final lastReadId = _settings.getLastReadAffirmationId();
     return lastReadId != null ? '&lastId=$lastReadId' : '';
+  }
+
+  Future<Affirmations?> getRandomAffirmations({required String locale}) async {
+    final String categories = await _getCategoriesString(locale);
+    final result = await _http.get(
+      '/random-affirmations.php?lang=$locale&categories=$categories',
+    );
+
+    if (!result.hasValue) return null;
+
+    return Affirmations.fromMap(result.value!.data);
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hayiqu/hayiqu.dart';
 import 'package:pretty_affirmations/generated/l10n.dart';
 import 'package:pretty_affirmations/ui/views/settings/widgets/language_dialog.dart';
+import 'package:pretty_affirmations/ui/views/settings/widgets/notification_setting_dialog.dart';
 import 'package:pretty_affirmations/ui/views/settings/widgets/select_categories_dialog.dart';
 import 'package:pretty_affirmations/ui/widgets/appbar_widget.dart';
 import 'package:pretty_affirmations/ui/widgets/bg_image.dart';
@@ -44,7 +45,7 @@ class SettingsView extends StatelessWidget {
         ),
         _buildSettingTile(
           context: context,
-          onTap: () {},
+          onTap: () => NotificationSettingDialog.show(context),
           title: s.reminders,
           description: s.remindersOption,
         ),

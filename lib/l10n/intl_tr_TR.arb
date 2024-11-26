@@ -49,5 +49,14 @@
                 "type": "String"
             }
         }
-    }
+    },
+    "dailyNotificationSetting": "Günlük Bildirim Sayısı",
+    "notificationTitle1": "Ben Hazırım!",
+    "notificationTitle2": "Bir Dakika!",
+    "notificationTitle3": "Başlıyorum",
+    "notificationTitle4": "Kendimdeyim",
+    "notificationTitle5": "Dinlenme Vakti",
+    "notificationTitle6": "Fark Yarat",
+    "notificationTitle7": "Günün Olumlaması",
+    "notificationTitle8": "Senin için bir olumlama"
 }

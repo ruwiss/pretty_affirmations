@@ -49,5 +49,15 @@
                 "type": "String"
             }
         }
-    }
+    },
+    "dailyNotificationSetting": "每日通知数量",
+    "notificationTitle1": "稍等一下！",
+    "notificationTitle2": "我开始了",
+    "notificationTitle3": "我的本我",
+    "notificationTitle4": "我在自己之中",
+    "notificationTitle5": "是时候休息了",
+    "notificationTitle6": "创造不同",
+    "notificationTitle7": "今天的肯定",
+    "notificationTitle8": "为你准备的肯定",
+    "notificationTitle9": "我准备好了！"
 }

@@ -329,6 +329,106 @@ class S {
       args: [appUrl],
     );
   }
+
+  /// `Daily Notification Count`
+  String get dailyNotificationSetting {
+    return Intl.message(
+      'Daily Notification Count',
+      name: 'dailyNotificationSetting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `One Moment!`
+  String get notificationTitle1 {
+    return Intl.message(
+      'One Moment!',
+      name: 'notificationTitle1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Starting Now`
+  String get notificationTitle2 {
+    return Intl.message(
+      'Starting Now',
+      name: 'notificationTitle2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My True Self`
+  String get notificationTitle3 {
+    return Intl.message(
+      'My True Self',
+      name: 'notificationTitle3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Centered in Me`
+  String get notificationTitle4 {
+    return Intl.message(
+      'Centered in Me',
+      name: 'notificationTitle4',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Time to Rest`
+  String get notificationTitle5 {
+    return Intl.message(
+      'Time to Rest',
+      name: 'notificationTitle5',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Make a Difference`
+  String get notificationTitle6 {
+    return Intl.message(
+      'Make a Difference',
+      name: 'notificationTitle6',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Affirmation of the Day`
+  String get notificationTitle7 {
+    return Intl.message(
+      'Affirmation of the Day',
+      name: 'notificationTitle7',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An Affirmation for You`
+  String get notificationTitle8 {
+    return Intl.message(
+      'An Affirmation for You',
+      name: 'notificationTitle8',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `I'm Ready!`
+  String get notificationTitle9 {
+    return Intl.message(
+      'I\'m Ready!',
+      name: 'notificationTitle9',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

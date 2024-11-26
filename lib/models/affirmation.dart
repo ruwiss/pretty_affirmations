@@ -7,14 +7,14 @@ class Affirmations {
 
   Affirmations({
     required this.data,
-    required this.page,
+    this.page = 0,
     required this.total,
   });
 
   Affirmations.fromMap(Map<String, dynamic> map)
       : data =
             (map['data'] as List).map((e) => Affirmation.fromMap(e)).toList(),
-        page = map['page'],
+        page = map['page'] ?? 0,
         total = map['count'];
 }
 

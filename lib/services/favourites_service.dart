@@ -1,3 +1,4 @@
+import 'package:pretty_affirmations/common/common.dart';
 import 'package:pretty_affirmations/models/affirmation.dart';
 import 'package:pretty_affirmations/models/favourites/favourites.dart';
 import 'package:realm/realm.dart';
@@ -12,7 +13,7 @@ class FavouritesService {
   Configuration _createConfig() {
     return Configuration.local(
       [Favourites.schema],
-      schemaVersion: 1,
+      schemaVersion: kLocalDbSchemaVersion,
     );
   }
 

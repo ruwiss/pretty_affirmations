@@ -49,5 +49,15 @@
                 "type": "String"
             }
         }
-    }
+    },
+    "dailyNotificationSetting": "Количество ежедневных уведомлений",
+    "notificationTitle1": "Одну минуту!",
+    "notificationTitle2": "Я начинаю",
+    "notificationTitle3": "Моя сущность",
+    "notificationTitle4": "Я в себе",
+    "notificationTitle5": "Время отдохнуть",
+    "notificationTitle6": "Создавай разницу",
+    "notificationTitle7": "Аффирмация дня",
+    "notificationTitle8": "Аффирмация для тебя",
+    "notificationTitle9": "Я готов!"
 }

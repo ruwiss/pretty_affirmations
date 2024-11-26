@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
+import 'package:pretty_affirmations/common/common.dart';
 import 'package:pretty_affirmations/generated/l10n.dart';
 import 'package:pretty_affirmations/models/app_settings/affirmation_last_reads.dart';
 import 'package:pretty_affirmations/models/app_settings/app_settings.dart';
@@ -11,7 +12,7 @@ class SettingsService {
   final _localeController = StreamController<Locale>.broadcast();
   final Configuration _config = Configuration.local(
     [AppSettings.schema, AffirmationLastReads.schema],
-    schemaVersion: 1,
+    schemaVersion: kLocalDbSchemaVersion,
   );
 
   Stream<Locale> get localeStream => _localeController.stream;
@@ -92,6 +93,21 @@ class SettingsService {
         .all<AffirmationLastReads>()
         .query(r'categoryKey == $0', [categoryKey]);
   }
+
+  int getDailyNotificationCount() => _settings.dailyNotificationCount;
+
+  void setDailyNotificationCount(int count) {
+    _realm.write(() => _settings.dailyNotificationCount = count);
+  }
+
+  DateTime? nextFetchScheduleNotification() =>
+      _settings.nextFetchNotificationDate;
+
+  void setNextFetchNotificationDate(DateTime? date) {
+    _realm.write(() => _settings.nextFetchNotificationDate = date);
+  }
+
+
 
   void dispose() {
     _localeController.close();

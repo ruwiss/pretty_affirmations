@@ -29,6 +29,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Please restart the application for the changes to take effect"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "comingSoon": MessageLookupByLibrary.simpleMessage("Coming Soon..."),
+        "dailyNotificationSetting":
+            MessageLookupByLibrary.simpleMessage("Daily Notification Count"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "favourites": MessageLookupByLibrary.simpleMessage("Favourites"),
         "flow": MessageLookupByLibrary.simpleMessage("Flow"),
@@ -42,6 +44,24 @@ class MessageLookup extends MessageLookupByLibrary {
             "There are no affirmations in this category yet"),
         "noFavourites":
             MessageLookupByLibrary.simpleMessage("You have no favourites"),
+        "notificationTitle1":
+            MessageLookupByLibrary.simpleMessage("One Moment!"),
+        "notificationTitle2":
+            MessageLookupByLibrary.simpleMessage("Starting Now"),
+        "notificationTitle3":
+            MessageLookupByLibrary.simpleMessage("My True Self"),
+        "notificationTitle4":
+            MessageLookupByLibrary.simpleMessage("Centered in Me"),
+        "notificationTitle5":
+            MessageLookupByLibrary.simpleMessage("Time to Rest"),
+        "notificationTitle6":
+            MessageLookupByLibrary.simpleMessage("Make a Difference"),
+        "notificationTitle7":
+            MessageLookupByLibrary.simpleMessage("Affirmation of the Day"),
+        "notificationTitle8":
+            MessageLookupByLibrary.simpleMessage("An Affirmation for You"),
+        "notificationTitle9":
+            MessageLookupByLibrary.simpleMessage("I\'m Ready!"),
         "ok": MessageLookupByLibrary.simpleMessage("Apply"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
         "privacyPolicyOption": MessageLookupByLibrary.simpleMessage(

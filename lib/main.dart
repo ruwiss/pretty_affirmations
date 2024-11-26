@@ -1,16 +1,18 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter/material.dart';
 import 'package:hayiqu/hayiqu.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:pretty_affirmations/app/locator.dart';
 import 'package:pretty_affirmations/app/router.dart';
 import 'package:pretty_affirmations/app/base.dart';
+import 'app/notification.dart';
 import 'generated/l10n.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting();
   await setupLocator(registerDependencies);
+  await NotificationController.initializeLocalNotifications();
   runApp(const MyApp());
 }
 

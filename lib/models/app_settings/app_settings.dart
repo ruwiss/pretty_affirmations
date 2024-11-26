@@ -9,4 +9,7 @@ class _AppSettings {
   String? countryCode;
 
   late List<String> unselectedTopics;
+
+  int dailyNotificationCount = 3;
+  DateTime? nextFetchNotificationDate;
 }
