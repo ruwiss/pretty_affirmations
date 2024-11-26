@@ -29,8 +29,11 @@ class _NotificationSettingDialogState extends State<NotificationSettingDialog> {
       getIt<SettingsService>().getDailyNotificationCount();
 
   void _handleSave(BuildContext context) {
-    getIt<SettingsService>().setDailyNotificationCount(_notificationsPerDay);
-    getIt<ScheduleService>().checkAndScheduleAffirmations(force: true);
+    if (_notificationsPerDay !=
+        getIt<SettingsService>().getDailyNotificationCount()) {
+      getIt<SettingsService>().setDailyNotificationCount(_notificationsPerDay);
+      getIt<ScheduleService>().checkAndScheduleAffirmations(force: true);
+    }
     Navigator.pop(context);
   }
 
