@@ -20,7 +20,11 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       alignment: Alignment.center,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 30),
-        margin: const EdgeInsets.symmetric(horizontal: 20),
+        margin: EdgeInsets.only(
+          left: 20,
+          right: 20,
+          top: MediaQuery.of(context).padding.top,
+        ),
         constraints: const BoxConstraints(maxHeight: 80),
         decoration: BoxDecoration(
           color: context.colors.primary,
