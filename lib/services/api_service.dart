@@ -59,7 +59,7 @@ class ApiService {
       final String lastIdParam = await _getLastReadIdParam();
 
       final result = await _http.get(
-        '/affirmations.php?lang=$locale&categories=$categories&page=$page$lastIdParam',
+        '/affirmations.php?lang=$locale&categories=$categories&page=$page&lastId=$lastIdParam',
       );
 
       if (!result.hasValue) return null;
