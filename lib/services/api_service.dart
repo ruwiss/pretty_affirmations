@@ -52,15 +52,19 @@ class ApiService {
     int page = 0,
     required String locale,
     String? categoryFilter,
+    bool startFromLastRead = false,
   }) async {
     try {
       final String categories =
           categoryFilter ?? await _getCategoriesString(locale);
-      final String lastIdParam = await _getLastReadIdParam();
+      String url =
+          '/affirmations.php?lang=$locale&categories=$categories&page=$page';
+      if (startFromLastRead) {
+        final lastReadId = _settings.getLastReadAffirmationId();
+        url += "&lastId=$lastReadId";
+      }
 
-      final result = await _http.get(
-        '/affirmations.php?lang=$locale&categories=$categories&page=$page&lastId=$lastIdParam',
-      );
+      final result = await _http.get(url);
 
       if (!result.hasValue) return null;
 
@@ -75,12 +79,6 @@ class ApiService {
   Future<String> _getCategoriesString(String locale) async {
     final categories = await getCategories(locale);
     return categories.map((e) => e.id).join(',');
-  }
-
-  // Son okunan olumlamanın ID'sini parametre olarak döndüren yardımcı fonksiyon
-  Future<String> _getLastReadIdParam() async {
-    final lastReadId = _settings.getLastReadAffirmationId();
-    return lastReadId != null ? '&lastId=$lastReadId' : '';
   }
 
   // Rastgele olumlamaları getiren fonksiyon

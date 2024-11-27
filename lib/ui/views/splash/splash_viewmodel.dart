@@ -30,7 +30,8 @@ class SplashViewmodel extends BaseViewModel {
     // cihaz dilini al
     final locale = context.read<AppBase>().localeStr;
     // olumlamaları getir
-    final affirmations = await _apiService.getAffirmations(locale: locale);
+    final affirmations = await _apiService.getAffirmations(
+        locale: locale, startFromLastRead: true);
     // günlük girişi kaydet
     _apiService.dailyEntry(locale);
     return affirmations!;

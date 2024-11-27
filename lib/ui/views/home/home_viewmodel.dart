@@ -59,6 +59,7 @@ class HomeViewModel extends BaseViewModel {
       locale: _localeStr,
       page: page,
       categoryFilter: affirmationCategory?.id,
+      startFromLastRead: page == 0,
     );
 
     if (affirmations == null) {
@@ -89,7 +90,7 @@ class HomeViewModel extends BaseViewModel {
   }
 
   void onPageIndexChanged(int index) async {
-    if (!_hasReachedEnd && index >= _affirmations!.data.length - 2) {
+    if (!_hasReachedEnd && index % 5 == 0) {
       await _getAffirmations(page: _affirmations!.page + 1);
     }
     final currentAffirmation = _affirmations!.data[index];
