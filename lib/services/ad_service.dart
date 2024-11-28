@@ -100,7 +100,7 @@ class AdService {
 
   /// Banner reklam yükleme
   Future<void> loadBannerAd({AdCallbacks? callbacks}) async {
-    if (_bannerState == AdLoadState.loading) return;
+    if (_bannerAd != null || _bannerState == AdLoadState.loading) return;
     _bannerState = AdLoadState.loading;
 
     _bannerAd = BannerAd(
@@ -126,7 +126,8 @@ class AdService {
 
   /// Geçiş reklamı yükleme
   Future<void> loadInterstitialAd({AdCallbacks? callbacks}) async {
-    if (_interstitialState == AdLoadState.loading) return;
+    if (_interstitialAd != null || _interstitialState == AdLoadState.loading)
+      return;
     if (_interstitialLoadAttempts >= _config.maxFailedLoadAttempts) return;
 
     _interstitialState = AdLoadState.loading;
@@ -161,7 +162,7 @@ class AdService {
 
   /// Ödüllü reklam yükleme
   Future<void> loadRewardedAd({AdCallbacks? callbacks}) async {
-    if (_rewardedState == AdLoadState.loading) return;
+    if (_rewardedAd != null || _rewardedState == AdLoadState.loading) return;
     if (_rewardedLoadAttempts >= _config.maxFailedLoadAttempts) return;
 
     _rewardedState = AdLoadState.loading;
@@ -196,7 +197,7 @@ class AdService {
 
   /// Native reklam yükleme
   Future<void> loadNativeAd({AdCallbacks? callbacks}) async {
-    if (_nativeState == AdLoadState.loading) return;
+    if (_nativeAd != null || _nativeState == AdLoadState.loading) return;
     _nativeState = AdLoadState.loading;
 
     _nativeAd = NativeAd(
@@ -222,7 +223,7 @@ class AdService {
 
   /// AppOpen reklam yükleme
   Future<void> loadAppOpenAd({AdCallbacks? callbacks}) async {
-    if (_appOpenState == AdLoadState.loading) return;
+    if (_appOpenAd != null || _appOpenState == AdLoadState.loading) return;
     _appOpenState = AdLoadState.loading;
 
     await AppOpenAd.load(
