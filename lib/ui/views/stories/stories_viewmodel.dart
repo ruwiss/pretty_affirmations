@@ -18,7 +18,10 @@ class StoriesViewmodel extends BaseViewModel {
   Story get story => _story!;
 
   void init(BuildContext context) async {
-    adService.loadBannerAd();
+    adService.loadBannerAd(
+      key: 'stories',
+      callbacks: AdCallbacks(onAdLoaded: () => notifyListeners()),
+    );
     final locale = context.read<AppBase>().localeStr;
     runBusyFuture(_getDailyStory(locale));
     _listenLocale();

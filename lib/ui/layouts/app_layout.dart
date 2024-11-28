@@ -44,7 +44,7 @@ class _AppLayoutState extends State<AppLayout> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     _adService.handleAppStateChange(state);
     if (state == AppLifecycleState.resumed) {
-      _adService.showAppOpenAdIfAvailable();
+      _adService.showAppOpenAd();
     }
     super.didChangeAppLifecycleState(state);
   }

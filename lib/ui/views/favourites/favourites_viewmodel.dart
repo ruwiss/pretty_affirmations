@@ -3,14 +3,20 @@ import 'package:hayiqu/hayiqu.dart';
 import 'package:pretty_affirmations/common/common.dart';
 import 'package:pretty_affirmations/generated/l10n.dart';
 import 'package:pretty_affirmations/models/favourites/favourites.dart';
+import 'package:pretty_affirmations/services/ad_service.dart';
 import 'package:pretty_affirmations/services/favourites_service.dart';
 import 'package:share_plus/share_plus.dart';
 
 class FavouritesViewmodel extends BaseViewModel {
   final _favouritesService = getIt<FavouritesService>();
+  final adService = AdService();
 
   FavouritesViewmodel() {
     _getFavourites();
+    adService.loadBannerAd(
+      key: 'favourites',
+      callbacks: AdCallbacks(onAdLoaded: () => notifyListeners()),
+    );
   }
 
   List<Favourites> _favourites = [];
@@ -33,6 +39,4 @@ class FavouritesViewmodel extends BaseViewModel {
 ${S.of(context).shareText(kAppUrl)}
 """);
   }
-
-  
 }

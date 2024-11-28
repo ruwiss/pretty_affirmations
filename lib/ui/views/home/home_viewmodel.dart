@@ -48,7 +48,7 @@ class HomeViewModel extends BaseViewModel {
     _affirmations = appBase.affirmations;
     _favourites = _favouritesService.getFavourites();
     _scheduleService.checkAndScheduleAffirmations();
-    _adService.loadInterstitialAd();
+    _adService.loadInterstitialAd(key: "home");
   }
 
   void _clearAffirmations() {
@@ -104,7 +104,7 @@ class HomeViewModel extends BaseViewModel {
     if (index > 0 &&
         index % kAffirmationScrollCountForAd == 0 &&
         !_shownAdIndexes.contains(index)) {
-      _adService.showInterstitialAd();
+      _adService.showInterstitialAd(key: "home");
       _shownAdIndexes.add(index);
     }
 

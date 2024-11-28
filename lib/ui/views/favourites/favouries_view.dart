@@ -34,25 +34,35 @@ class FavouriesView extends StatelessWidget {
             if (value.favourites.isEmpty) {
               return _noFavourites(context);
             } else {
-              return ListView.builder(
-                itemCount: value.favourites.length,
-                itemBuilder: (context, index) {
-                  final favourite = value.favourites[index];
-                  return TweenAnimationBuilder<double>(
-                    tween: Tween(begin: 1.0, end: 0.0),
-                    duration: Duration(milliseconds: 500 + (index * 100)),
-                    builder: (context, value, child) {
-                      return Transform.translate(
-                        offset: Offset(0, value * 50),
-                        child: Opacity(
-                          opacity: 1 - value,
-                          child: child,
-                        ),
-                      );
-                    },
-                    child: _favouriteTile(favourite, context, value),
-                  );
-                },
+              return Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: value.favourites.length,
+                      itemBuilder: (context, index) {
+                        final favourite = value.favourites[index];
+                        return TweenAnimationBuilder<double>(
+                          tween: Tween(begin: 1.0, end: 0.0),
+                          duration: Duration(milliseconds: 500 + (index * 100)),
+                          builder: (context, value, child) {
+                            return Transform.translate(
+                              offset: Offset(0, value * 50),
+                              child: Opacity(
+                                opacity: 1 - value,
+                                child: child,
+                              ),
+                            );
+                          },
+                          child: _favouriteTile(favourite, context, value),
+                        );
+                      },
+                    ),
+                  ),
+                  if (value.adService.isBannerAdLoaded(key:'favourites')) ...[
+                    value.adService.showBannerAd(key:'favourites'),
+                    const Gap(10),
+                  ]
+                ],
               );
             }
           },
