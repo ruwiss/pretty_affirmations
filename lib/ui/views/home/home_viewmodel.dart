@@ -6,6 +6,7 @@ import 'package:pretty_affirmations/generated/l10n.dart';
 import 'package:pretty_affirmations/models/affirmation.dart';
 import 'package:pretty_affirmations/models/favourites/favourites.dart';
 import 'package:pretty_affirmations/models/menu_item.dart';
+import 'package:pretty_affirmations/services/ad_service.dart';
 import 'package:pretty_affirmations/services/api_service.dart';
 import 'package:pretty_affirmations/services/favourites_service.dart';
 import 'package:pretty_affirmations/services/schedule_service.dart';
@@ -24,6 +25,10 @@ class HomeViewModel extends BaseViewModel {
   final _settingsService = getIt.get<SettingsService>();
   final _favouritesService = getIt.get<FavouritesService>();
   final _scheduleService = getIt.get<ScheduleService>();
+  final _adService = AdService();
+
+  // Reklam gösterilen indexleri tutmak için set
+  final Set<int> _shownAdIndexes = {};
 
   final PageController _pageController = PageController();
   PageController get pageController => _pageController;
@@ -43,6 +48,7 @@ class HomeViewModel extends BaseViewModel {
     _affirmations = appBase.affirmations;
     _favourites = _favouritesService.getFavourites();
     _scheduleService.checkAndScheduleAffirmations();
+    _adService.loadInterstitialAd();
   }
 
   void _clearAffirmations() {
@@ -93,6 +99,15 @@ class HomeViewModel extends BaseViewModel {
     if (!_hasReachedEnd && index % 5 == 0) {
       await _getAffirmations(page: _affirmations!.page + 1);
     }
+
+    // Her [kAffirmationScrollCountForAd] katı kaydırmada geçiş reklamı göster
+    if (index > 0 &&
+        index % kAffirmationScrollCountForAd == 0 &&
+        !_shownAdIndexes.contains(index)) {
+      _adService.showInterstitialAd();
+      _shownAdIndexes.add(index);
+    }
+
     final currentAffirmation = _affirmations!.data[index];
     _settingsService.setLastReadAffirmationId(
       currentAffirmation.id,

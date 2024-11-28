@@ -7,6 +7,8 @@ const String kAppUrl =
     "https://play.google.com/store/apps/details?id=$kPackageName";
 const int kLocalDbSchemaVersion = 8;
 
+const int kAffirmationScrollCountForAd = 8;
+
 final AdIds kAdIds = true
     ? AdIds.test()
     : const AdIds(
