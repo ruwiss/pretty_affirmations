@@ -35,13 +35,11 @@ class AdConfig {
   final AdIds adIds;
   final Duration minLoadAttemptDelay;
   final int maxFailedLoadAttempts;
-  final bool enableTestMode;
 
   const AdConfig({
     required this.adIds,
     this.minLoadAttemptDelay = const Duration(seconds: 1),
     this.maxFailedLoadAttempts = 3,
-    this.enableTestMode = false,
   });
 }
 
