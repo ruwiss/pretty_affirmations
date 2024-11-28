@@ -69,6 +69,7 @@ Future<void> myNotifyScheduleInHours({
       title: '$emoji $title',
       body: msg,
       customSound: 'resource://raw/notif',
+      notificationLayout: NotificationLayout.BigText,
     ),
   );
 }
