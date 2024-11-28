@@ -13,11 +13,11 @@ class AdIds {
   final String appOpenId;
 
   const AdIds({
-    required this.bannerId,
-    required this.interstitialId,
-    required this.rewardedId,
-    required this.nativeId,
-    required this.appOpenId,
+    this.bannerId = "",
+    this.interstitialId = "",
+    this.rewardedId = "",
+    this.nativeId = "",
+    this.appOpenId = "",
   });
 
   /// Test reklamları için factory constructor
@@ -33,11 +33,13 @@ class AdIds {
 /// Reklam konfigürasyonu için model
 class AdConfig {
   final AdIds adIds;
+  final bool testAds;
   final Duration minLoadAttemptDelay;
   final int maxFailedLoadAttempts;
 
   const AdConfig({
     required this.adIds,
+    required this.testAds,
     this.minLoadAttemptDelay = const Duration(seconds: 1),
     this.maxFailedLoadAttempts = 3,
   });
@@ -65,6 +67,7 @@ class AdService {
   AdService._internal();
 
   late final AdConfig _config;
+  final AdIds _testAds = AdIds.test();
 
   // Her reklam tipi için Map'ler
   final Map<String, BannerAd?> _bannerAds = {};
@@ -102,7 +105,9 @@ class AdService {
     try {
       final bannerAd = BannerAd(
         size: AdSize.banner,
-        adUnitId: adUnitId ?? _config.adIds.bannerId,
+        adUnitId: _config.testAds
+            ? _testAds.bannerId
+            : adUnitId ?? _config.adIds.bannerId,
         listener: BannerAdListener(
           onAdLoaded: (ad) {
             _bannerStates[key] = AdLoadState.loaded;
@@ -152,7 +157,9 @@ class AdService {
 
     try {
       await InterstitialAd.load(
-        adUnitId: adUnitId ?? _config.adIds.interstitialId,
+        adUnitId: _config.testAds
+            ? _testAds.interstitialId
+            : adUnitId ?? _config.adIds.interstitialId,
         request: const AdRequest(),
         adLoadCallback: InterstitialAdLoadCallback(
           onAdLoaded: (ad) {
@@ -210,7 +217,9 @@ class AdService {
 
     try {
       await RewardedAd.load(
-        adUnitId: adUnitId ?? _config.adIds.rewardedId,
+        adUnitId: _config.testAds
+            ? _testAds.rewardedId
+            : adUnitId ?? _config.adIds.rewardedId,
         request: const AdRequest(),
         rewardedAdLoadCallback: RewardedAdLoadCallback(
           onAdLoaded: (ad) {
@@ -267,7 +276,9 @@ class AdService {
 
     try {
       final nativeAd = NativeAd(
-        adUnitId: adUnitId ?? _config.adIds.nativeId,
+        adUnitId: _config.testAds
+            ? _testAds.nativeId
+            : adUnitId ?? _config.adIds.nativeId,
         factoryId: 'adFactoryMedium',
         listener: NativeAdListener(
           onAdLoaded: (ad) {
@@ -320,7 +331,9 @@ class AdService {
 
     try {
       await AppOpenAd.load(
-        adUnitId: adUnitId ?? _config.adIds.appOpenId,
+        adUnitId: _config.testAds
+            ? _testAds.appOpenId
+            : adUnitId ?? _config.adIds.appOpenId,
         request: const AdRequest(),
         adLoadCallback: AppOpenAdLoadCallback(
           onAdLoaded: (ad) {

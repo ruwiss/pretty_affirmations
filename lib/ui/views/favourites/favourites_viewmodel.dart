@@ -15,6 +15,7 @@ class FavouritesViewmodel extends BaseViewModel {
     _getFavourites();
     adService.loadBannerAd(
       key: 'favourites',
+      adUnitId: kFavouritesBannerAdId,
       callbacks: AdCallbacks(onAdLoaded: () => notifyListeners()),
     );
   }

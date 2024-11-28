@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hayiqu/hayiqu.dart';
 import 'package:pretty_affirmations/app/base.dart';
+import 'package:pretty_affirmations/common/common.dart';
 import 'package:pretty_affirmations/common/extensions/string_extensions.dart';
 import 'package:pretty_affirmations/models/story.dart';
 import 'package:pretty_affirmations/services/ad_service.dart';
@@ -20,6 +21,7 @@ class StoriesViewmodel extends BaseViewModel {
   void init(BuildContext context) async {
     adService.loadBannerAd(
       key: 'stories',
+      adUnitId: kStoryBannerAdId,
       callbacks: AdCallbacks(onAdLoaded: () => notifyListeners()),
     );
     final locale = context.read<AppBase>().localeStr;

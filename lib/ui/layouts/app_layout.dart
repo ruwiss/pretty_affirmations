@@ -29,7 +29,7 @@ class _AppLayoutState extends State<AppLayout> with WidgetsBindingObserver {
   }
 
   Future<void> _initAds() async {
-    _adService.init(AdConfig(adIds: kAdIds));
+    _adService.init(const AdConfig(adIds: kAdIds, testAds: kTestAds));
     await _adService.loadAppOpenAd();
   }
 
