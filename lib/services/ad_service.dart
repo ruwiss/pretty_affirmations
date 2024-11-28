@@ -126,8 +126,9 @@ class AdService {
 
   /// Geçiş reklamı yükleme
   Future<void> loadInterstitialAd({AdCallbacks? callbacks}) async {
-    if (_interstitialAd != null || _interstitialState == AdLoadState.loading)
+    if (_interstitialAd != null || _interstitialState == AdLoadState.loading) {
       return;
+    }
     if (_interstitialLoadAttempts >= _config.maxFailedLoadAttempts) return;
 
     _interstitialState = AdLoadState.loading;
@@ -263,6 +264,10 @@ class AdService {
     }
   }
 
+  /// Banner reklamın yüklenip yüklenmediğini kontrol et
+  bool get isBannerAdLoaded =>
+      _bannerAd != null && _bannerState == AdLoadState.loaded;
+
   /// Reklam gösterilmeden önce yükleme kontrolü ve yükleme
   Future<bool> _ensureAdLoaded(AdType type) async {
     if (isAdLoaded(type)) return true;
@@ -288,12 +293,13 @@ class AdService {
     return isAdLoaded(type);
   }
 
-  /// Banner reklamı gösterme
+  /// Banner reklamı göster
   Widget showBannerAd() {
-    _ensureAdLoaded(AdType.banner);
-    if (_bannerAd == null) return const SizedBox.shrink();
-    return Container(
-      alignment: Alignment.center,
+    if (!isBannerAdLoaded) {
+      return const SizedBox();
+    }
+
+    return SizedBox(
       width: _bannerAd!.size.width.toDouble(),
       height: _bannerAd!.size.height.toDouble(),
       child: AdWidget(ad: _bannerAd!),

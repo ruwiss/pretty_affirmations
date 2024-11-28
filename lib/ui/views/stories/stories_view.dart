@@ -13,6 +13,10 @@ class StoriesView extends StatelessWidget {
       children: [
         _buildDateText(context),
         const Gap(15),
+        if (viewModel.adService.isBannerAdLoaded) ...[
+          viewModel.adService.showBannerAd(),
+          const Gap(15),
+        ],
         _buildTitle(viewModel.story.title),
         const Gap(12),
         _buildStoryContent(viewModel.story.content),
