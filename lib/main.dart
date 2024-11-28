@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hayiqu/hayiqu.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:pretty_affirmations/app/locator.dart';
@@ -13,6 +16,7 @@ void main() async {
   await initializeDateFormatting();
   await setupLocator(registerDependencies);
   await NotificationController.initializeLocalNotifications();
+  unawaited(MobileAds.instance.initialize());
   runApp(const MyApp());
 }
 
@@ -32,8 +36,9 @@ class MyApp extends StatelessWidget {
             locale: value.locale,
             builder: (context, child) {
               return MediaQuery(
-                data: MediaQuery.of(context)
-                    .copyWith(textScaler: const TextScaler.linear(1.0)),
+                data: MediaQuery.of(context).copyWith(
+                  textScaler: const TextScaler.linear(1.0),
+                ),
                 child: child!,
               );
             },

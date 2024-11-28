@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:hayiqu/hayiqu.dart';
 import 'package:pretty_affirmations/app/router.dart';
 import 'package:pretty_affirmations/common/common.dart';
+import 'package:pretty_affirmations/services/ad_service.dart';
 import 'package:pretty_affirmations/ui/widgets/splash_svg_button.dart';
 
-class AppLayout extends StatelessWidget {
+class AppLayout extends StatefulWidget {
   final Widget child;
   final String location;
   const AppLayout({
@@ -14,9 +15,36 @@ class AppLayout extends StatelessWidget {
   });
 
   @override
+  State<AppLayout> createState() => _AppLayoutState();
+}
+
+class _AppLayoutState extends State<AppLayout> with WidgetsBindingObserver {
+  final _adService = AdService();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _adService.loadAppOpenAd();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _adService.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    _adService.handleAppStateChange(state);
+    super.didChangeAppLifecycleState(state);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: child,
+      body: widget.child,
       bottomNavigationBar: _buildBottomNavigationBar(context),
     );
   }
@@ -64,7 +92,7 @@ class AppLayout extends StatelessWidget {
     required String svg,
     required String route,
   }) {
-    final bool isEnabled = location.startsWith(route);
+    final bool isEnabled = widget.location.startsWith(route);
     final bool isHome = route == AppRouter.homeRoute;
 
     return SplashSvgButton(
