@@ -25,7 +25,12 @@ class _AppLayoutState extends State<AppLayout> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _adService.loadAppOpenAd();
+    _initAds();
+  }
+
+  Future<void> _initAds() async {
+    _adService.init(AdConfig(adIds: AdIds.test()));
+    await _adService.loadAppOpenAd();
   }
 
   @override
@@ -38,6 +43,9 @@ class _AppLayoutState extends State<AppLayout> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     _adService.handleAppStateChange(state);
+    if (state == AppLifecycleState.resumed) {
+      _adService.showAppOpenAdIfAvailable();
+    }
     super.didChangeAppLifecycleState(state);
   }
 

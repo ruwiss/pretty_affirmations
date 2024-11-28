@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 /// Reklam yükleme durumlarını takip etmek için enum
-enum AdLoadState { initial, loading, loaded, error }
+enum AdLoadState { initial, loading, loaded, error, shown }
 
 /// Reklam kimliklerini tutmak için model
 class AdIds {
@@ -89,10 +89,13 @@ class AdService {
   int _interstitialLoadAttempts = 0;
   int _rewardedLoadAttempts = 0;
   DateTime? _lastInterstitialShowTime;
+  bool _isInitialized = false;
 
   /// Servisi başlatmak için init metodu
   void init(AdConfig config) {
+    if (_isInitialized) return;
     _config = config;
+    _isInitialized = true;
     // Sadece AppOpen reklamını yükle
     loadAppOpenAd();
   }
@@ -408,13 +411,20 @@ class AdService {
     await _appOpenAd!.show();
   }
 
-  /// Uygulama yaşam döngüsü değişikliklerini yönetme
+  /// App lifecycle değişikliklerini yönet
   void handleAppStateChange(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      showAppOpenAd();
-    } else if (state == AppLifecycleState.paused) {
-      loadAppOpenAd();
+      showAppOpenAdIfAvailable();
     }
+  }
+
+  /// App Open reklamı varsa göster
+  void showAppOpenAdIfAvailable() {
+    if (_appOpenAd == null) return;
+    if (_appOpenState != AdLoadState.loaded) return;
+
+    _appOpenAd!.show();
+    _appOpenState = AdLoadState.shown;
   }
 
   /// Kaynakları temizleme
