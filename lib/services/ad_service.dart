@@ -1,8 +1,54 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 /// Reklam yükleme durumlarını takip etmek için enum
 enum AdLoadState { initial, loading, loaded, error, shown }
+
+/// Reklam hatalarını tanımlamak için enum
+enum AdErrorType {
+  network, // Ağ bağlantısı hatası
+  timeout, // Zaman aşımı hatası
+  noFill, // Reklam bulunamadı (error code 3)
+  invalid, // Geçersiz reklam kimliği
+  unknown // Bilinmeyen hata
+}
+
+/// Reklam durumunu yönetmek için sınıf
+class AdState {
+  AdLoadState loadState;
+  int loadAttempts;
+  DateTime? lastShowTime;
+  DateTime? lastAttemptTime;
+  AdErrorType? lastError;
+  Duration retryDelay;
+
+  AdState({
+    this.loadState = AdLoadState.initial,
+    this.loadAttempts = 0,
+    this.lastShowTime,
+    this.lastAttemptTime,
+    this.lastError,
+    this.retryDelay = const Duration(seconds: 1),
+  });
+
+  bool get canRetry => loadAttempts < 3;
+
+  void incrementAttempts() {
+    loadAttempts++;
+    lastAttemptTime = DateTime.now();
+    // Üstel artış ile bekleme süresini güncelle
+    retryDelay = Duration(seconds: pow(2, loadAttempts).toInt());
+  }
+
+  void reset() {
+    loadState = AdLoadState.initial;
+    loadAttempts = 0;
+    lastError = null;
+    retryDelay = const Duration(seconds: 1);
+  }
+}
 
 /// Reklam kimliklerini tutmak için model
 class AdIds {
@@ -25,7 +71,7 @@ class AdIds {
         bannerId: 'ca-app-pub-3940256099942544/6300978111',
         interstitialId: 'ca-app-pub-3940256099942544/1033173712',
         rewardedId: 'ca-app-pub-3940256099942544/5224354917',
-        nativeId: 'ca-app-pub-39402error56099942544/2247696110',
+        nativeId: 'ca-app-pub-3940256099942544/2247696110',
         appOpenId: 'ca-app-pub-3940256099942544/9257395921',
       );
 }
@@ -60,6 +106,19 @@ class AdCallbacks {
   });
 }
 
+/// Ödül reklamı için callback model
+class RewardAdCallbacks extends AdCallbacks {
+  final Function(RewardItem)? onRewardEarned;
+
+  const RewardAdCallbacks({
+    super.onAdLoaded,
+    super.onAdFailedToLoad,
+    super.onAdShown,
+    super.onAdDismissed,
+    this.onRewardEarned,
+  });
+}
+
 /// Reklam servisimiz
 class AdService {
   static final AdService _instance = AdService._internal();
@@ -76,31 +135,70 @@ class AdService {
   final Map<String, NativeAd?> _nativeAds = {};
   final Map<String, AppOpenAd?> _appOpenAds = {};
 
-  // Her reklam tipi için state Map'leri
-  final Map<String, AdLoadState> _bannerStates = {};
-  final Map<String, AdLoadState> _interstitialStates = {};
-  final Map<String, AdLoadState> _rewardedStates = {};
-  final Map<String, AdLoadState> _nativeStates = {};
-  final Map<String, AdLoadState> _appOpenStates = {};
-
-  // Her reklam tipi için yükleme deneme sayıları
-  final Map<String, int> _interstitialLoadAttempts = {};
-  final Map<String, int> _rewardedLoadAttempts = {};
-  final Map<String, DateTime?> _lastInterstitialShowTimes = {};
+  // Her reklam tipi için AdState Map'leri
+  final Map<String, AdState> _bannerStates = {};
+  final Map<String, AdState> _interstitialStates = {};
+  final Map<String, AdState> _rewardedStates = {};
+  final Map<String, AdState> _nativeStates = {};
+  final Map<String, AdState> _appOpenStates = {};
 
   /// Servisi başlatmak için init metodu
   void init(AdConfig config) {
+    // Konfigürasyon doğrulaması
+    if (config.adIds.bannerId.isEmpty &&
+        config.adIds.interstitialId.isEmpty &&
+        config.adIds.rewardedId.isEmpty &&
+        config.adIds.nativeId.isEmpty &&
+        config.adIds.appOpenId.isEmpty) {
+      throw ArgumentError('En az bir reklam ID\'si sağlanmalıdır');
+    }
     _config = config;
   }
 
+  /// Hata tipini belirle
+  AdErrorType _getErrorType(LoadAdError error) {
+    switch (error.code) {
+      case 0:
+        return AdErrorType.network;
+      case 1:
+        return AdErrorType.invalid;
+      case 2:
+        return AdErrorType.timeout;
+      case 3:
+        return AdErrorType.noFill;
+      default:
+        return AdErrorType.unknown;
+    }
+  }
+
+  /// Yeniden deneme mantığı
+  Future<void> _handleRetry(
+      String key, AdState state, Future<void> Function() loadAd) async {
+    if (!state.canRetry) return;
+
+    state.incrementAttempts();
+    debugPrint(
+        'Reklam yükleme yeniden deneniyor. Deneme: ${state.loadAttempts}, Bekleme süresi: ${state.retryDelay.inSeconds}s');
+
+    await Future.delayed(state.retryDelay);
+    if (state.loadState != AdLoadState.loaded) {
+      await loadAd();
+    }
+  }
+
   /// Banner reklam yükleme
-  Future<void> loadBannerAd(
-      {String key = "app", String? adUnitId, AdCallbacks? callbacks}) async {
-    if (_bannerAds[key] != null || _bannerStates[key] == AdLoadState.loading) {
+  Future<void> loadBannerAd({
+    String key = "app",
+    String? adUnitId,
+    AdCallbacks? callbacks,
+  }) async {
+    if (_bannerAds[key] != null ||
+        _bannerStates[key]?.loadState == AdLoadState.loading) {
       return;
     }
 
-    _bannerStates[key] = AdLoadState.loading;
+    final state = AdState();
+    _bannerStates[key] = state;
 
     try {
       final bannerAd = BannerAd(
@@ -110,28 +208,25 @@ class AdService {
             : adUnitId ?? _config.adIds.bannerId,
         listener: BannerAdListener(
           onAdLoaded: (ad) {
-            _bannerStates[key] = AdLoadState.loaded;
+            state.loadState = AdLoadState.loaded;
             _bannerAds[key] = ad as BannerAd;
             callbacks?.onAdLoaded?.call();
             debugPrint('Banner reklam yüklendi: $key');
           },
-          onAdFailedToLoad: (ad, error) {
-            _bannerStates[key] = AdLoadState.error;
+          onAdFailedToLoad: (ad, error) async {
+            state.loadState = AdLoadState.error;
+            state.lastError = _getErrorType(error);
             _bannerAds[key]?.dispose();
             _bannerAds[key] = null;
             callbacks?.onAdFailedToLoad?.call(error);
             debugPrint(
                 'Banner reklam yüklenemedi: $key, Hata: ${error.message} (${error.code})');
 
-            // Belirli bir süre sonra tekrar dene
-            if (error.code == 3) {
-              Future.delayed(const Duration(minutes: 1), () {
-                if (_bannerStates[key] != AdLoadState.loaded) {
-                  loadBannerAd(
-                      key: key, adUnitId: adUnitId, callbacks: callbacks);
-                }
-              });
-            }
+            await _handleRetry(
+                key,
+                state,
+                () => loadBannerAd(
+                    key: key, adUnitId: adUnitId, callbacks: callbacks));
           },
         ),
         request: const AdRequest(),
@@ -140,20 +235,27 @@ class AdService {
       await bannerAd.load();
     } catch (e) {
       debugPrint('Banner reklam yüklenirken hata: $key, Hata: $e');
-      _bannerStates[key] = AdLoadState.error;
+      state.loadState = AdLoadState.error;
       _bannerAds[key]?.dispose();
       _bannerAds[key] = null;
     }
   }
 
   /// Geçiş reklamı yükleme
-  Future<void> loadInterstitialAd(
-      {String key = "app", String? adUnitId, AdCallbacks? callbacks}) async {
+  Future<void> loadInterstitialAd({
+    String key = "app",
+    String? adUnitId,
+    AdCallbacks? callbacks,
+  }) async {
     if (_interstitialAds[key] != null ||
-        _interstitialStates[key] == AdLoadState.loading) return;
-    if (_interstitialLoadAttempts[key] == _config.maxFailedLoadAttempts) return;
+        _interstitialStates[key]?.loadState == AdLoadState.loading) return;
+    if (_interstitialStates[key]?.loadAttempts ==
+        _config.maxFailedLoadAttempts) {
+      return;
+    }
 
-    _interstitialStates[key] = AdLoadState.loading;
+    final state = AdState();
+    _interstitialStates[key] = state;
 
     try {
       await InterstitialAd.load(
@@ -163,9 +265,9 @@ class AdService {
         request: const AdRequest(),
         adLoadCallback: InterstitialAdLoadCallback(
           onAdLoaded: (ad) {
+            state.loadState = AdLoadState.loaded;
             _interstitialAds[key] = ad;
-            _interstitialStates[key] = AdLoadState.loaded;
-            _interstitialLoadAttempts[key] = 0;
+            state.loadAttempts = 0;
             callbacks?.onAdLoaded?.call();
             debugPrint('Geçiş reklamı yüklendi: $key');
 
@@ -173,47 +275,49 @@ class AdService {
               onAdDismissedFullScreenContent: (ad) {
                 _interstitialAds[key]?.dispose();
                 _interstitialAds[key] = null;
-                _interstitialStates[key] = AdLoadState.initial;
+                state.loadState = AdLoadState.initial;
                 callbacks?.onAdDismissed?.call();
               },
             );
           },
-          onAdFailedToLoad: (error) {
-            _interstitialStates[key] = AdLoadState.error;
-            _interstitialLoadAttempts[key] =
-                (_interstitialLoadAttempts[key] ?? 0) + 1;
+          onAdFailedToLoad: (error) async {
+            state.loadState = AdLoadState.error;
+            state.lastError = _getErrorType(error);
+            state.loadAttempts++;
             callbacks?.onAdFailedToLoad?.call(error);
             debugPrint(
                 'Geçiş reklamı yüklenemedi: $key, Hata: ${error.message} (${error.code})');
 
-            // Belirli bir süre sonra tekrar dene
-            if (error.code == 3) {
-              Future.delayed(const Duration(minutes: 1), () {
-                if (_interstitialStates[key] != AdLoadState.loaded) {
-                  loadInterstitialAd(
-                      key: key, adUnitId: adUnitId, callbacks: callbacks);
-                }
-              });
-            }
+            await _handleRetry(
+                key,
+                state,
+                () => loadInterstitialAd(
+                    key: key, adUnitId: adUnitId, callbacks: callbacks));
           },
         ),
       );
     } catch (e) {
       debugPrint('Geçiş reklamı yüklenirken hata: $key, Hata: $e');
-      _interstitialStates[key] = AdLoadState.error;
+      state.loadState = AdLoadState.error;
       _interstitialAds[key]?.dispose();
       _interstitialAds[key] = null;
     }
   }
 
   /// Ödül reklamı yükleme
-  Future<void> loadRewardedAd(
-      {String key = "app", String? adUnitId, AdCallbacks? callbacks}) async {
+  Future<void> loadRewardedAd({
+    String key = "app",
+    String? adUnitId,
+    RewardAdCallbacks? callbacks,
+  }) async {
     if (_rewardedAds[key] != null ||
-        _rewardedStates[key] == AdLoadState.loading) return;
-    if (_rewardedLoadAttempts[key] == _config.maxFailedLoadAttempts) return;
+        _rewardedStates[key]?.loadState == AdLoadState.loading) return;
+    if (_rewardedStates[key]?.loadAttempts == _config.maxFailedLoadAttempts) {
+      return;
+    }
 
-    _rewardedStates[key] = AdLoadState.loading;
+    final state = AdState();
+    _rewardedStates[key] = state;
 
     try {
       await RewardedAd.load(
@@ -223,9 +327,9 @@ class AdService {
         request: const AdRequest(),
         rewardedAdLoadCallback: RewardedAdLoadCallback(
           onAdLoaded: (ad) {
+            state.loadState = AdLoadState.loaded;
             _rewardedAds[key] = ad;
-            _rewardedStates[key] = AdLoadState.loaded;
-            _rewardedLoadAttempts[key] = 0;
+            state.loadAttempts = 0;
             callbacks?.onAdLoaded?.call();
             debugPrint('Ödül reklamı yüklendi: $key');
 
@@ -233,46 +337,48 @@ class AdService {
               onAdDismissedFullScreenContent: (ad) {
                 _rewardedAds[key]?.dispose();
                 _rewardedAds[key] = null;
-                _rewardedStates[key] = AdLoadState.initial;
+                state.loadState = AdLoadState.initial;
                 callbacks?.onAdDismissed?.call();
               },
             );
           },
-          onAdFailedToLoad: (error) {
-            _rewardedStates[key] = AdLoadState.error;
-            _rewardedLoadAttempts[key] = (_rewardedLoadAttempts[key] ?? 0) + 1;
+          onAdFailedToLoad: (error) async {
+            state.loadState = AdLoadState.error;
+            state.lastError = _getErrorType(error);
+            state.loadAttempts++;
             callbacks?.onAdFailedToLoad?.call(error);
             debugPrint(
                 'Ödül reklamı yüklenemedi: $key, Hata: ${error.message} (${error.code})');
 
-            // Belirli bir süre sonra tekrar dene
-            if (error.code == 3) {
-              Future.delayed(const Duration(minutes: 1), () {
-                if (_rewardedStates[key] != AdLoadState.loaded) {
-                  loadRewardedAd(
-                      key: key, adUnitId: adUnitId, callbacks: callbacks);
-                }
-              });
-            }
+            await _handleRetry(
+                key,
+                state,
+                () => loadRewardedAd(
+                    key: key, adUnitId: adUnitId, callbacks: callbacks));
           },
         ),
       );
     } catch (e) {
       debugPrint('Ödül reklamı yüklenirken hata: $key, Hata: $e');
-      _rewardedStates[key] = AdLoadState.error;
+      state.loadState = AdLoadState.error;
       _rewardedAds[key]?.dispose();
       _rewardedAds[key] = null;
     }
   }
 
   /// Native reklam yükleme
-  Future<void> loadNativeAd(
-      {String key = "app", String? adUnitId, AdCallbacks? callbacks}) async {
-    if (_nativeAds[key] != null || _nativeStates[key] == AdLoadState.loading) {
+  Future<void> loadNativeAd({
+    String key = "app",
+    String? adUnitId,
+    AdCallbacks? callbacks,
+  }) async {
+    if (_nativeAds[key] != null ||
+        _nativeStates[key]?.loadState == AdLoadState.loading) {
       return;
     }
 
-    _nativeStates[key] = AdLoadState.loading;
+    final state = AdState();
+    _nativeStates[key] = state;
 
     try {
       final nativeAd = NativeAd(
@@ -282,28 +388,25 @@ class AdService {
         factoryId: 'adFactoryMedium',
         listener: NativeAdListener(
           onAdLoaded: (ad) {
+            state.loadState = AdLoadState.loaded;
             _nativeAds[key] = ad as NativeAd;
-            _nativeStates[key] = AdLoadState.loaded;
             callbacks?.onAdLoaded?.call();
             debugPrint('Native reklam yüklendi: $key');
           },
-          onAdFailedToLoad: (ad, error) {
-            _nativeStates[key] = AdLoadState.error;
+          onAdFailedToLoad: (ad, error) async {
+            state.loadState = AdLoadState.error;
+            state.lastError = _getErrorType(error);
             _nativeAds[key]?.dispose();
             _nativeAds[key] = null;
             callbacks?.onAdFailedToLoad?.call(error);
             debugPrint(
                 'Native reklam yüklenemedi: $key, Hata: ${error.message} (${error.code})');
 
-            // Belirli bir süre sonra tekrar dene
-            if (error.code == 3) {
-              Future.delayed(const Duration(minutes: 1), () {
-                if (_nativeStates[key] != AdLoadState.loaded) {
-                  loadNativeAd(
-                      key: key, adUnitId: adUnitId, callbacks: callbacks);
-                }
-              });
-            }
+            await _handleRetry(
+                key,
+                state,
+                () => loadNativeAd(
+                    key: key, adUnitId: adUnitId, callbacks: callbacks));
           },
         ),
         request: const AdRequest(),
@@ -313,21 +416,25 @@ class AdService {
       await nativeAd.load();
     } catch (e) {
       debugPrint('Native reklam yüklenirken hata: $key, Hata: $e');
-      _nativeStates[key] = AdLoadState.error;
+      state.loadState = AdLoadState.error;
       _nativeAds[key]?.dispose();
       _nativeAds[key] = null;
     }
   }
 
   /// AppOpen reklam yükleme
-  Future<void> loadAppOpenAd(
-      {String key = "app", String? adUnitId, AdCallbacks? callbacks}) async {
+  Future<void> loadAppOpenAd({
+    String key = "app",
+    String? adUnitId,
+    AdCallbacks? callbacks,
+  }) async {
     if (_appOpenAds[key] != null ||
-        _appOpenStates[key] == AdLoadState.loading) {
+        _appOpenStates[key]?.loadState == AdLoadState.loading) {
       return;
     }
 
-    _appOpenStates[key] = AdLoadState.loading;
+    final state = AdState();
+    _appOpenStates[key] = state;
 
     try {
       await AppOpenAd.load(
@@ -337,8 +444,8 @@ class AdService {
         request: const AdRequest(),
         adLoadCallback: AppOpenAdLoadCallback(
           onAdLoaded: (ad) {
+            state.loadState = AdLoadState.loaded;
             _appOpenAds[key] = ad;
-            _appOpenStates[key] = AdLoadState.loaded;
             callbacks?.onAdLoaded?.call();
             debugPrint('AppOpen reklam yüklendi: $key');
 
@@ -346,57 +453,66 @@ class AdService {
               onAdDismissedFullScreenContent: (ad) {
                 _appOpenAds[key]?.dispose();
                 _appOpenAds[key] = null;
-                _appOpenStates[key] = AdLoadState.initial;
+                state.loadState = AdLoadState.initial;
                 callbacks?.onAdDismissed?.call();
               },
             );
           },
-          onAdFailedToLoad: (error) {
-            _appOpenStates[key] = AdLoadState.error;
+          onAdFailedToLoad: (error) async {
+            state.loadState = AdLoadState.error;
+            state.lastError = _getErrorType(error);
             callbacks?.onAdFailedToLoad?.call(error);
             debugPrint(
                 'AppOpen reklam yüklenemedi: $key, Hata: ${error.message} (${error.code})');
 
-            // Belirli bir süre sonra tekrar dene
-            if (error.code == 3) {
-              Future.delayed(const Duration(minutes: 1), () {
-                if (_appOpenStates[key] != AdLoadState.loaded) {
-                  loadAppOpenAd(
-                      key: key, adUnitId: adUnitId, callbacks: callbacks);
-                }
-              });
-            }
+            await _handleRetry(
+                key,
+                state,
+                () => loadAppOpenAd(
+                    key: key, adUnitId: adUnitId, callbacks: callbacks));
           },
         ),
       );
     } catch (e) {
       debugPrint('AppOpen reklam yüklenirken hata: $key, Hata: $e');
-      _appOpenStates[key] = AdLoadState.error;
+      state.loadState = AdLoadState.error;
       _appOpenAds[key]?.dispose();
       _appOpenAds[key] = null;
     }
   }
 
+  /// Reklamın gösterilebilir olup olmadığını kontrol et
+  bool _adCanBeShown(AdState? state) {
+    if (state?.lastShowTime == null) return true;
+    final sonGosterimdenBeriGecenSure =
+        DateTime.now().difference(state!.lastShowTime!);
+    return sonGosterimdenBeriGecenSure >= _config.minLoadAttemptDelay;
+  }
+
   /// Banner reklamın yüklenip yüklenmediğini kontrol et
   bool isBannerAdLoaded({String key = "app"}) =>
-      _bannerAds[key] != null && _bannerStates[key] == AdLoadState.loaded;
+      _bannerAds[key] != null &&
+      _bannerStates[key]?.loadState == AdLoadState.loaded;
 
   /// Geçiş reklamının yüklenip yüklenmediğini kontrol et
   bool isInterstitialAdLoaded({String key = "app"}) =>
       _interstitialAds[key] != null &&
-      _interstitialStates[key] == AdLoadState.loaded;
+      _interstitialStates[key]?.loadState == AdLoadState.loaded;
 
   /// Ödül reklamının yüklenip yüklenmediğini kontrol et
   bool isRewardedAdLoaded({String key = "app"}) =>
-      _rewardedAds[key] != null && _rewardedStates[key] == AdLoadState.loaded;
+      _rewardedAds[key] != null &&
+      _rewardedStates[key]?.loadState == AdLoadState.loaded;
 
   /// Native reklamın yüklenip yüklenmediğini kontrol et
   bool isNativeAdLoaded({String key = "app"}) =>
-      _nativeAds[key] != null && _nativeStates[key] == AdLoadState.loaded;
+      _nativeAds[key] != null &&
+      _nativeStates[key]?.loadState == AdLoadState.loaded;
 
   /// AppOpen reklamın yüklenip yüklenmediğini kontrol et
   bool isAppOpenAdLoaded({String key = "app"}) =>
-      _appOpenAds[key] != null && _appOpenStates[key] == AdLoadState.loaded;
+      _appOpenAds[key] != null &&
+      _appOpenStates[key]?.loadState == AdLoadState.loaded;
 
   /// Banner reklamı göster
   Widget showBannerAd({String key = "app"}) {
@@ -413,36 +529,51 @@ class AdService {
   }
 
   /// Geçiş reklamı göster
-  Future<void> showInterstitialAd(
-      {String key = "app", AdCallbacks? callbacks}) async {
+  Future<void> showInterstitialAd({
+    String key = "app",
+    AdCallbacks? callbacks,
+  }) async {
     final interstitialAd = _interstitialAds[key];
-    if (interstitialAd == null || !isInterstitialAdLoaded(key: key)) return;
+    final state = _interstitialStates[key];
 
-    // Son gösterim zamanını kontrol et
-    final lastShowTime = _lastInterstitialShowTimes[key];
-    if (lastShowTime != null) {
-      final timeSinceLastShow = DateTime.now().difference(lastShowTime);
-      if (timeSinceLastShow < _config.minLoadAttemptDelay) return;
+    if (interstitialAd == null || state?.loadState != AdLoadState.loaded) {
+      return;
     }
 
+    // Son gösterim zamanını kontrol et
+    if (!_adCanBeShown(state)) return;
+
     await interstitialAd.show();
-    _lastInterstitialShowTimes[key] = DateTime.now();
+    state?.lastShowTime = DateTime.now();
     callbacks?.onAdShown?.call();
   }
 
   /// Ödül reklamı göster
-  Future<void> showRewardedAd(
-      {String key = "app", AdCallbacks? callbacks}) async {
+  Future<void> showRewardedAd({
+    String key = "app",
+    RewardAdCallbacks? callbacks,
+  }) async {
     final rewardedAd = _rewardedAds[key];
-    if (rewardedAd == null || !isRewardedAdLoaded(key: key)) return;
+    final state = _rewardedStates[key];
 
-    await rewardedAd.show(onUserEarnedReward: (_, reward) {});
+    if (rewardedAd == null || state?.loadState != AdLoadState.loaded) return;
+
+    // Son gösterim zamanını kontrol et
+    if (!_adCanBeShown(state)) return;
+
+    await rewardedAd.show(onUserEarnedReward: (ad, reward) {
+      callbacks?.onRewardEarned?.call(reward);
+      state?.lastShowTime = DateTime.now();
+    });
+
     callbacks?.onAdShown?.call();
   }
 
   /// AppOpen reklamı göster
-  Future<void> showAppOpenAd(
-      {String key = "app", AdCallbacks? callbacks}) async {
+  Future<void> showAppOpenAd({
+    String key = "app",
+    AdCallbacks? callbacks,
+  }) async {
     final appOpenAd = _appOpenAds[key];
     if (appOpenAd == null || !isAppOpenAdLoaded(key: key)) return;
 
@@ -463,36 +594,39 @@ class AdService {
 
   /// Kaynakları temizleme
   void dispose() {
-    for (final ad in _bannerAds.values) {
-      ad?.dispose();
-    }
-    for (final ad in _interstitialAds.values) {
-      ad?.dispose();
-    }
-    for (final ad in _rewardedAds.values) {
-      ad?.dispose();
-    }
-    for (final ad in _nativeAds.values) {
-      ad?.dispose();
-    }
-    for (final ad in _appOpenAds.values) {
-      ad?.dispose();
-    }
+    try {
+      // Reklam instance'larını temizle
+      for (final ad in _bannerAds.values) {
+        ad?.dispose();
+      }
+      for (final ad in _interstitialAds.values) {
+        ad?.dispose();
+      }
+      for (final ad in _rewardedAds.values) {
+        ad?.dispose();
+      }
+      for (final ad in _nativeAds.values) {
+        ad?.dispose();
+      }
+      for (final ad in _appOpenAds.values) {
+        ad?.dispose();
+      }
 
-    _bannerAds.clear();
-    _interstitialAds.clear();
-    _rewardedAds.clear();
-    _nativeAds.clear();
-    _appOpenAds.clear();
+      // Haritaları temizle
+      _bannerAds.clear();
+      _interstitialAds.clear();
+      _rewardedAds.clear();
+      _nativeAds.clear();
+      _appOpenAds.clear();
 
-    _bannerStates.clear();
-    _interstitialStates.clear();
-    _rewardedStates.clear();
-    _nativeStates.clear();
-    _appOpenStates.clear();
-
-    _interstitialLoadAttempts.clear();
-    _rewardedLoadAttempts.clear();
-    _lastInterstitialShowTimes.clear();
+      // Durum haritalarını temizle
+      _bannerStates.clear();
+      _interstitialStates.clear();
+      _rewardedStates.clear();
+      _nativeStates.clear();
+      _appOpenStates.clear();
+    } catch (e) {
+      debugPrint('Kaynakları temizlerken hata oluştu: $e');
+    }
   }
 }
