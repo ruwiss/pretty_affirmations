@@ -150,7 +150,7 @@ class AdService {
         config.adIds.rewardedId.isEmpty &&
         config.adIds.nativeId.isEmpty &&
         config.adIds.appOpenId.isEmpty) {
-      throw ArgumentError('En az bir reklam ID\'si sağlanmalıdır');
+        ArgumentError('En az bir reklam ID\'si sağlanmalıdır');
     }
     _config = config;
   }
