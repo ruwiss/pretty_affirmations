@@ -1,4 +1,3 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:hayiqu/hayiqu.dart';
 import 'package:intl/intl.dart';
 import 'package:pretty_affirmations/app/notification.dart';
@@ -147,11 +146,30 @@ class ScheduleService {
   /// Rastgele bir bildirim emojisi döndürür
   String _randomNotificationEmoji() {
     const emojis = [
-      Emojis.wheater_snowflake,
-      Emojis.sun,
-      Emojis.emotion_sparkling_heart,
-      Emojis.sky_rainbow,
-      Emojis.sky_star
+      "🌟",
+      "💖",
+      "🌈",
+      "☀️",
+      "✨",
+      "🍀",
+      "🌻",
+      "💫",
+      "🕊️",
+      "🌸",
+      "🎉",
+      "🏞️",
+      "💎",
+      "🔥",
+      "📖",
+      "💐",
+      "🧘‍♂️",
+      "🎨",
+      "🚀",
+      "🦋",
+      "🎵",
+      "🌍",
+      "🪐",
+      "💡",
     ];
     return (List.from(emojis)..shuffle()).first;
   }

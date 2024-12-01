@@ -248,7 +248,9 @@ class AdService {
     AdCallbacks? callbacks,
   }) async {
     if (_interstitialAds[key] != null ||
-        _interstitialStates[key]?.loadState == AdLoadState.loading) return;
+        _interstitialStates[key]?.loadState == AdLoadState.loading) {
+      return;
+    }
     if (_interstitialStates[key]?.loadAttempts ==
         _config.maxFailedLoadAttempts) {
       return;
@@ -311,7 +313,9 @@ class AdService {
     RewardAdCallbacks? callbacks,
   }) async {
     if (_rewardedAds[key] != null ||
-        _rewardedStates[key]?.loadState == AdLoadState.loading) return;
+        _rewardedStates[key]?.loadState == AdLoadState.loading) {
+      return;
+    }
     if (_rewardedStates[key]?.loadAttempts == _config.maxFailedLoadAttempts) {
       return;
     }

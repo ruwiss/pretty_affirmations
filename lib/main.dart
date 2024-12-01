@@ -16,6 +16,7 @@ void main() async {
   await initializeDateFormatting();
   await setupLocator(registerDependencies);
   await NotificationController.initializeLocalNotifications();
+  await NotificationController.notificationPermission();
   unawaited(MobileAds.instance.initialize());
   runApp(const MyApp());
 }
