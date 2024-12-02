@@ -63,16 +63,16 @@ class SettingsView extends StatelessWidget {
         ),
         _buildSettingTile(
           context: context,
-          onTap: () {},
+          onTap: () => viewModel.onPrivacyPolicyTap(context),
           title: s.privacyPolicy,
           description: s.privacyPolicyOption,
         ),
-        _buildSettingTile(
-          context: context,
-          onTap: () {},
-          title: s.termsOfUse,
-          description: s.termsOfUseOption,
-        ),
+        // _buildSettingTile(
+        //   context: context,
+        //   onTap: () {},
+        //   title: s.termsOfUse,
+        //   description: s.termsOfUseOption,
+        // ),
       ],
     );
   }
