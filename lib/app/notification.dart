@@ -21,27 +21,14 @@ class NotificationController {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    const DarwinInitializationSettings initializationSettingsIOS =
-        DarwinInitializationSettings(
-      requestSoundPermission: true,
-      requestBadgePermission: true,
-      requestAlertPermission: true,
-    );
-
     const InitializationSettings initializationSettings =
-        InitializationSettings(
-      android: initializationSettingsAndroid,
-      iOS: initializationSettingsIOS,
-    );
+        InitializationSettings(android: initializationSettingsAndroid);
 
-    await flutterLocalNotificationsPlugin.initialize(
-      initializationSettings,
-    );
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
-  static Future<void> clearAllScheduledNotifications() async {
-    await flutterLocalNotificationsPlugin.cancelAll();
-  }
+  static Future<void> clearAllScheduledNotifications() =>
+      flutterLocalNotificationsPlugin.cancelAll();
 
   static Future<void> notificationPermission() async {
     await flutterLocalNotificationsPlugin
@@ -64,8 +51,9 @@ Future<void> myNotifyScheduleInHours({
   required String title,
   required String msg,
   required String emoji,
-  bool repeatNotif = false,
 }) async {
+  if (dateTime.isBefore(DateTime.now())) return;
+
   const AndroidNotificationDetails androidPlatformChannelSpecifics =
       AndroidNotificationDetails(
     channelKey,
@@ -77,15 +65,8 @@ Future<void> myNotifyScheduleInHours({
     color: Colors.deepPurple,
   );
 
-  const DarwinNotificationDetails iOSPlatformChannelSpecifics =
-      DarwinNotificationDetails(
-    sound: 'notif.wav',
-  );
-
-  const NotificationDetails platformChannelSpecifics = NotificationDetails(
-    android: androidPlatformChannelSpecifics,
-    iOS: iOSPlatformChannelSpecifics,
-  );
+  const NotificationDetails platformChannelSpecifics =
+      NotificationDetails(android: androidPlatformChannelSpecifics);
 
   final scheduledDate = tz.TZDateTime.from(
     DateTime(
@@ -104,9 +85,8 @@ Future<void> myNotifyScheduleInHours({
     msg,
     scheduledDate,
     platformChannelSpecifics,
-    androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+    androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
     uiLocalNotificationDateInterpretation:
         UILocalNotificationDateInterpretation.absoluteTime,
-    matchDateTimeComponents: repeatNotif ? DateTimeComponents.time : null,
   );
 }

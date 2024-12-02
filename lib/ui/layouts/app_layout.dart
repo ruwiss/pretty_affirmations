@@ -18,14 +18,50 @@ class AppLayout extends StatefulWidget {
   State<AppLayout> createState() => _AppLayoutState();
 }
 
-class _AppLayoutState extends State<AppLayout> with WidgetsBindingObserver {
+class _AppLayoutState extends State<AppLayout>
+    with WidgetsBindingObserver, TickerProviderStateMixin {
   final _adService = AdService();
+
+  late final AnimationController _breathingController;
+  late final Animation<double> _slideAnimation;
+  late final Animation<Offset> _breathingAnimation;
+  late final AnimationController _initialSlideController;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _initAds();
+
+    // Başlangıç slide animasyonu için controller
+    _initialSlideController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    )..forward();
+
+    // Nefes alma animasyonu için controller
+    _breathingController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 3),
+    )..repeat(reverse: true);
+
+    // İlk giriş animasyonu
+    _slideAnimation = Tween<double>(
+      begin: -100.0,
+      end: 10.0,
+    ).animate(CurvedAnimation(
+      parent: _initialSlideController,
+      curve: Curves.easeOutCubic,
+    ));
+
+    // Yatay nefes alma animasyonu
+    _breathingAnimation = Tween<Offset>(
+      begin: const Offset(0, 0),
+      end: const Offset(0.2, 0), // Sola doğru hareket miktarı
+    ).animate(CurvedAnimation(
+      parent: _breathingController,
+      curve: Curves.easeInOut,
+    ));
   }
 
   Future<void> _initAds() async {
@@ -35,6 +71,8 @@ class _AppLayoutState extends State<AppLayout> with WidgetsBindingObserver {
 
   @override
   void dispose() {
+    _breathingController.dispose();
+    _initialSlideController.dispose();
     WidgetsBinding.instance.removeObserver(this);
     _adService.dispose();
     super.dispose();
@@ -52,7 +90,13 @@ class _AppLayoutState extends State<AppLayout> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: widget.child,
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          widget.child,
+          _buildRemoveAdsButton(context),
+        ],
+      ),
       bottomNavigationBar: _buildBottomNavigationBar(context),
     );
   }
@@ -125,5 +169,42 @@ class _AppLayoutState extends State<AppLayout> with WidgetsBindingObserver {
       return isHome ? 1.3 : 0.85;
     }
     return isHome ? 1.0 : 0.65;
+  }
+
+  Widget _buildRemoveAdsButton(BuildContext context) {
+    return AnimatedBuilder(
+      animation:
+          Listenable.merge([_initialSlideController, _breathingController]),
+      builder: (context, child) {
+        return Positioned(
+          top: 40,
+          right: _slideAnimation.value,
+          child: SlideTransition(
+            position: _breathingAnimation,
+            child: GestureDetector(
+              onTap: () {},
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                decoration: BoxDecoration(
+                    color: context.colors.tertiary.withAlpha(230),
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(
+                      color: context.colors.primary,
+                    )),
+                child: const Text(
+                  "Remove Ads",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    height: 1.2,
+                    letterSpacing: .5,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 }
