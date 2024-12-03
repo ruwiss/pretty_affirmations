@@ -20,10 +20,13 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'zh';
 
-  static String m0(appUrl) => "看看这个应用程序：${appUrl}\n\n它提供肯定语，帮助您坚持目标并保持动力。";
+  static String m0(expirationDate) => "到期日期: ${expirationDate}";
+
+  static String m1(appUrl) => "看看这个应用程序：${appUrl}\n\n它提供肯定语，帮助您坚持目标并保持动力。";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "alreadyProUser": MessageLookupByLibrary.simpleMessage("您已经有一个活跃的计划"),
         "annualDescription": MessageLookupByLibrary.simpleMessage("年度计费"),
         "applyInfo": MessageLookupByLibrary.simpleMessage("请重新启动应用以使更改生效"),
         "bestValue": MessageLookupByLibrary.simpleMessage("最佳价值"),
@@ -54,9 +57,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "notificationTitle8": MessageLookupByLibrary.simpleMessage("为你准备的肯定"),
         "notificationTitle9": MessageLookupByLibrary.simpleMessage("我准备好了！"),
         "ok": MessageLookupByLibrary.simpleMessage("应用"),
+        "planIsActiveDescription": m0,
+        "planIsNotActiveDescription":
+            MessageLookupByLibrary.simpleMessage("您的订阅未激活"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("隐私政策"),
         "privacyPolicyOption":
             MessageLookupByLibrary.simpleMessage("获取有关我们应用数据安全和隐私政策的详细信息"),
+        "purchaseSuccess": MessageLookupByLibrary.simpleMessage("购买成功"),
         "reminders": MessageLookupByLibrary.simpleMessage("提醒"),
         "remindersOption":
             MessageLookupByLibrary.simpleMessage("设置您的提醒，选择最合适的时间段，将肯定句融入日常生活"),
@@ -71,7 +78,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "share": MessageLookupByLibrary.simpleMessage("分享"),
         "shareOption": MessageLookupByLibrary.simpleMessage(
             "与您的朋友和亲人分享我们的应用，为他们的生活带来积极影响"),
-        "shareText": m0,
+        "shareText": m1,
         "stories": MessageLookupByLibrary.simpleMessage("今日故事"),
         "termsOfUse": MessageLookupByLibrary.simpleMessage("使用条款"),
         "termsOfUseOption":

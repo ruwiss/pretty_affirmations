@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
+import 'package:hayiqu/hayiqu.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 /// RevenueCat servis durumlarını takip etmek için enum
@@ -86,10 +87,7 @@ class RevenueCatService {
   CustomerInfo? get customerInfo => _customerInfo;
   Offerings? get offerings => _offerings;
   Stream<bool> get purchaseStream => _purchaseController.stream;
-  bool get isProUser =>
-      _customerInfo?.entitlements.active.keys
-          .any((key) => _config.entitlementIds.contains(key)) ??
-      false;
+  bool get isProUser => _customerInfo?.activeSubscriptions.isNotEmpty ?? false;
 
   /// Servisin hazır olup olmadığını kontrol eder
   bool get isReady => _status == RevenueCatStatus.ready;
@@ -199,6 +197,23 @@ class RevenueCatService {
       _handleError(error, callbacks?.onError);
       rethrow;
     }
+  }
+
+  /// Kullanıcının satın aldığı paketi getirir
+  Package? getPurchasedPackage() {
+    // Aktif yetkileri al
+    final activeEntitlements = getActiveEntitlements();
+    if (activeEntitlements.isEmpty) return null;
+
+    // Aktif yetkilerden birini kullanarak paketi bul
+    for (final entitlement in activeEntitlements) {
+      final package = getPackageByIdentifier(entitlement.productIdentifier);
+      if (package != null) {
+        return package;
+      }
+    }
+
+    return null;
   }
 
   /// Satın almaları geri yükler
@@ -324,9 +339,16 @@ class RevenueCatService {
   }
 
   /// Belirli bir paketi ID'ye göre getirir
-  Package? getPackageById(String identifier) {
-    return _offerings?.current?.availablePackages
-        .firstWhere((package) => package.identifier == identifier);
+  Package? getPackageByIdentifier(String identifier) {
+    identifier.log();
+    try {
+      return _offerings?.current?.availablePackages.firstWhere(
+        (package) => package.storeProduct.identifier.contains(identifier),
+      );
+    } catch (e) {
+      _logDebug('Paket bulunamadı: $identifier');
+      return null;
+    }
   }
 
   /// Aylık paketi getirir
@@ -377,7 +399,7 @@ class RevenueCatService {
         .replaceAll(" ", "");
   }
 
-  /// Paket süresini getirir (örn: "1 ay", "1 yıl")
+  /// Paket süresini getirir
   String getPackageDuration(Package package) {
     final identifier = package.identifier.toLowerCase();
     if (identifier.contains('month')) return 'Monthly';
@@ -414,5 +436,24 @@ class RevenueCatService {
     } catch (e) {
       _logDebug('Özellik ayarlama başarısız: $e');
     }
+  }
+
+  /// Belirli bir paketin satın alınıp alınmadığını kontrol eder
+  bool isPackagePurchased(Package package) {
+    // Aktif yetkileri al
+    final activeEntitlements = getActiveEntitlements();
+    if (activeEntitlements.isEmpty) return false;
+
+    // Paket ID'sini kontrol et
+    final packageIdentifier = package.storeProduct.defaultOption?.id;
+
+    // Aktif yetkiler içinde bu pakete ait bir yetki var mı kontrol et
+    return activeEntitlements.any((entitlement) {
+      // Paket ID'si ile yetki ID'si eşleşiyorsa veya
+      // yetki ID'si config'de tanımlı yetkilerden biriyse true döner
+      entitlement.productPlanIdentifier.log();
+      return entitlement.productPlanIdentifier == packageIdentifier ||
+          _config.entitlementIds.contains(entitlement.identifier);
+    });
   }
 }

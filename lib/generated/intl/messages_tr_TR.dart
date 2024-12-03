@@ -20,11 +20,15 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'tr_TR';
 
-  static String m0(appUrl) =>
+  static String m0(expirationDate) => "Bitiş Tarihi: ${expirationDate}";
+
+  static String m1(appUrl) =>
       "Bu uygulamayı kontrol edin: ${appUrl}\n\nHedeflerinizde tutunmak ve motivasyonunuzu korumak için olumlamalar sağlar.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "alreadyProUser":
+            MessageLookupByLibrary.simpleMessage("Şuanda aktif planınız var"),
         "annualDescription":
             MessageLookupByLibrary.simpleMessage("Yıllık faturalama"),
         "applyInfo": MessageLookupByLibrary.simpleMessage(
@@ -67,10 +71,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "notificationTitle8":
             MessageLookupByLibrary.simpleMessage("Senin için bir olumlama"),
         "ok": MessageLookupByLibrary.simpleMessage("Tamam"),
+        "planIsActiveDescription": m0,
+        "planIsNotActiveDescription":
+            MessageLookupByLibrary.simpleMessage("Aboneliğiniz aktif değil"),
         "privacyPolicy":
             MessageLookupByLibrary.simpleMessage("Gizlilik Politikası"),
         "privacyPolicyOption": MessageLookupByLibrary.simpleMessage(
             "Uygulamamızın veri güvenliği ve gizlilik politikası hakkında detaylı bilgi alın"),
+        "purchaseSuccess":
+            MessageLookupByLibrary.simpleMessage("Satın alma başarılı"),
         "reminders": MessageLookupByLibrary.simpleMessage("Hatırlatıcılar"),
         "remindersOption": MessageLookupByLibrary.simpleMessage(
             "Olumlamaları rutininize uydurmak için en uygun zaman diliminde hatırlatıcılarınızı ayarlayın"),
@@ -86,7 +95,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "share": MessageLookupByLibrary.simpleMessage("Paylaş"),
         "shareOption": MessageLookupByLibrary.simpleMessage(
             "Uygulamamızı arkadaşlarınız ve yakın çevreniz ile paylaşın ve hayatlarına pozitif dokunuşlar yapın"),
-        "shareText": m0,
+        "shareText": m1,
         "stories": MessageLookupByLibrary.simpleMessage("Günün Hikayesi"),
         "termsOfUse":
             MessageLookupByLibrary.simpleMessage("Şartlar ve Koşullar"),

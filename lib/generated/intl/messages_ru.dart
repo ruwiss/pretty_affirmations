@@ -20,11 +20,15 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ru';
 
-  static String m0(appUrl) =>
+  static String m0(expirationDate) => "Дата окончания: ${expirationDate}";
+
+  static String m1(appUrl) =>
       "Посмотрите это приложение: ${appUrl}\n\nОно предоставляет утверждения, которые помогут вам придерживаться своих целей и сохранять мотивацию.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "alreadyProUser": MessageLookupByLibrary.simpleMessage(
+            "У вас уже есть активная подписка"),
         "annualDescription":
             MessageLookupByLibrary.simpleMessage("Годовая подписка"),
         "applyInfo": MessageLookupByLibrary.simpleMessage(
@@ -68,10 +72,15 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Аффирмация для тебя"),
         "notificationTitle9": MessageLookupByLibrary.simpleMessage("Я готов!"),
         "ok": MessageLookupByLibrary.simpleMessage("Применить"),
+        "planIsActiveDescription": m0,
+        "planIsNotActiveDescription":
+            MessageLookupByLibrary.simpleMessage("Ваша подписка не активна"),
         "privacyPolicy":
             MessageLookupByLibrary.simpleMessage("Политика конфиденциальности"),
         "privacyPolicyOption": MessageLookupByLibrary.simpleMessage(
             "Получите подробную информацию о безопасности данных и политике конфиденциальности нашего приложения"),
+        "purchaseSuccess":
+            MessageLookupByLibrary.simpleMessage("Покупка прошла успешно"),
         "reminders": MessageLookupByLibrary.simpleMessage("Напоминания"),
         "remindersOption": MessageLookupByLibrary.simpleMessage(
             "Установите напоминания на удобное время, чтобы встроить утверждения в свой распорядок"),
@@ -87,7 +96,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "share": MessageLookupByLibrary.simpleMessage("Поделиться"),
         "shareOption": MessageLookupByLibrary.simpleMessage(
             "Поделитесь нашим приложением с друзьями и близкими, внесите позитивные изменения в их жизни"),
-        "shareText": m0,
+        "shareText": m1,
         "stories": MessageLookupByLibrary.simpleMessage("История дня"),
         "termsOfUse": MessageLookupByLibrary.simpleMessage("Правила и условия"),
         "termsOfUseOption": MessageLookupByLibrary.simpleMessage(

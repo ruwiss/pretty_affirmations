@@ -68,5 +68,9 @@
     "savings": "tasarruf",
     "annualDescription": "Yıllık faturalama",
     "monthlyDescription": "Aylık faturalama",
-    "twoMonthDescription": "2 aylık faturalama"
+    "twoMonthDescription": "2 aylık faturalama",
+    "purchaseSuccess": "Satın alma başarılı",
+    "planIsActiveDescription": "Bitiş Tarihi: {expirationDate}",
+    "planIsNotActiveDescription": "Aboneliğiniz aktif değil",
+    "alreadyProUser": "Şuanda aktif planınız var"
 }

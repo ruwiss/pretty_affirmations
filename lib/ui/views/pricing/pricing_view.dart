@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hayiqu/hayiqu.dart';
+import 'package:intl/intl.dart';
 import 'package:pretty_affirmations/generated/l10n.dart';
 import 'package:pretty_affirmations/services/revenue_cat_service.dart';
 import 'package:pretty_affirmations/ui/views/pricing/pricing_viewmodel.dart';
@@ -42,42 +43,18 @@ class PricingView extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.close,
-                            color: Theme.of(context).colorScheme.onSurface),
-                        onPressed: () => context.pop(),
-                      ),
-                      Text(
-                        s.removeAds,
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.onSurface,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(width: 40),
-                    ],
+                _buildTitleBar(context, s),
+                const Gap(20),
+                _buildIconView(),
+                const Gap(20),
+                if (viewModel.hasError) ...[
+                  Text(
+                    viewModel.error.toString(),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Colors.red),
                   ),
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.workspace_premium_rounded,
-                    size: 60,
-                    color: Colors.amber,
-                  ),
-                ),
-                const SizedBox(height: 20),
+                  const Gap(20),
+                ],
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 24),
                   padding: const EdgeInsets.all(24),
@@ -118,7 +95,11 @@ class PricingView extends StatelessWidget {
                                   'twoMonth' => "24% ${s.savings}",
                                   _ => null,
                                 },
-                                onTap: () {},
+                                isPurchased: viewModel.isPurchased(package),
+                                customerInfo: viewModel.customerInfo,
+                                onTap:   () {
+                                  viewModel.onPlanSelected(context, package);
+                                },
                               ),
                               const Gap(16),
                             ],
@@ -127,23 +108,68 @@ class PricingView extends StatelessWidget {
                         .toList(),
                   ),
                 ),
-                const SizedBox(height: 24),
-                TextButton.icon(
-                  onPressed: () async {
-                    await RevenueCatService().restorePurchases();
-                  },
-                  icon: Icon(Icons.restore, color: context.colors.onSurface),
-                  label: Text(
-                    s.restorePurchases,
-                    style: TextStyle(color: context.colors.onSurface),
-                  ),
-                ),
-                const SizedBox(height: 32),
+                const Gap(24),
+                if (viewModel.customerInfo == null) ...[
+                  _buildRestoreSubscription(viewModel, context, s),
+                  const Gap(32),
+                ]
               ],
             ),
           ),
         ),
       ],
+    );
+  }
+
+  TextButton _buildRestoreSubscription(
+      PricingViewModel viewModel, BuildContext context, S s) {
+    return TextButton.icon(
+      onPressed: () => viewModel.restorePurchases(context),
+      icon: Icon(Icons.restore, color: context.colors.onSurface),
+      label: Text(
+        s.restorePurchases,
+        style: TextStyle(color: context.colors.onSurface),
+      ),
+    );
+  }
+
+  Container _buildIconView() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+      ),
+      child: const Icon(
+        Icons.workspace_premium_rounded,
+        size: 60,
+        color: Colors.amber,
+      ),
+    );
+  }
+
+  Padding _buildTitleBar(BuildContext context, S s) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            icon: Icon(Icons.close,
+                color: Theme.of(context).colorScheme.onSurface),
+            onPressed: () => context.pop(),
+          ),
+          Text(
+            s.removeAds,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onSurface,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(width: 40),
+        ],
+      ),
     );
   }
 }

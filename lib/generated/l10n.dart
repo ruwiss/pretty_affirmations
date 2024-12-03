@@ -529,6 +529,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Purchase Successful`
+  String get purchaseSuccess {
+    return Intl.message(
+      'Purchase Successful',
+      name: 'purchaseSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expiration Date: {expirationDate}`
+  String planIsActiveDescription(Object expirationDate) {
+    return Intl.message(
+      'Expiration Date: $expirationDate',
+      name: 'planIsActiveDescription',
+      desc: '',
+      args: [expirationDate],
+    );
+  }
+
+  /// `Your subscription is not active`
+  String get planIsNotActiveDescription {
+    return Intl.message(
+      'Your subscription is not active',
+      name: 'planIsNotActiveDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You already have an active plan`
+  String get alreadyProUser {
+    return Intl.message(
+      'You already have an active plan',
+      name: 'alreadyProUser',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

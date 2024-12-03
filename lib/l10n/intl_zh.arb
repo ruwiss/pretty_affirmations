@@ -69,5 +69,9 @@
     "savings": "节省",
     "annualDescription": "年度计费",
     "monthlyDescription": "每月计费",
-    "twoMonthDescription": "两个月计费"
+    "twoMonthDescription": "两个月计费",
+    "purchaseSuccess": "购买成功",
+    "planIsActiveDescription": "到期日期: {expirationDate}",
+    "planIsNotActiveDescription": "您的订阅未激活",
+    "alreadyProUser": "您已经有一个活跃的计划"
 }

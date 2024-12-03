@@ -20,11 +20,15 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(appUrl) =>
+  static String m0(expirationDate) => "Expiration Date: ${expirationDate}";
+
+  static String m1(appUrl) =>
       "Check out this app: ${appUrl}\n\nIt provides affirmations to stick to your goals and stay motivated.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "alreadyProUser": MessageLookupByLibrary.simpleMessage(
+            "You already have an active plan"),
         "annualDescription":
             MessageLookupByLibrary.simpleMessage("Annual Billing"),
         "applyInfo": MessageLookupByLibrary.simpleMessage(
@@ -70,9 +74,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "notificationTitle9":
             MessageLookupByLibrary.simpleMessage("I\'m Ready!"),
         "ok": MessageLookupByLibrary.simpleMessage("Apply"),
+        "planIsActiveDescription": m0,
+        "planIsNotActiveDescription": MessageLookupByLibrary.simpleMessage(
+            "Your subscription is not active"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
         "privacyPolicyOption": MessageLookupByLibrary.simpleMessage(
             "Get detailed information about our app’s data security and privacy policy"),
+        "purchaseSuccess":
+            MessageLookupByLibrary.simpleMessage("Purchase Successful"),
         "reminders": MessageLookupByLibrary.simpleMessage("Reminders"),
         "remindersOption": MessageLookupByLibrary.simpleMessage(
             "Set your reminders for the most suitable time slot to fit affirmations into your routine"),
@@ -89,7 +98,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "share": MessageLookupByLibrary.simpleMessage("Share"),
         "shareOption": MessageLookupByLibrary.simpleMessage(
             "Share our app with your friends and close ones and make a positive impact on their lives"),
-        "shareText": m0,
+        "shareText": m1,
         "stories": MessageLookupByLibrary.simpleMessage("Story of the day"),
         "termsOfUse":
             MessageLookupByLibrary.simpleMessage("Terms and Conditions"),

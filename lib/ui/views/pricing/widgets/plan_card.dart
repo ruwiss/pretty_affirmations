@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hayiqu/hayiqu.dart';
+import 'package:intl/intl.dart';
 import 'package:pretty_affirmations/generated/l10n.dart';
+import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 
 class PricingPlanCard extends StatelessWidget {
   final String title;
@@ -8,6 +11,8 @@ class PricingPlanCard extends StatelessWidget {
   final String? savings;
   final bool isPopular;
   final VoidCallback onTap;
+  final bool isPurchased;
+  final CustomerInfo? customerInfo;
 
   const PricingPlanCard({
     super.key,
@@ -17,6 +22,8 @@ class PricingPlanCard extends StatelessWidget {
     this.savings,
     required this.isPopular,
     required this.onTap,
+    this.isPurchased = false,
+    this.customerInfo,
   });
 
   @override
@@ -43,7 +50,7 @@ class PricingPlanCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (isPopular) ...[
+                      if (isPopular && !isPurchased) ...[
                         Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 8,
@@ -62,33 +69,41 @@ class PricingPlanCard extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        const Gap(8),
                       ],
                       Text(
                         title,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
-                          color: Theme.of(context).colorScheme.onSurface,
+                          color: isPurchased
+                              ? Theme.of(context)
+                                  .colorScheme
+                                  .onSurface
+                                  .withOpacity(.5)
+                              : Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        description,
-                        style: TextStyle(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onSurface
-                              .withOpacity(0.6),
-                          fontSize: 14,
+                      const Gap(4),
+                      if (!isPurchased)
+                        Text(
+                          description,
+                          style: TextStyle(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurface
+                                .withOpacity(0.6),
+                            fontSize: 14,
+                          ),
                         ),
-                      ),
-                      if (savings != null) ...[
-                        const SizedBox(height: 4),
+                      if (customerInfo != null && isPurchased)
+                        _buildCustomerInfo(context, S.of(context)),
+                      if (savings != null && !isPurchased) ...[
+                        const Gap(4),
                         Text(
                           savings!,
-                          style: TextStyle(
-                            color: Colors.pink.shade300,
+                          style: const TextStyle(
+                            color: Colors.green,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -99,16 +114,36 @@ class PricingPlanCard extends StatelessWidget {
                 Text(
                   price,
                   style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.onSurface,
-                  ),
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: isPurchased
+                          ? Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withOpacity(0.5)
+                          : Theme.of(context).colorScheme.onSurface),
                 ),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildCustomerInfo(BuildContext context, S s) {
+    final activeEntitlements = customerInfo!.entitlements.active;
+    late final String text;
+    if (customerInfo!.entitlements.active.isNotEmpty) {
+      final expiration = activeEntitlements.values.first.expirationDate!;
+      final expirationDate = DateTime.parse(expiration).mmddyyyy;
+      text = s.planIsActiveDescription(expirationDate);
+    } else {
+      text = s.planIsNotActiveDescription;
+    }
+    return Text(
+      text,
+      style: const TextStyle(color: Colors.blueGrey),
     );
   }
 }

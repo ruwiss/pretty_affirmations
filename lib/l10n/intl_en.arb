@@ -69,5 +69,9 @@
     "savings": "Savings",
     "annualDescription": "Annual Billing",
     "monthlyDescription": "Monthly Billing",
-    "twoMonthDescription": "Two Month Billing"
+    "twoMonthDescription": "Two Month Billing",
+    "purchaseSuccess": "Purchase Successful",
+    "planIsActiveDescription": "Expiration Date: {expirationDate}",
+    "planIsNotActiveDescription": "Your subscription is not active",
+    "alreadyProUser": "You already have an active plan"
 }

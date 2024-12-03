@@ -69,5 +69,9 @@
     "savings": "экономия",
     "annualDescription": "Годовая подписка",
     "monthlyDescription": "Ежемесячная подписка",
-    "twoMonthDescription": "Двухмесячная подписка"
+    "twoMonthDescription": "Двухмесячная подписка",
+    "purchaseSuccess": "Покупка прошла успешно",
+    "planIsActiveDescription": "Дата окончания: {expirationDate}",
+    "planIsNotActiveDescription": "Ваша подписка не активна",
+    "alreadyProUser": "У вас уже есть активная подписка"
 }
