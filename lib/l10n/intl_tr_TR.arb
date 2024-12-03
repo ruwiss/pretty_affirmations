@@ -58,5 +58,15 @@
     "notificationTitle5": "Dinlenme Vakti",
     "notificationTitle6": "Fark Yarat",
     "notificationTitle7": "Günün Olumlaması",
-    "notificationTitle8": "Senin için bir olumlama"
+    "notificationTitle8": "Senin için bir olumlama",
+    "removeAds": "Reklamları Kaldır",
+    "restorePurchases": "Aboneliği Geri Yükle",
+    "monthlyPremium": "Aylık Premium",
+    "twoMonthPremium": "2 Aylık Premium",
+    "yearlyPremium": "Yıllık Premium",
+    "bestValue": "En İyi Değer",
+    "savings": "tasarruf",
+    "annualDescription": "Yıllık faturalama",
+    "monthlyDescription": "Aylık faturalama",
+    "twoMonthDescription": "2 aylık faturalama"
 }

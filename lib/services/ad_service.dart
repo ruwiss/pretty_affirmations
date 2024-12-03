@@ -82,12 +82,14 @@ class AdConfig {
   final bool testAds;
   final Duration minLoadAttemptDelay;
   final int maxFailedLoadAttempts;
+  final bool disabled;
 
   const AdConfig({
     required this.adIds,
     required this.testAds,
     this.minLoadAttemptDelay = const Duration(seconds: 1),
     this.maxFailedLoadAttempts = 3,
+    this.disabled = false,
   });
 }
 
@@ -150,7 +152,7 @@ class AdService {
         config.adIds.rewardedId.isEmpty &&
         config.adIds.nativeId.isEmpty &&
         config.adIds.appOpenId.isEmpty) {
-        ArgumentError('En az bir reklam ID\'si sağlanmalıdır');
+      ArgumentError('En az bir reklam ID\'si sağlanmalıdır');
     }
     _config = config;
   }
@@ -192,6 +194,7 @@ class AdService {
     String? adUnitId,
     AdCallbacks? callbacks,
   }) async {
+    if (_config.disabled) return;
     if (_bannerAds[key] != null ||
         _bannerStates[key]?.loadState == AdLoadState.loading) {
       return;
@@ -247,6 +250,7 @@ class AdService {
     String? adUnitId,
     AdCallbacks? callbacks,
   }) async {
+       if (_config.disabled) return;
     if (_interstitialAds[key] != null ||
         _interstitialStates[key]?.loadState == AdLoadState.loading) {
       return;
@@ -312,6 +316,7 @@ class AdService {
     String? adUnitId,
     RewardAdCallbacks? callbacks,
   }) async {
+       if (_config.disabled) return;
     if (_rewardedAds[key] != null ||
         _rewardedStates[key]?.loadState == AdLoadState.loading) {
       return;
@@ -376,6 +381,7 @@ class AdService {
     String? adUnitId,
     AdCallbacks? callbacks,
   }) async {
+    if (_config.disabled) return;
     if (_nativeAds[key] != null ||
         _nativeStates[key]?.loadState == AdLoadState.loading) {
       return;
@@ -432,6 +438,7 @@ class AdService {
     String? adUnitId,
     AdCallbacks? callbacks,
   }) async {
+    if (_config.disabled) return;
     if (_appOpenAds[key] != null ||
         _appOpenStates[key]?.loadState == AdLoadState.loading) {
       return;
@@ -537,6 +544,7 @@ class AdService {
     String key = "app",
     AdCallbacks? callbacks,
   }) async {
+    if (_config.disabled) return;
     final interstitialAd = _interstitialAds[key];
     final state = _interstitialStates[key];
 
@@ -557,6 +565,7 @@ class AdService {
     String key = "app",
     RewardAdCallbacks? callbacks,
   }) async {
+    if (_config.disabled) return;
     final rewardedAd = _rewardedAds[key];
     final state = _rewardedStates[key];
 
@@ -578,6 +587,7 @@ class AdService {
     String key = "app",
     AdCallbacks? callbacks,
   }) async {
+    if (_config.disabled) return;
     final appOpenAd = _appOpenAds[key];
     if (appOpenAd == null || !isAppOpenAdLoaded(key: key)) return;
 

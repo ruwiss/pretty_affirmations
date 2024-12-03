@@ -2,6 +2,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
+import 'package:hayiqu/hayiqu.dart';
 
 const String channelKey = 'affirmation_alert_0';
 
@@ -52,8 +53,12 @@ Future<void> myNotifyScheduleInHours({
   required String msg,
   required String emoji,
 }) async {
-  if (dateTime.isBefore(DateTime.now())) return;
+  final now = DateTime.now();
+  if (dateTime.isBefore(now)) return;
 
+  final diff = dateTime.difference(now);
+  "${diff.inHours} saat sonrasına planlandı".log();
+  
   const AndroidNotificationDetails androidPlatformChannelSpecifics =
       AndroidNotificationDetails(
     channelKey,

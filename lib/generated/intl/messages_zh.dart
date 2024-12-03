@@ -24,7 +24,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "annualDescription": MessageLookupByLibrary.simpleMessage("年度计费"),
         "applyInfo": MessageLookupByLibrary.simpleMessage("请重新启动应用以使更改生效"),
+        "bestValue": MessageLookupByLibrary.simpleMessage("最佳价值"),
         "cancel": MessageLookupByLibrary.simpleMessage("取消"),
         "comingSoon": MessageLookupByLibrary.simpleMessage("敬请期待..."),
         "dailyNotificationSetting":
@@ -38,6 +40,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "leaveComment": MessageLookupByLibrary.simpleMessage("留下评论"),
         "leaveCommentOption":
             MessageLookupByLibrary.simpleMessage("为我们开发者留下关于应用的评论，帮助我们改进应用"),
+        "monthlyDescription": MessageLookupByLibrary.simpleMessage("每月计费"),
+        "monthlyPremium": MessageLookupByLibrary.simpleMessage("每月高级版"),
         "noAffirmations": MessageLookupByLibrary.simpleMessage("此类别中还没有肯定句"),
         "noFavourites": MessageLookupByLibrary.simpleMessage("您还没有收藏"),
         "notificationTitle1": MessageLookupByLibrary.simpleMessage("稍等一下！"),
@@ -56,6 +60,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "reminders": MessageLookupByLibrary.simpleMessage("提醒"),
         "remindersOption":
             MessageLookupByLibrary.simpleMessage("设置您的提醒，选择最合适的时间段，将肯定句融入日常生活"),
+        "removeAds": MessageLookupByLibrary.simpleMessage("移除广告"),
+        "restorePurchases": MessageLookupByLibrary.simpleMessage("恢复订阅"),
+        "savings": MessageLookupByLibrary.simpleMessage("节省"),
         "selectCategory": MessageLookupByLibrary.simpleMessage("分类"),
         "selectCategoryOption": MessageLookupByLibrary.simpleMessage(
             "请选择您希望在应用中看到的分类。我们将为您推荐符合您喜好的内容"),
@@ -69,6 +76,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "termsOfUse": MessageLookupByLibrary.simpleMessage("使用条款"),
         "termsOfUseOption":
             MessageLookupByLibrary.simpleMessage("阅读使用我们应用所需遵循的条款和条件"),
-        "topics": MessageLookupByLibrary.simpleMessage("分类")
+        "topics": MessageLookupByLibrary.simpleMessage("分类"),
+        "twoMonthDescription": MessageLookupByLibrary.simpleMessage("两个月计费"),
+        "twoMonthPremium": MessageLookupByLibrary.simpleMessage("两个月高级版"),
+        "yearlyPremium": MessageLookupByLibrary.simpleMessage("年度高级版")
       };
 }

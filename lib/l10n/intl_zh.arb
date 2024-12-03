@@ -59,5 +59,15 @@
     "notificationTitle6": "创造不同",
     "notificationTitle7": "今天的肯定",
     "notificationTitle8": "为你准备的肯定",
-    "notificationTitle9": "我准备好了！"
+    "notificationTitle9": "我准备好了！",
+    "removeAds": "移除广告",
+    "restorePurchases": "恢复订阅",
+    "monthlyPremium": "每月高级版",
+    "twoMonthPremium": "两个月高级版",
+    "yearlyPremium": "年度高级版",
+    "bestValue": "最佳价值",
+    "savings": "节省",
+    "annualDescription": "年度计费",
+    "monthlyDescription": "每月计费",
+    "twoMonthDescription": "两个月计费"
 }

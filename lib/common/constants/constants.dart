@@ -20,3 +20,6 @@ const AdIds kAdIds = AdIds(
 
 const String kFavouritesBannerAdId = "ca-app-pub-1923752572867502/2040761477";
 const String kStoryBannerAdId = "ca-app-pub-1923752572867502/3880285315";
+
+const String kRevenueCatPublicApiKey = "goog_gceeqxVMmScMdUJQAXouNXUkUcG";
+

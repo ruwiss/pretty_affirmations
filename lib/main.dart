@@ -9,7 +9,9 @@ import 'package:pretty_affirmations/app/locator.dart';
 import 'package:pretty_affirmations/app/router.dart';
 import 'package:pretty_affirmations/app/base.dart';
 import 'app/notification.dart';
+import 'common/common.dart';
 import 'generated/l10n.dart';
+import 'services/revenue_cat_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +20,13 @@ void main() async {
   await NotificationController.initializeLocalNotifications();
   await NotificationController.notificationPermission();
   unawaited(MobileAds.instance.initialize());
+  await RevenueCatService().initialize(
+    config: const RevenueCatConfig(
+      apiKey: kRevenueCatPublicApiKey,
+      entitlementIds: ["entlc18e64a153"],
+      debugLogsEnabled: true,
+    ),
+  );
   runApp(const MyApp());
 }
 

@@ -59,5 +59,15 @@
     "notificationTitle6": "Make a Difference",
     "notificationTitle7": "Affirmation of the Day",
     "notificationTitle8": "An Affirmation for You",
-    "notificationTitle9": "I'm Ready!"
+    "notificationTitle9": "I'm Ready!",
+    "removeAds": "Remove Ads",
+    "restorePurchases": "Restore Subscription",
+    "monthlyPremium": "Monthly Premium",
+    "twoMonthPremium": "2 Month Premium",
+    "yearlyPremium": "Yearly Premium",
+    "bestValue": "Best Value",
+    "savings": "Savings",
+    "annualDescription": "Annual Billing",
+    "monthlyDescription": "Monthly Billing",
+    "twoMonthDescription": "Two Month Billing"
 }

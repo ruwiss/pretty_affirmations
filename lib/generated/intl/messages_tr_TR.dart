@@ -25,8 +25,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "annualDescription":
+            MessageLookupByLibrary.simpleMessage("Yıllık faturalama"),
         "applyInfo": MessageLookupByLibrary.simpleMessage(
             "Değişikliklerin geçerli olabilmesi için uygulamayı yeniden başlatınız"),
+        "bestValue": MessageLookupByLibrary.simpleMessage("En İyi Değer"),
         "cancel": MessageLookupByLibrary.simpleMessage("İptal"),
         "comingSoon": MessageLookupByLibrary.simpleMessage("YAKINDA..."),
         "dailyNotificationSetting":
@@ -40,6 +43,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "leaveComment": MessageLookupByLibrary.simpleMessage("Yorum Bırak"),
         "leaveCommentOption": MessageLookupByLibrary.simpleMessage(
             "Biz geliştiricilere uygulama hakkında bir yorum bırakın ve uygulamamızın gelişmesine katkı sağlayın"),
+        "monthlyDescription":
+            MessageLookupByLibrary.simpleMessage("Aylık faturalama"),
+        "monthlyPremium": MessageLookupByLibrary.simpleMessage("Aylık Premium"),
         "noAffirmations": MessageLookupByLibrary.simpleMessage(
             "Bu kategoriye ait olumlamalar henüz yok"),
         "noFavourites":
@@ -68,6 +74,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "reminders": MessageLookupByLibrary.simpleMessage("Hatırlatıcılar"),
         "remindersOption": MessageLookupByLibrary.simpleMessage(
             "Olumlamaları rutininize uydurmak için en uygun zaman diliminde hatırlatıcılarınızı ayarlayın"),
+        "removeAds": MessageLookupByLibrary.simpleMessage("Reklamları Kaldır"),
+        "restorePurchases":
+            MessageLookupByLibrary.simpleMessage("Aboneliği Geri Yükle"),
+        "savings": MessageLookupByLibrary.simpleMessage("tasarruf"),
         "selectCategory": MessageLookupByLibrary.simpleMessage("Kategoriler"),
         "selectCategoryOption": MessageLookupByLibrary.simpleMessage(
             "Uygulamada görmek istediğiniz kategorileri seçin. Sizin için istediğiniz türde içerikler göstereceğiz"),
@@ -82,6 +92,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Şartlar ve Koşullar"),
         "termsOfUseOption": MessageLookupByLibrary.simpleMessage(
             "Uygulamamızı kullanmak için uymanız gereken şartlar ve koşulları okuyun"),
-        "topics": MessageLookupByLibrary.simpleMessage("Kategoriler")
+        "topics": MessageLookupByLibrary.simpleMessage("Kategoriler"),
+        "twoMonthDescription":
+            MessageLookupByLibrary.simpleMessage("2 aylık faturalama"),
+        "twoMonthPremium":
+            MessageLookupByLibrary.simpleMessage("2 Aylık Premium"),
+        "yearlyPremium": MessageLookupByLibrary.simpleMessage("Yıllık Premium")
       };
 }

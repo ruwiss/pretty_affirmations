@@ -25,8 +25,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "annualDescription":
+            MessageLookupByLibrary.simpleMessage("Годовая подписка"),
         "applyInfo": MessageLookupByLibrary.simpleMessage(
             "Пожалуйста, перезапустите приложение, чтобы изменения вступили в силу"),
+        "bestValue": MessageLookupByLibrary.simpleMessage("Лучшая цена"),
         "cancel": MessageLookupByLibrary.simpleMessage("Отмена"),
         "comingSoon": MessageLookupByLibrary.simpleMessage("Скоро будет..."),
         "dailyNotificationSetting": MessageLookupByLibrary.simpleMessage(
@@ -41,6 +44,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Оставить комментарий"),
         "leaveCommentOption": MessageLookupByLibrary.simpleMessage(
             "Оставьте комментарий о приложении для разработчиков и помогите улучшить его"),
+        "monthlyDescription":
+            MessageLookupByLibrary.simpleMessage("Ежемесячная подписка"),
+        "monthlyPremium":
+            MessageLookupByLibrary.simpleMessage("Ежемесячный премиум"),
         "noAffirmations": MessageLookupByLibrary.simpleMessage(
             "В этой категории пока нет утверждений"),
         "noFavourites":
@@ -68,6 +75,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "reminders": MessageLookupByLibrary.simpleMessage("Напоминания"),
         "remindersOption": MessageLookupByLibrary.simpleMessage(
             "Установите напоминания на удобное время, чтобы встроить утверждения в свой распорядок"),
+        "removeAds": MessageLookupByLibrary.simpleMessage("Удалить рекламу"),
+        "restorePurchases":
+            MessageLookupByLibrary.simpleMessage("Восстановить подписку"),
+        "savings": MessageLookupByLibrary.simpleMessage("экономия"),
         "selectCategory": MessageLookupByLibrary.simpleMessage("Категории"),
         "selectCategoryOption": MessageLookupByLibrary.simpleMessage(
             "Выберите категории, которые хотите видеть в приложении. Мы покажем вам контент, соответствующий вашим предпочтениям"),
@@ -81,6 +92,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "termsOfUse": MessageLookupByLibrary.simpleMessage("Правила и условия"),
         "termsOfUseOption": MessageLookupByLibrary.simpleMessage(
             "Прочитайте правила и условия использования нашего приложения"),
-        "topics": MessageLookupByLibrary.simpleMessage("Категории")
+        "topics": MessageLookupByLibrary.simpleMessage("Категории"),
+        "twoMonthDescription":
+            MessageLookupByLibrary.simpleMessage("Двухмесячная подписка"),
+        "twoMonthPremium":
+            MessageLookupByLibrary.simpleMessage("Двухмесячный премиум"),
+        "yearlyPremium": MessageLookupByLibrary.simpleMessage("Годовой премиум")
       };
 }

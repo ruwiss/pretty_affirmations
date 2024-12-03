@@ -6,6 +6,8 @@ import 'package:pretty_affirmations/ui/views/favourites/favouries_view.dart';
 import 'package:pretty_affirmations/ui/views/favourites/favourites_viewmodel.dart';
 import 'package:pretty_affirmations/ui/views/home/home_view.dart';
 import 'package:pretty_affirmations/ui/views/home/home_viewmodel.dart';
+import 'package:pretty_affirmations/ui/views/pricing/pricing_view.dart';
+import 'package:pretty_affirmations/ui/views/pricing/pricing_viewmodel.dart';
 import 'package:pretty_affirmations/ui/views/settings/settings_view.dart';
 import 'package:pretty_affirmations/ui/views/settings/settings_viewmodel.dart';
 import 'package:pretty_affirmations/ui/views/splash/splash_view.dart';
@@ -25,6 +27,7 @@ class AppRouter {
   static const String topicsRoute = '/topics';
   static const String storiesRoute = '/stories';
   static const String settingsRoute = '/settings';
+  static const String pricingRoute = '/pricing';
 
   static final routerKey = GlobalKey<NavigatorState>();
 
@@ -32,8 +35,12 @@ class AppRouter {
     initialLocation: _initialRoute,
     navigatorKey: routerKey,
     routes: [
-      _buildRoute(splashRoute, (context, extra) => SplashViewmodel(),
-          const SplashView()),
+      _buildRoute(
+        splashRoute,
+        (context, extra) => SplashViewmodel(),
+        const SplashView(),
+      ),
+      _buildPricingRoute(),
       ShellRoute(
         builder: (context, state, child) {
           return AppLayout(
@@ -87,6 +94,26 @@ class AppRouter {
         transitionsBuilder: (context, animation, secondaryAnimation, child) =>
             FadeTransition(
           opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+          child: child,
+        ),
+      ),
+    );
+  }
+
+  static GoRoute _buildPricingRoute() {
+    return GoRoute(
+      path: pricingRoute,
+      pageBuilder: (context, state) => CustomTransitionPage(
+        child: ChangeNotifierProvider(
+          create: (context) => PricingViewModel(),
+          child: const PricingView(),
+        ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(1.0, 0.0),
+            end: Offset.zero,
+          ).animate(animation),
           child: child,
         ),
       ),

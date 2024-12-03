@@ -429,6 +429,106 @@ class S {
       args: [],
     );
   }
+
+  /// `Remove Ads`
+  String get removeAds {
+    return Intl.message(
+      'Remove Ads',
+      name: 'removeAds',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Restore Subscription`
+  String get restorePurchases {
+    return Intl.message(
+      'Restore Subscription',
+      name: 'restorePurchases',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Monthly Premium`
+  String get monthlyPremium {
+    return Intl.message(
+      'Monthly Premium',
+      name: 'monthlyPremium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `2 Month Premium`
+  String get twoMonthPremium {
+    return Intl.message(
+      '2 Month Premium',
+      name: 'twoMonthPremium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yearly Premium`
+  String get yearlyPremium {
+    return Intl.message(
+      'Yearly Premium',
+      name: 'yearlyPremium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Best Value`
+  String get bestValue {
+    return Intl.message(
+      'Best Value',
+      name: 'bestValue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Savings`
+  String get savings {
+    return Intl.message(
+      'Savings',
+      name: 'savings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Annual Billing`
+  String get annualDescription {
+    return Intl.message(
+      'Annual Billing',
+      name: 'annualDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Monthly Billing`
+  String get monthlyDescription {
+    return Intl.message(
+      'Monthly Billing',
+      name: 'monthlyDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Two Month Billing`
+  String get twoMonthDescription {
+    return Intl.message(
+      'Two Month Billing',
+      name: 'twoMonthDescription',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

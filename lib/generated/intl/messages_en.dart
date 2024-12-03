@@ -25,8 +25,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "annualDescription":
+            MessageLookupByLibrary.simpleMessage("Annual Billing"),
         "applyInfo": MessageLookupByLibrary.simpleMessage(
             "Please restart the application for the changes to take effect"),
+        "bestValue": MessageLookupByLibrary.simpleMessage("Best Value"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "comingSoon": MessageLookupByLibrary.simpleMessage("Coming Soon..."),
         "dailyNotificationSetting":
@@ -40,6 +43,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "leaveComment": MessageLookupByLibrary.simpleMessage("Leave a Comment"),
         "leaveCommentOption": MessageLookupByLibrary.simpleMessage(
             "Leave a comment about the app for us developers and contribute to the improvement of our application"),
+        "monthlyDescription":
+            MessageLookupByLibrary.simpleMessage("Monthly Billing"),
+        "monthlyPremium":
+            MessageLookupByLibrary.simpleMessage("Monthly Premium"),
         "noAffirmations": MessageLookupByLibrary.simpleMessage(
             "There are no affirmations in this category yet"),
         "noFavourites":
@@ -69,6 +76,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "reminders": MessageLookupByLibrary.simpleMessage("Reminders"),
         "remindersOption": MessageLookupByLibrary.simpleMessage(
             "Set your reminders for the most suitable time slot to fit affirmations into your routine"),
+        "removeAds": MessageLookupByLibrary.simpleMessage("Remove Ads"),
+        "restorePurchases":
+            MessageLookupByLibrary.simpleMessage("Restore Subscription"),
+        "savings": MessageLookupByLibrary.simpleMessage("Savings"),
         "selectCategory": MessageLookupByLibrary.simpleMessage("Categories"),
         "selectCategoryOption": MessageLookupByLibrary.simpleMessage(
             "Select the categories you\'d like to see in the app. We\'ll show you content tailored to your preferences"),
@@ -84,6 +95,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Terms and Conditions"),
         "termsOfUseOption": MessageLookupByLibrary.simpleMessage(
             "Read the terms and conditions you must follow to use our app"),
-        "topics": MessageLookupByLibrary.simpleMessage("Categories")
+        "topics": MessageLookupByLibrary.simpleMessage("Categories"),
+        "twoMonthDescription":
+            MessageLookupByLibrary.simpleMessage("Two Month Billing"),
+        "twoMonthPremium":
+            MessageLookupByLibrary.simpleMessage("2 Month Premium"),
+        "yearlyPremium": MessageLookupByLibrary.simpleMessage("Yearly Premium")
       };
 }

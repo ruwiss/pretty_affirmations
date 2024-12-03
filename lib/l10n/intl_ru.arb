@@ -59,5 +59,15 @@
     "notificationTitle6": "Создавай разницу",
     "notificationTitle7": "Аффирмация дня",
     "notificationTitle8": "Аффирмация для тебя",
-    "notificationTitle9": "Я готов!"
+    "notificationTitle9": "Я готов!",
+    "removeAds": "Удалить рекламу",
+    "restorePurchases": "Восстановить подписку",
+    "monthlyPremium": "Ежемесячный премиум",
+    "twoMonthPremium": "Двухмесячный премиум",
+    "yearlyPremium": "Годовой премиум",
+    "bestValue": "Лучшая цена",
+    "savings": "экономия",
+    "annualDescription": "Годовая подписка",
+    "monthlyDescription": "Ежемесячная подписка",
+    "twoMonthDescription": "Двухмесячная подписка"
 }

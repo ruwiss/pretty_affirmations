@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hayiqu/hayiqu.dart';
 import 'package:pretty_affirmations/app/router.dart';
 import 'package:pretty_affirmations/common/common.dart';
+import 'package:pretty_affirmations/generated/l10n.dart';
 import 'package:pretty_affirmations/services/ad_service.dart';
+import 'package:pretty_affirmations/services/revenue_cat_service.dart';
 import 'package:pretty_affirmations/ui/widgets/splash_svg_button.dart';
 
 class AppLayout extends StatefulWidget {
@@ -31,8 +33,10 @@ class _AppLayoutState extends State<AppLayout>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _initAds();
 
+    _initAds(RevenueCatService().isProUser);
+
+    if (RevenueCatService().isProUser) return;
     // Başlangıç slide animasyonu için controller
     _initialSlideController = AnimationController(
       vsync: this,
@@ -64,8 +68,9 @@ class _AppLayoutState extends State<AppLayout>
     ));
   }
 
-  Future<void> _initAds() async {
-    _adService.init(const AdConfig(adIds: kAdIds, testAds: kTestAds));
+  Future<void> _initAds(bool disabled) async {
+    _adService
+        .init(AdConfig(adIds: kAdIds, testAds: kTestAds, disabled: disabled));
     await _adService.loadAppOpenAd();
   }
 
@@ -94,7 +99,7 @@ class _AppLayoutState extends State<AppLayout>
         alignment: Alignment.center,
         children: [
           widget.child,
-          _buildRemoveAdsButton(context),
+          if (!RevenueCatService().isProUser) _buildRemoveAdsButton(context),
         ],
       ),
       bottomNavigationBar: _buildBottomNavigationBar(context),
@@ -181,8 +186,8 @@ class _AppLayoutState extends State<AppLayout>
           right: _slideAnimation.value,
           child: SlideTransition(
             position: _breathingAnimation,
-            child: GestureDetector(
-              onTap: () {},
+            child: InkWell(
+              onTap: () => context.push(AppRouter.pricingRoute),
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
@@ -192,10 +197,10 @@ class _AppLayoutState extends State<AppLayout>
                     border: Border.all(
                       color: context.colors.primary,
                     )),
-                child: const Text(
-                  "Remove Ads",
+                child: Text(
+                  S.of(context).removeAds,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     height: 1.2,
                     letterSpacing: .5,
                   ),
