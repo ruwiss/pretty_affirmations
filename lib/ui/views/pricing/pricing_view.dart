@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hayiqu/hayiqu.dart';
-import 'package:intl/intl.dart';
 import 'package:pretty_affirmations/generated/l10n.dart';
-import 'package:pretty_affirmations/services/revenue_cat_service.dart';
 import 'package:pretty_affirmations/ui/views/pricing/pricing_viewmodel.dart';
 import 'package:pretty_affirmations/ui/views/pricing/widgets/plan_card.dart';
 
@@ -97,7 +95,7 @@ class PricingView extends StatelessWidget {
                                 },
                                 isPurchased: viewModel.isPurchased(package),
                                 customerInfo: viewModel.customerInfo,
-                                onTap:   () {
+                                onTap: () {
                                   viewModel.onPlanSelected(context, package);
                                 },
                               ),
@@ -109,7 +107,7 @@ class PricingView extends StatelessWidget {
                   ),
                 ),
                 const Gap(24),
-                if (viewModel.customerInfo == null) ...[
+                if (!viewModel.isProUser) ...[
                   _buildRestoreSubscription(viewModel, context, s),
                   const Gap(32),
                 ]

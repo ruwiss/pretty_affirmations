@@ -17,8 +17,7 @@ class PricingViewModel extends BaseViewModel {
       RevenueCatService().getFormattedPrice(package);
 
   bool isPurchased(Package package) =>
-      currentPackage != null &&
-      currentPackage!.identifier == package.identifier;
+      RevenueCatService().isPackagePurchased(package);
 
   PricingViewModel() {
     _getPurchasedPackage();
@@ -46,21 +45,18 @@ class PricingViewModel extends BaseViewModel {
     RevenueCatService().purchasePackage(
       package,
       callbacks: RevenueCatCallbacks(
-        onError: (err) => setError(err),
-        onPurchaseStatusChanged: (isOkey) {
-          if (isOkey) {
-            _getPurchasedPackage();
-            _getCustomerInfo();
-            notifyListeners();
+        onCustomerInfoUpdated: (info) {
+          _getCustomerInfo();
+          _getPurchasedPackage();
+          notifyListeners();
 
-            toastification.show(
-              context: context,
-              type: ToastificationType.success,
-              style: ToastificationStyle.flat,
-              autoCloseDuration: const Duration(seconds: 5),
-              title: Text(S.of(context).purchaseSuccess),
-            );
-          }
+          toastification.show(
+            context: context,
+            type: ToastificationType.success,
+            style: ToastificationStyle.flat,
+            autoCloseDuration: const Duration(seconds: 5),
+            title: Text(S.of(context).purchaseSuccess),
+          );
         },
       ),
     );

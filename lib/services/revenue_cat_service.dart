@@ -57,13 +57,11 @@ class RevenueCatConfig {
 class RevenueCatCallbacks {
   final Function(CustomerInfo)? onCustomerInfoUpdated;
   final Function(RevenueCatError)? onError;
-  final Function(bool)? onPurchaseStatusChanged;
   final Function(Offerings)? onOfferingsUpdated;
 
   const RevenueCatCallbacks({
     this.onCustomerInfoUpdated,
     this.onError,
-    this.onPurchaseStatusChanged,
     this.onOfferingsUpdated,
   });
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hayiqu/hayiqu.dart';
-import 'package:intl/intl.dart';
 import 'package:pretty_affirmations/generated/l10n.dart';
 import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 
