@@ -82,9 +82,9 @@ class AdConfig {
   final bool testAds;
   final Duration minLoadAttemptDelay;
   final int maxFailedLoadAttempts;
-  final bool disabled;
+  bool disabled;
 
-  const AdConfig({
+  AdConfig({
     required this.adIds,
     required this.testAds,
     this.minLoadAttemptDelay = const Duration(seconds: 1),
@@ -155,6 +155,10 @@ class AdService {
       ArgumentError('En az bir reklam ID\'si sağlanmalıdır');
     }
     _config = config;
+  }
+
+  void disableAds() {
+    _config.disabled = true;
   }
 
   /// Hata tipini belirle
@@ -250,7 +254,7 @@ class AdService {
     String? adUnitId,
     AdCallbacks? callbacks,
   }) async {
-       if (_config.disabled) return;
+    if (_config.disabled) return;
     if (_interstitialAds[key] != null ||
         _interstitialStates[key]?.loadState == AdLoadState.loading) {
       return;
@@ -316,7 +320,7 @@ class AdService {
     String? adUnitId,
     RewardAdCallbacks? callbacks,
   }) async {
-       if (_config.disabled) return;
+    if (_config.disabled) return;
     if (_rewardedAds[key] != null ||
         _rewardedStates[key]?.loadState == AdLoadState.loading) {
       return;

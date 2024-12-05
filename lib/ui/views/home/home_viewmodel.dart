@@ -29,6 +29,8 @@ class HomeViewModel extends BaseViewModel {
 
   // Reklam gösterilen indexleri tutmak için set
   final Set<int> _shownAdIndexes = {};
+  // Çekilen sayfaları tutmak için yeni set
+  final Set<int> _loadedIndex = {0};
 
   final PageController _pageController = PageController();
   PageController get pageController => _pageController;
@@ -49,6 +51,8 @@ class HomeViewModel extends BaseViewModel {
     _favourites = _favouritesService.getFavourites();
     _scheduleService.checkAndScheduleAffirmations();
     _adService.loadInterstitialAd(key: "home");
+    // İlk sayfa yüklendiğinde set'e ekle
+    _loadedIndex.add(0);
   }
 
   void _clearAffirmations() {
@@ -58,7 +62,11 @@ class HomeViewModel extends BaseViewModel {
 
   Future<void> _getAffirmations({int page = 0}) async {
     if (_isLoading) return;
-    if (page == 0) _clearAffirmations();
+    if (page == 0) {
+      _clearAffirmations();
+      _loadedIndex.clear();
+      _loadedIndex.add(0);
+    }
 
     _isLoading = true;
     final affirmations = await _apiService.getAffirmations(
@@ -96,8 +104,10 @@ class HomeViewModel extends BaseViewModel {
   }
 
   void onPageIndexChanged(int index) async {
+    if (_loadedIndex.contains(index)) return;
     if (!_hasReachedEnd && index % 5 == 0) {
       await _getAffirmations(page: _affirmations!.page + 1);
+      _loadedIndex.add(index);
     }
 
     // Her [kAffirmationScrollCountForAd] katı kaydırmada geçiş reklamı göster

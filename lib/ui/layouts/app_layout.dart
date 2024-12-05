@@ -85,9 +85,11 @@ class _AppLayoutState extends State<AppLayout>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    _adService.handleAppStateChange(state);
-    if (state == AppLifecycleState.resumed) {
-      _adService.showAppOpenAd();
+    if (!RevenueCatService().isProUser) {
+      _adService.handleAppStateChange(state);
+      if (state == AppLifecycleState.resumed) {
+        _adService.showAppOpenAd();
+      }
     }
     super.didChangeAppLifecycleState(state);
   }
