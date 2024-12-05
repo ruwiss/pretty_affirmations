@@ -18,6 +18,9 @@ class SettingsViewmodel extends BaseViewModel {
   }
 
   void onPrivacyPolicyTap(BuildContext context) {
-    launchUrl(Uri.parse(kPrivacyPolicyUrl));
+    launchUrl(
+      Uri.parse(kPrivacyPolicyUrl),
+      mode: LaunchMode.externalApplication,
+    );
   }
 }
