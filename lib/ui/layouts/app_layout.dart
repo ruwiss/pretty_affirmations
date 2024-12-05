@@ -186,7 +186,7 @@ class _AppLayoutState extends State<AppLayout>
           Listenable.merge([_initialSlideController, _breathingController]),
       builder: (context, child) {
         return Positioned(
-          top: 40,
+          top: 48,
           right: _slideAnimation.value,
           child: SlideTransition(
             position: _breathingAnimation,
@@ -194,20 +194,44 @@ class _AppLayoutState extends State<AppLayout>
               onTap: () => context.push(AppRouter.pricingRoute),
               child: Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
                 decoration: BoxDecoration(
-                    color: context.colors.tertiary.withAlpha(230),
-                    borderRadius: BorderRadius.circular(6),
-                    border: Border.all(
-                      color: context.colors.primary,
-                    )),
-                child: Text(
-                  S.of(context).removeAds,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    height: 1.2,
-                    letterSpacing: .5,
+                  gradient: const LinearGradient(
+                    colors: [
+                      Color(0xFFFF6B6B),
+                      Color(0xFFFF9F43),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFFFF6B6B).withOpacity(0.25),
+                      blurRadius: 6,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.workspace_premium_rounded,
+                      size: 16,
+                      color: Colors.white,
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      S.of(context).removeAds,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12,
+                        letterSpacing: 0.3,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

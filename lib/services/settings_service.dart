@@ -80,7 +80,6 @@ class SettingsService {
 
   /// Son okunan affirmation ID'sini ayarlar
   void setLastReadAffirmationId(String id, {String? categoryKey}) {
-    "id: $id : category: $categoryKey".log();
     final key = categoryKey ?? 'all';
     final results = _getLastReadsByCategory(key);
 
