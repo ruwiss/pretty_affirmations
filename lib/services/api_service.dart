@@ -51,16 +51,17 @@ class ApiService {
   Future<Affirmations?> getAffirmations({
     int page = 0,
     required String locale,
-    String? categoryFilter,
+    MenuItem? categoryFilter,
     bool startFromLastRead = false,
   }) async {
     try {
       final String categories =
-          categoryFilter ?? await _getCategoriesString(locale);
+          categoryFilter?.id ?? await _getCategoriesString(locale);
       String url =
           '/affirmations.php?lang=$locale&categories=$categories&page=$page';
       if (startFromLastRead) {
-        final lastReadId = _settings.getLastReadAffirmationId();
+        final lastReadId = _settings.getLastReadAffirmationId(
+            categoryKey: categoryFilter?.categoryKey);
         url += "&lastId=$lastReadId";
       }
 
@@ -95,6 +96,9 @@ class ApiService {
 
   // Günlük giriş için sayaç tutan fonksiyon
   void dailyEntry(String locale) => _http.post("/daily-entry.php?lang=$locale");
+
+  // Satın alım için API'ı bilgilendir
+  void purchaseCounter() => _http.post("/purchases.php");
 
   // API'dan uygulama ayarlarını getiren fonksiyon
   Future<RemoteSettings> getRemoteSettings() async {

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
+import 'package:hayiqu/hayiqu.dart';
 import 'package:pretty_affirmations/common/common.dart';
 import 'package:pretty_affirmations/generated/l10n.dart';
 import 'package:pretty_affirmations/models/app_settings/affirmation_last_reads.dart';
@@ -79,6 +80,7 @@ class SettingsService {
 
   /// Son okunan affirmation ID'sini ayarlar
   void setLastReadAffirmationId(String id, {String? categoryKey}) {
+    "id: $id : category: $categoryKey".log();
     final key = categoryKey ?? 'all';
     final results = _getLastReadsByCategory(key);
 
@@ -92,10 +94,10 @@ class SettingsService {
   }
 
   /// Son okunan affirmation ID'sini getirir
-  String? getLastReadAffirmationId({String? categoryKey}) {
+  String getLastReadAffirmationId({String? categoryKey}) {
     final key = categoryKey ?? 'all';
     final result = _getLastReadsByCategory(key);
-    return result.isEmpty ? null : result.single.lastReadId;
+    return result.isEmpty ? '0' : result.single.lastReadId;
   }
 
   /// Belirli bir kategori için son okumaları getirir

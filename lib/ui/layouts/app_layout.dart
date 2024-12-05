@@ -5,6 +5,7 @@ import 'package:pretty_affirmations/common/common.dart';
 import 'package:pretty_affirmations/generated/l10n.dart';
 import 'package:pretty_affirmations/services/ad_service.dart';
 import 'package:pretty_affirmations/services/revenue_cat_service.dart';
+import 'package:pretty_affirmations/services/settings_service.dart';
 import 'package:pretty_affirmations/ui/widgets/splash_svg_button.dart';
 
 class AppLayout extends StatefulWidget {
@@ -34,7 +35,8 @@ class _AppLayoutState extends State<AppLayout>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
 
-    _initAds(RevenueCatService().isProUser);
+    _initAds(RevenueCatService().isProUser ||
+        !locator<SettingsService>().getAdsEnabled());
 
     if (RevenueCatService().isProUser) return;
     // Başlangıç slide animasyonu için controller

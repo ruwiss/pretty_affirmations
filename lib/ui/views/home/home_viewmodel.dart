@@ -71,7 +71,7 @@ class HomeViewModel extends BaseViewModel {
     final affirmations = await _apiService.getAffirmations(
       locale: _localeStr,
       page: page,
-      categoryFilter: affirmationCategory?.id,
+      categoryFilter: affirmationCategory,
       startFromLastRead: page == 0,
     );
 
