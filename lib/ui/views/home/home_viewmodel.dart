@@ -51,8 +51,6 @@ class HomeViewModel extends BaseViewModel {
     _favourites = _favouritesService.getFavourites();
     _scheduleService.checkAndScheduleAffirmations();
     _adService.loadInterstitialAd(key: "home");
-    // İlk sayfa yüklendiğinde set'e ekle
-    _loadedIndex.add(0);
   }
 
   void _clearAffirmations() {
@@ -64,8 +62,9 @@ class HomeViewModel extends BaseViewModel {
     if (_isLoading) return;
     if (page == 0) {
       _clearAffirmations();
-      _loadedIndex.clear();
-      _loadedIndex.add(0);
+      _loadedIndex
+        ..clear()
+        ..add(0);
     }
 
     _isLoading = true;

@@ -86,16 +86,9 @@ class AppRouter {
   ) {
     return GoRoute(
       path: path,
-      pageBuilder: (context, state) => CustomTransitionPage(
-        child: ChangeNotifierProvider<T>(
-          create: (context) => createViewModel(context, state.extra),
-          child: child,
-        ),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-            FadeTransition(
-          opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
-          child: child,
-        ),
+      builder: (context, state) => ChangeNotifierProvider<T>(
+        create: (context) => createViewModel(context, state.extra),
+        child: child,
       ),
     );
   }
@@ -116,6 +109,8 @@ class AppRouter {
           ).animate(animation),
           child: child,
         ),
+        transitionDuration: const Duration(milliseconds: 300),
+        reverseTransitionDuration: const Duration(milliseconds: 300),
       ),
     );
   }
