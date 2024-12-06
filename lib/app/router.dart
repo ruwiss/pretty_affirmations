@@ -17,6 +17,7 @@ import 'package:pretty_affirmations/ui/views/stories/stories_viewmodel.dart';
 import 'package:pretty_affirmations/ui/views/topics/topics_view.dart';
 import 'package:pretty_affirmations/ui/views/topics/topics_viewmodel.dart';
 
+
 class AppRouter {
   AppRouter._();
 
@@ -42,12 +43,10 @@ class AppRouter {
       ),
       _buildPricingRoute(),
       ShellRoute(
-        builder: (context, state, child) {
-          return AppLayout(
-            location: state.matchedLocation,
-            child: child,
-          );
-        },
+        builder: (context, state, child) => AppLayout(
+          location: state.matchedLocation,
+          child: child,
+        ),
         routes: [
           _buildRoute(
             favouritesRoute,

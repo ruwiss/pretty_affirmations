@@ -12,10 +12,6 @@ class NotificationController {
   static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  ///  *********************************************
-  ///     BAŞLATMA
-  ///  *********************************************
-  ///
   static Future<void> initializeLocalNotifications() async {
     tz.initializeTimeZones();
 
@@ -25,22 +21,26 @@ class NotificationController {
     const InitializationSettings initializationSettings =
         InitializationSettings(android: initializationSettingsAndroid);
 
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse: (details) {
+        // Bildirime tıklandığında yapılacak işlemler
+      },
+    );
+  }
+
+  static Future<void> notificationPermission() async {
+    // Flutter Local Notifications'ın kendi izin mekanizmasını kullan
+    final bool? result = await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestNotificationsPermission();
+
+    "Bildirim izni: $result".log();
   }
 
   static Future<void> clearAllScheduledNotifications() =>
       flutterLocalNotificationsPlugin.cancelAll();
-
-  static Future<void> notificationPermission() async {
-    await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            IOSFlutterLocalNotificationsPlugin>()
-        ?.requestPermissions(
-          alert: true,
-          badge: true,
-          sound: true,
-        );
-  }
 
   static Future<void> cancelNotifications() async {
     await flutterLocalNotificationsPlugin.cancelAll();
@@ -56,11 +56,10 @@ Future<void> myNotifyScheduleInHours({
   final now = DateTime.now();
   if (dateTime.isBefore(now)) return;
 
-  final diff = dateTime.difference(now);
-  "${diff.inHours} saat sonrasına planlandı".log();
-  
-  const AndroidNotificationDetails androidPlatformChannelSpecifics =
-      AndroidNotificationDetails(
+  final int notificationId =
+      DateTime.now().millisecondsSinceEpoch.remainder(100000);
+
+  const androidDetails = AndroidNotificationDetails(
     channelKey,
     'Affirmation',
     channelDescription: 'Daily affirmation notification',
@@ -68,10 +67,12 @@ Future<void> myNotifyScheduleInHours({
     priority: Priority.high,
     sound: RawResourceAndroidNotificationSound('notif'),
     color: Colors.deepPurple,
+    enableVibration: true,
+    visibility: NotificationVisibility.public,
   );
 
-  const NotificationDetails platformChannelSpecifics =
-      NotificationDetails(android: androidPlatformChannelSpecifics);
+  NotificationDetails platformChannelSpecifics =
+      const NotificationDetails(android: androidDetails);
 
   final scheduledDate = tz.TZDateTime.from(
     DateTime(
@@ -85,7 +86,7 @@ Future<void> myNotifyScheduleInHours({
   );
 
   await NotificationController.flutterLocalNotificationsPlugin.zonedSchedule(
-    0,
+    notificationId,
     '$emoji $title',
     msg,
     scheduledDate,
