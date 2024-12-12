@@ -18,7 +18,6 @@ void main() async {
   await initializeDateFormatting();
   await setupLocator(registerDependencies);
   await NotificationController.initializeLocalNotifications();
-  await NotificationController.notificationPermission();
   unawaited(MobileAds.instance.initialize());
   await RevenueCatService().initialize(
     config: const RevenueCatConfig(

@@ -74,7 +74,9 @@ class ScheduleService {
     int forDays,
   ) async {
     // Bildirim izinlerini kontrol et
-    await NotificationController.notificationPermission();
+    if (!await NotificationController.notificationPermission()) {
+      return;
+    }
     await NotificationController.clearAllScheduledNotifications();
 
     // Bildirim saatlerini al (örn: günde 3 bildirim için [8, 12, 18])

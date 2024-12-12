@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:hayiqu/hayiqu.dart';
 import 'package:pretty_affirmations/app/router.dart';
 import 'package:pretty_affirmations/common/common.dart';
-import 'package:pretty_affirmations/generated/l10n.dart';
 import 'package:pretty_affirmations/services/ad_service.dart';
 import 'package:pretty_affirmations/services/revenue_cat_service.dart';
 import 'package:pretty_affirmations/services/settings_service.dart';
 import 'package:pretty_affirmations/ui/widgets/splash_svg_button.dart';
+import 'package:pretty_affirmations/ui/widgets/animated_remove_ads_button.dart';
 
 class AppLayout extends StatefulWidget {
   final Widget child;
@@ -21,14 +21,8 @@ class AppLayout extends StatefulWidget {
   State<AppLayout> createState() => _AppLayoutState();
 }
 
-class _AppLayoutState extends State<AppLayout>
-    with WidgetsBindingObserver, TickerProviderStateMixin {
+class _AppLayoutState extends State<AppLayout> with WidgetsBindingObserver {
   final _adService = AdService();
-
-  late final AnimationController _breathingController;
-  late final Animation<double> _slideAnimation;
-  late final Animation<Offset> _breathingAnimation;
-  late final AnimationController _initialSlideController;
 
   @override
   void initState() {
@@ -37,37 +31,6 @@ class _AppLayoutState extends State<AppLayout>
 
     _initAds(RevenueCatService().isProUser ||
         !locator<SettingsService>().getAdsEnabled());
-
-    if (RevenueCatService().isProUser) return;
-    // Başlangıç slide animasyonu için controller
-    _initialSlideController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 800),
-    )..forward();
-
-    // Nefes alma animasyonu için controller
-    _breathingController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 3),
-    )..repeat(reverse: true);
-
-    // İlk giriş animasyonu
-    _slideAnimation = Tween<double>(
-      begin: -100.0,
-      end: 10.0,
-    ).animate(CurvedAnimation(
-      parent: _initialSlideController,
-      curve: Curves.easeOutCubic,
-    ));
-
-    // Yatay nefes alma animasyonu
-    _breathingAnimation = Tween<Offset>(
-      begin: const Offset(0, 0),
-      end: const Offset(0.2, 0), // Sola doğru hareket miktarı
-    ).animate(CurvedAnimation(
-      parent: _breathingController,
-      curve: Curves.easeInOut,
-    ));
   }
 
   Future<void> _initAds(bool disabled) async {
@@ -78,9 +41,6 @@ class _AppLayoutState extends State<AppLayout>
 
   @override
   void dispose() {
-    _breathingController.dispose();
-    _initialSlideController.dispose();
-    WidgetsBinding.instance.removeObserver(this);
     _adService.dispose();
     super.dispose();
   }
@@ -103,7 +63,7 @@ class _AppLayoutState extends State<AppLayout>
         alignment: Alignment.center,
         children: [
           widget.child,
-          if (!RevenueCatService().isProUser) _buildRemoveAdsButton(context),
+          if (!RevenueCatService().isProUser) const AnimatedRemoveAdsButton(),
         ],
       ),
       bottomNavigationBar: _buildBottomNavigationBar(context),
@@ -178,66 +138,5 @@ class _AppLayoutState extends State<AppLayout>
       return isHome ? 1.3 : 0.85;
     }
     return isHome ? 1.0 : 0.65;
-  }
-
-  Widget _buildRemoveAdsButton(BuildContext context) {
-    return AnimatedBuilder(
-      animation:
-          Listenable.merge([_initialSlideController, _breathingController]),
-      builder: (context, child) {
-        return Positioned(
-          top: 48,
-          right: _slideAnimation.value,
-          child: SlideTransition(
-            position: _breathingAnimation,
-            child: InkWell(
-              onTap: () => context.push(AppRouter.pricingRoute),
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [
-                      Color(0xFFFF6B6B),
-                      Color(0xFFFF9F43),
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xFFFF6B6B).withOpacity(0.25),
-                      blurRadius: 6,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(
-                      Icons.workspace_premium_rounded,
-                      size: 16,
-                      color: Colors.white,
-                    ),
-                    const SizedBox(width: 5),
-                    Text(
-                      S.of(context).removeAds,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
-                        letterSpacing: 0.3,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
   }
 }
