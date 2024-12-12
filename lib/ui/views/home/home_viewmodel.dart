@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hayiqu/hayiqu.dart';
 import 'package:pretty_affirmations/app/base.dart';
-import 'package:pretty_affirmations/app/notification.dart';
 import 'package:pretty_affirmations/common/common.dart';
 import 'package:pretty_affirmations/generated/l10n.dart';
 import 'package:pretty_affirmations/models/affirmation.dart';
@@ -45,7 +44,7 @@ class HomeViewModel extends BaseViewModel {
 
   List<Favourites> _favourites = [];
 
-  void _init(BuildContext context) {
+  void _init(BuildContext context) async {
     final appBase = context.read<AppBase>();
     _localeStr = appBase.localeStr;
     _affirmations = appBase.affirmations;

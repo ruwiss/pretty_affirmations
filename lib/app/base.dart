@@ -12,6 +12,8 @@ class AppBase extends BaseTheme {
 
   late final Affirmations affirmations;
 
+  bool showRemoveAdsButton = true;
+
   void changeLocale(Locale locale) async {
     this.locale = locale;
     await getIt<SettingsService>().changeLocale(locale);
@@ -59,4 +61,9 @@ class AppBase extends BaseTheme {
           ),
         ),
       );
+
+  void hideRemoveAdsButton() {
+    showRemoveAdsButton = false;
+    notifyListeners();
+  }
 }

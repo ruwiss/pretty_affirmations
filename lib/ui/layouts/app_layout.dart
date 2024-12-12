@@ -7,6 +7,7 @@ import 'package:pretty_affirmations/services/revenue_cat_service.dart';
 import 'package:pretty_affirmations/services/settings_service.dart';
 import 'package:pretty_affirmations/ui/widgets/splash_svg_button.dart';
 import 'package:pretty_affirmations/ui/widgets/animated_remove_ads_button.dart';
+import 'package:pretty_affirmations/app/base.dart';
 
 class AppLayout extends StatefulWidget {
   final Widget child;
@@ -63,7 +64,9 @@ class _AppLayoutState extends State<AppLayout> with WidgetsBindingObserver {
         alignment: Alignment.center,
         children: [
           widget.child,
-          if (!RevenueCatService().isProUser) const AnimatedRemoveAdsButton(),
+          if (!RevenueCatService().isProUser &&
+              context.watch<AppBase>().showRemoveAdsButton)
+            const AnimatedRemoveAdsButton(),
         ],
       ),
       bottomNavigationBar: _buildBottomNavigationBar(context),
