@@ -4,7 +4,7 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:hayiqu/hayiqu.dart';
 
-const String channelKey = 'affirmation_alert_0';
+const String channelKey = 'affirmation_alert_1';
 
 class NotificationController {
   NotificationController._();
@@ -30,7 +30,7 @@ class NotificationController {
         ?.createNotificationChannel(channel);
 
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings('ic_stat_logo');
 
     const InitializationSettings initializationSettings =
         InitializationSettings(android: initializationSettingsAndroid);
@@ -105,6 +105,7 @@ Future<void> myNotifyScheduleInHours({
     fullScreenIntent: true,
     playSound: true,
     enableLights: true,
+    styleInformation: BigTextStyleInformation(''),
   );
 
   NotificationDetails platformChannelSpecifics =
