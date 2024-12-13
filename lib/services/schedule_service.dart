@@ -75,41 +75,68 @@ class ScheduleService {
   ) async {
     // Bildirim izinlerini kontrol et
     if (!await NotificationController.notificationPermission()) {
+      'Bildirim izni alınamadı'.log();
       return;
     }
     await NotificationController.clearAllScheduledNotifications();
+    'Tüm zamanlanmış bildirimler temizlendi'.log();
 
-    // Bildirim saatlerini al (örn: günde 3 bildirim için [8, 12, 18])
+    // Bildirim saatlerini al
     final List<int> notificationHours = _getNotificationHours(dailyCount);
+    'Bildirim saatleri: $notificationHours'.log();
 
-    // Şu anki tarih
     final DateTime today = DateTime.now();
+    'Başlangıç tarihi: $today'.log();
+    'Toplam planlanacak gün sayısı: $forDays'.log();
+    'Günlük bildirim sayısı: $dailyCount'.log();
+    'Toplam bildirim sayısı: ${forDays * dailyCount}'.log();
 
-    // Elimizdeki olumlama mesajlarını sırayla kullan
     int currentMessageIndex = 0;
+    List<DateTime> plannedTimes = [];
 
     // Her gün için bildirim oluştur
     for (int dayOffset = 0; dayOffset < forDays; dayOffset++) {
-      // O günün tarihini hesapla
       final DateTime targetDate = today.add(Duration(days: dayOffset));
+      'Gün ${dayOffset + 1} için bildirimler planlanıyor (${targetDate.toString().split(' ')[0]})'
+          .log();
 
-      // O gün için belirlenen her saatte bildirim oluştur
       for (final int hour in notificationHours) {
-        // Eğer tüm mesajlar kullanıldıysa döngüyü bitir
         if (currentMessageIndex >= affirmations.data.length) break;
 
-        // Bildirimi oluştur
         final String affirmationMessage =
             affirmations.data[currentMessageIndex].content;
+
+        final dateTime = DateTime(
+          targetDate.year,
+          targetDate.month,
+          targetDate.day,
+          hour,
+        );
+
+        plannedTimes.add(dateTime);
+
+        'Bildirim #${currentMessageIndex + 1} planlanıyor:'.log();
+        '  - Tarih: ${dateTime.toString()}'.log();
+        '  - Saat: $hour:00'.log();
+        '  - Mesaj: $affirmationMessage'.log();
+
         await _createNotification(
           currentDay: targetDate,
           hour: hour,
           message: affirmationMessage,
         );
 
-        // Sonraki mesaja geç
         currentMessageIndex++;
       }
+    }
+
+    'Bildirim Planlaması Özeti:'.log();
+    'Toplam $currentMessageIndex bildirim planlandı'.log();
+    'İlk bildirim: ${plannedTimes.first}'.log();
+    'Son bildirim: ${plannedTimes.last}'.log();
+    'Planlanan tüm zamanlar:'.log();
+    for (var time in plannedTimes) {
+      '  - ${time.toString()}'.log();
     }
   }
 
@@ -164,7 +191,7 @@ class ScheduleService {
       "🔥",
       "📖",
       "💐",
-      "🧘‍♂️",
+      "��‍♂️",
       "🎨",
       "🚀",
       "🦋",

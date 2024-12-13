@@ -8,7 +8,6 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:pretty_affirmations/app/locator.dart';
 import 'package:pretty_affirmations/app/router.dart';
 import 'package:pretty_affirmations/app/base.dart';
-import 'app/notification.dart';
 import 'common/common.dart';
 import 'generated/l10n.dart';
 import 'services/revenue_cat_service.dart';
@@ -17,7 +16,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting();
   await setupLocator(registerDependencies);
-  await NotificationController.initializeLocalNotifications();
   unawaited(MobileAds.instance.initialize());
   await RevenueCatService().initialize(
     config: const RevenueCatConfig(

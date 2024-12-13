@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hayiqu/hayiqu.dart';
 import 'package:pretty_affirmations/app/base.dart';
+import 'package:pretty_affirmations/app/notification.dart';
 import 'package:pretty_affirmations/common/common.dart';
 import 'package:pretty_affirmations/generated/l10n.dart';
 import 'package:pretty_affirmations/models/affirmation.dart';
@@ -49,7 +52,10 @@ class HomeViewModel extends BaseViewModel {
     _localeStr = appBase.localeStr;
     _affirmations = appBase.affirmations;
     _favourites = _favouritesService.getFavourites();
-    _scheduleService.checkAndScheduleAffirmations();
+    NotificationController.initializeLocalNotifications().then((_) {
+      _scheduleService.checkAndScheduleAffirmations();
+    });
+
     _adService.loadInterstitialAd(key: "home");
   }
 

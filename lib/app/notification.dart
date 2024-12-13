@@ -84,7 +84,10 @@ Future<void> myNotifyScheduleInHours({
   required String emoji,
 }) async {
   final now = DateTime.now();
-  if (dateTime.isBefore(now)) return;
+  if (dateTime.isBefore(now)) {
+    'Bildirim zamanı geçmiş: $dateTime'.log();
+    return;
+  }
 
   final int notificationId =
       DateTime.now().millisecondsSinceEpoch.remainder(100000);
@@ -100,21 +103,30 @@ Future<void> myNotifyScheduleInHours({
     enableVibration: true,
     visibility: NotificationVisibility.public,
     fullScreenIntent: true,
+    playSound: true,
+    enableLights: true,
   );
 
   NotificationDetails platformChannelSpecifics =
       const NotificationDetails(android: androidDetails);
 
-  final scheduledDate = tz.TZDateTime.from(dateTime, tz.local);
+  try {
+    final scheduledDate = tz.TZDateTime.from(dateTime, tz.local);
 
-  await NotificationController.flutterLocalNotificationsPlugin.zonedSchedule(
-    notificationId,
-    '$emoji $title',
-    msg,
-    scheduledDate,
-    platformChannelSpecifics,
-    androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-    uiLocalNotificationDateInterpretation:
-        UILocalNotificationDateInterpretation.absoluteTime,
-  );
+    await NotificationController.flutterLocalNotificationsPlugin.zonedSchedule(
+      notificationId,
+      '$emoji $title',
+      msg,
+      scheduledDate,
+      platformChannelSpecifics,
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+    );
+
+    'Bildirim başarıyla zamanlandı - ID: $notificationId, Tarih: $scheduledDate'
+        .log();
+  } catch (e) {
+    'Bildirim zamanlama hatası: $e'.log();
+  }
 }
