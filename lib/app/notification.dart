@@ -59,15 +59,10 @@ class NotificationController {
       final bool? notificationResult =
           await androidImplementation.requestNotificationsPermission();
 
-      // Tam zamanlı bildirimler için izin
-      final bool? exactAlarmsResult =
-          await androidImplementation.requestExactAlarmsPermission();
-
-      "Bildirim izinleri: Notification=$notificationResult, ExactAlarms=$exactAlarmsResult"
-          .log();
+      "Bildirim izinleri: Notification=$notificationResult".log();
 
       // Tüm izinlerin alındığından emin olalım
-      return (notificationResult ?? false) && (exactAlarmsResult ?? true);
+      return (notificationResult ?? false);
     } catch (e) {
       "Bildirim izinleri alınırken hata: $e".log();
       return false;
@@ -147,7 +142,7 @@ Future<void> myNotifyScheduleInHours({
       msg,
       scheduledDate,
       platformChannelSpecifics,
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
     );
