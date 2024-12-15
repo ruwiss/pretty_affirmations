@@ -53,7 +53,6 @@ class HomeViewModel extends BaseViewModel {
     _affirmations = appBase.affirmations;
     _favourites = _favouritesService.getFavourites();
     NotificationController.initializeLocalNotifications().then((_) {
-      NotificationController.scheduleTestNotification();
       _scheduleService.checkAndScheduleAffirmations();
     });
 
