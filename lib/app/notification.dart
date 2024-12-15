@@ -19,9 +19,11 @@ class NotificationController {
       channelKey,
       'Affirmation',
       description: 'Daily affirmation notification',
-      importance: Importance.high,
+      importance: Importance.max,
       playSound: true,
       sound: RawResourceAndroidNotificationSound('notif'),
+      enableVibration: true,
+      enableLights: true,
     );
 
     await flutterLocalNotificationsPlugin
@@ -44,14 +46,32 @@ class NotificationController {
   }
 
   static Future<bool> notificationPermission() async {
-    // Flutter Local Notifications'ın kendi izin mekanizmasını kullan
-    final bool? result = await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
-        ?.requestNotificationsPermission();
+    final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
+        flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>();
 
-    "Bildirim izni: $result".log();
-    return result ?? false;
+    if (androidImplementation == null) {
+      return false;
+    }
+
+    try {
+      // Bildirim izni
+      final bool? notificationResult =
+          await androidImplementation.requestNotificationsPermission();
+
+      // Tam zamanlı bildirimler için izin
+      final bool? exactAlarmsResult =
+          await androidImplementation.requestExactAlarmsPermission();
+
+      "Bildirim izinleri: Notification=$notificationResult, ExactAlarms=$exactAlarmsResult"
+          .log();
+
+      // Tüm izinlerin alındığından emin olalım
+      return (notificationResult ?? false) && (exactAlarmsResult ?? true);
+    } catch (e) {
+      "Bildirim izinleri alınırken hata: $e".log();
+      return false;
+    }
   }
 
   static Future<void> clearAllScheduledNotifications() =>
@@ -63,17 +83,25 @@ class NotificationController {
 
   // Test için 15 saniyelik bildirim gönderme fonksiyonu
   static Future<void> scheduleTestNotification() async {
-    final now = DateTime.now();
-    final scheduledDate = now.add(const Duration(minutes: 1));
+    await clearAllScheduledNotifications();
 
+    final now = DateTime.now();
+
+    // İlk bildirim - 1 dakika sonra
     await myNotifyScheduleInHours(
-      dateTime: scheduledDate,
-      title: 'Test Bildirimi',
-      msg: '1 dakikalık test bildirimi başarıyla çalıştı!',
+      dateTime: now.add(const Duration(minutes: 1)),
+      title: 'Test Bildirimi 1',
+      msg: 'Birinci test bildirimi!',
       emoji: '✨',
     );
 
-    'Test bildirimi ${scheduledDate.toString()} için planlandı'.log();
+    // İkinci bildirim - 2 dakika sonra
+    await myNotifyScheduleInHours(
+      dateTime: now.add(const Duration(minutes: 2)),
+      title: 'Test Bildirimi 2',
+      msg: 'İkinci test bildirimi!',
+      emoji: '🌟',
+    );
   }
 }
 
@@ -89,17 +117,16 @@ Future<void> myNotifyScheduleInHours({
     return;
   }
 
-  final int notificationId =
-      DateTime.now().millisecondsSinceEpoch.remainder(100000);
+  final int notificationId = dateTime.millisecondsSinceEpoch ~/ 1000;
 
   const androidDetails = AndroidNotificationDetails(
     channelKey,
     'Affirmation',
     channelDescription: 'Daily affirmation notification',
-    importance: Importance.high,
-    priority: Priority.high,
+    importance: Importance.max,
+    priority: Priority.max,
     sound: RawResourceAndroidNotificationSound('notif'),
-    color: Colors.deepPurple,
+    color: Color(0xFFf9eaea),
     enableVibration: true,
     visibility: NotificationVisibility.public,
     fullScreenIntent: true,
@@ -120,7 +147,7 @@ Future<void> myNotifyScheduleInHours({
       msg,
       scheduledDate,
       platformChannelSpecifics,
-      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
     );
