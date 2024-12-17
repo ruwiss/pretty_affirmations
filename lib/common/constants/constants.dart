@@ -6,7 +6,7 @@ const String kPackageName = "com.prettycat.affirmations";
 const String kAppUrl =
     "https://play.google.com/store/apps/details?id=$kPackageName";
 const String kPrivacyPolicyUrl = "https://docs.caltikoc.com.tr/affirmations";
-const int kLocalDbSchemaVersion = 8;
+const int kLocalDbSchemaVersion = 9;
 
 const int kAffirmationScrollCountForAd = 8;
 
