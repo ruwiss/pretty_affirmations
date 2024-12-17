@@ -10,6 +10,7 @@ class AppBase extends BaseTheme {
 
   String get localeStr => locale.toLocaleStr();
 
+  bool affirmationsLoaded = false;
   late final Affirmations affirmations;
 
   bool showRemoveAdsButton = true;

@@ -12,7 +12,6 @@ import 'package:pretty_affirmations/models/menu_item.dart';
 import 'package:pretty_affirmations/services/ad_service.dart';
 import 'package:pretty_affirmations/services/api_service.dart';
 import 'package:pretty_affirmations/services/favourites_service.dart';
-import 'package:pretty_affirmations/services/schedule_service.dart';
 import 'package:pretty_affirmations/services/settings_service.dart';
 import 'package:share_plus/share_plus.dart';
 

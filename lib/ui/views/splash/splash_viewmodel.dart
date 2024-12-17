@@ -23,22 +23,24 @@ class SplashViewmodel extends BaseViewModel {
       if (context.mounted) {
         final data = results[0] as Affirmations;
         context.go(AppRouter.homeRoute);
-        context.read<AppBase>().affirmations = data;
+
+        final appBase = context.read<AppBase>();
+        if (appBase.affirmationsLoaded) return;
+        appBase.affirmations = data;
+        appBase.affirmationsLoaded = true;
       }
     });
 
     "Reklamlar Etkin: ${getIt<SettingsService>().getAdsEnabled()}".log();
   }
 
-  Future<Affirmations> _getAffirmations(BuildContext context) async {
+  Future<void> _getAffirmations(BuildContext context) async {
     // cihaz dilini al
     final locale = context.read<AppBase>().localeStr;
     // olumlamaları getir
-    final affirmations = await _apiService.getAffirmations(
-        locale: locale, startFromLastRead: true);
+    await _apiService.getAffirmations(locale: locale, startFromLastRead: true);
     // günlük girişi kaydet
     _apiService.dailyEntry(locale);
-    return affirmations!;
   }
 
   void _setupNotifications() {
