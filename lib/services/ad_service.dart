@@ -127,7 +127,7 @@ class AdService {
   factory AdService() => _instance;
   AdService._internal();
 
-  late final AdConfig _config;
+  late AdConfig _config;
   final AdIds _testAds = AdIds.test();
 
   // Her reklam tipi için Map'ler
