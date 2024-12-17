@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:hayiqu/hayiqu.dart';
+import 'package:pretty_affirmations/app/notification.dart';
 import 'package:pretty_affirmations/app/router.dart';
 import 'package:pretty_affirmations/app/base.dart';
 import 'package:pretty_affirmations/models/affirmation.dart';
 import 'package:pretty_affirmations/services/api_service.dart';
+import 'package:pretty_affirmations/services/schedule_service.dart';
 import 'package:pretty_affirmations/services/settings_service.dart';
 
 class SplashViewmodel extends BaseViewModel {
   final _apiService = getIt.get<ApiService>();
+  final _scheduleService = getIt.get<ScheduleService>();
 
   void init(BuildContext context) {
+    _setupNotifications();
     Future.wait([
       // olumlamaları al (senkron)
       _getAffirmations(context),
@@ -35,5 +39,12 @@ class SplashViewmodel extends BaseViewModel {
     // günlük girişi kaydet
     _apiService.dailyEntry(locale);
     return affirmations!;
+  }
+
+  void _setupNotifications() {
+    NotificationController.initializeLocalNotifications().then((_) {
+      //NotificationController.scheduleTestNotification();
+      _scheduleService.checkAndScheduleAffirmations();
+    });
   }
 }

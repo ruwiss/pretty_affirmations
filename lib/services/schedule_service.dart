@@ -94,6 +94,8 @@ class ScheduleService {
     int currentMessageIndex = 0;
     List<DateTime> plannedTimes = [];
 
+    await NotificationController.clearAllScheduledNotifications();
+
     // Her gün için bildirim oluştur
     for (int dayOffset = 0; dayOffset < forDays; dayOffset++) {
       final DateTime targetDate = today.add(Duration(days: dayOffset));

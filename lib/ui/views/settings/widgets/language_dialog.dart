@@ -5,6 +5,7 @@ import 'package:pretty_affirmations/app/router.dart';
 import 'package:pretty_affirmations/app/base.dart';
 import 'package:pretty_affirmations/common/enums/app_language.dart';
 import 'package:pretty_affirmations/generated/l10n.dart';
+import 'package:pretty_affirmations/services/schedule_service.dart';
 import 'package:pretty_affirmations/services/settings_service.dart';
 
 class LanguageDialog extends StatefulWidget {
@@ -40,6 +41,7 @@ class _LanguageDialogState extends State<LanguageDialog> {
     if (!isCurrent) {
       widget.onLanguageSelect?.call(language.getLocale);
       context.go(AppRouter.splashRoute);
+      locator<ScheduleService>().checkAndScheduleAffirmations(force: true);
     }
   }
 

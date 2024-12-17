@@ -1,5 +1,4 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter/material.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:hayiqu/hayiqu.dart';
@@ -84,7 +83,7 @@ class NotificationController {
 
     // İlk bildirim - 1 dakika sonra
     await myNotifyScheduleInHours(
-      dateTime: now.add(const Duration(minutes: 1)),
+      dateTime: now.add(const Duration(seconds: 40)),
       title: 'Test Bildirimi 1',
       msg: 'Birinci test bildirimi!',
       emoji: '✨',
@@ -92,7 +91,7 @@ class NotificationController {
 
     // İkinci bildirim - 2 dakika sonra
     await myNotifyScheduleInHours(
-      dateTime: now.add(const Duration(minutes: 2)),
+      dateTime: now.add(const Duration(seconds: 70)),
       title: 'Test Bildirimi 2',
       msg: 'İkinci test bildirimi!',
       emoji: '🌟',

@@ -27,7 +27,6 @@ class HomeViewModel extends BaseViewModel {
   final _apiService = getIt.get<ApiService>();
   final _settingsService = getIt.get<SettingsService>();
   final _favouritesService = getIt.get<FavouritesService>();
-  final _scheduleService = getIt.get<ScheduleService>();
   final _adService = AdService();
 
   // Reklam gösterilen indexleri tutmak için set
@@ -52,9 +51,6 @@ class HomeViewModel extends BaseViewModel {
     _localeStr = appBase.localeStr;
     _affirmations = appBase.affirmations;
     _favourites = _favouritesService.getFavourites();
-    NotificationController.initializeLocalNotifications().then((_) {
-      _scheduleService.checkAndScheduleAffirmations();
-    });
 
     _adService.loadInterstitialAd(key: "home");
   }

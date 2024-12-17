@@ -10,7 +10,7 @@ class _AppSettings {
 
   late List<String> unselectedTopics;
 
-  int dailyNotificationCount = 3;
+  int dailyNotificationCount = 4;
   DateTime? nextFetchNotificationDate;
 
   bool adsEnabled = false;

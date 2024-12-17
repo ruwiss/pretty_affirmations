@@ -15,13 +15,13 @@ class AppSettings extends _AppSettings
     String? localeStr,
     String? countryCode,
     Iterable<String> unselectedTopics = const [],
-    int dailyNotificationCount = 3,
+    int dailyNotificationCount = 4,
     DateTime? nextFetchNotificationDate,
     bool adsEnabled = false,
   }) {
     if (!_defaultsSet) {
       _defaultsSet = RealmObjectBase.setDefaults<AppSettings>({
-        'dailyNotificationCount': 3,
+        'dailyNotificationCount': 4,
         'adsEnabled': false,
       });
     }
@@ -109,7 +109,7 @@ class AppSettings extends _AppSettings
       countryCode: fromEJson(ejson['countryCode']),
       unselectedTopics: fromEJson(ejson['unselectedTopics']),
       dailyNotificationCount:
-          fromEJson(ejson['dailyNotificationCount'], defaultValue: 3),
+          fromEJson(ejson['dailyNotificationCount'], defaultValue: 4),
       nextFetchNotificationDate: fromEJson(ejson['nextFetchNotificationDate']),
       adsEnabled: fromEJson(ejson['adsEnabled'], defaultValue: false),
     );

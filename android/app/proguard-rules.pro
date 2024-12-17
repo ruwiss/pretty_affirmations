@@ -28,3 +28,12 @@
 
 # Flutter Native Splash için Proguard kuralları
 -keep class net.jonhanson.flutter_native_splash.** { *; }
+
+# Keep R$ fields and R class
+-keep class **.R$* {
+    <fields>;
+}
+-keep class **.R
+-keepclassmembers class **.R$* {
+    public static <fields>;
+}
