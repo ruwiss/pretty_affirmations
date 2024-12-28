@@ -10,7 +10,7 @@ const int kLocalDbSchemaVersion = 9;
 
 const int kAffirmationScrollCountForAd = 8;
 
-const bool kTestAds = true;
+const bool kTestAds = false;
 
 const AdIds kAdIds = AdIds(
   interstitialId: "ca-app-pub-1923752572867502/4479222557",
