@@ -20,7 +20,11 @@ class ScheduleService {
         _settingsService.getDailyNotificationCount();
 
     // Bildirim sayısı 0 ise işlemi sonlandır
-    if (dailyNotificationCount == 0) return;
+    if (dailyNotificationCount == 0) {
+      await NotificationController.clearAllScheduledNotifications();
+      'Bildirimler temizlendi'.log();
+      return;
+    }
 
     // Bir sonraki bildirim zamanlaması için kontrol
     if (!_shouldFetchNewAffirmations() && !force) return;
