@@ -20,7 +20,7 @@ void main() async {
   await RevenueCatService().initialize(
     config: const RevenueCatConfig(
       apiKey: kRevenueCatPublicApiKey,
-      entitlementIds: ["entlc18e64a153"],
+      entitlementIds: ["example"],
       debugLogsEnabled: true,
     ),
   );

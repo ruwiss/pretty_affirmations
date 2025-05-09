@@ -18,17 +18,20 @@ class S {
   static S? _current;
 
   static S get current {
-    assert(_current != null,
-        'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.');
+    assert(
+      _current != null,
+      'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.',
+    );
     return _current!;
   }
 
   static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final name = (locale.countryCode?.isEmpty ?? false)
-        ? locale.languageCode
-        : locale.toString();
+    final name =
+        (locale.countryCode?.isEmpty ?? false)
+            ? locale.languageCode
+            : locale.toString();
     final localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
@@ -41,8 +44,10 @@ class S {
 
   static S of(BuildContext context) {
     final instance = S.maybeOf(context);
-    assert(instance != null,
-        'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?');
+    assert(
+      instance != null,
+      'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?',
+    );
     return instance!;
   }
 
@@ -112,12 +117,7 @@ class S {
 
   /// `Language`
   String get language {
-    return Intl.message(
-      'Language',
-      name: 'language',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Language', name: 'language', desc: '', args: []);
   }
 
   /// `Change the application language, see affirmations in the language you want`
@@ -132,12 +132,7 @@ class S {
 
   /// `Reminders`
   String get reminders {
-    return Intl.message(
-      'Reminders',
-      name: 'reminders',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Reminders', name: 'reminders', desc: '', args: []);
   }
 
   /// `Set your reminders for the most suitable time slot to fit affirmations into your routine`
@@ -172,22 +167,12 @@ class S {
 
   /// `Share`
   String get share {
-    return Intl.message(
-      'Share',
-      name: 'share',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Share', name: 'share', desc: '', args: []);
   }
 
   /// `Delete`
   String get delete {
-    return Intl.message(
-      'Delete',
-      name: 'delete',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Delete', name: 'delete', desc: '', args: []);
   }
 
   /// `Share our app with your friends and close ones and make a positive impact on their lives`
@@ -272,22 +257,12 @@ class S {
 
   /// `Cancel`
   String get cancel {
-    return Intl.message(
-      'Cancel',
-      name: 'cancel',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Cancel', name: 'cancel', desc: '', args: []);
   }
 
   /// `Apply`
   String get ok {
-    return Intl.message(
-      'Apply',
-      name: 'ok',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Apply', name: 'ok', desc: '', args: []);
   }
 
   /// `Please restart the application for the changes to take effect`
@@ -432,12 +407,7 @@ class S {
 
   /// `Remove Ads`
   String get removeAds {
-    return Intl.message(
-      'Remove Ads',
-      name: 'removeAds',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Remove Ads', name: 'removeAds', desc: '', args: []);
   }
 
   /// `Restore Subscription`
@@ -482,22 +452,12 @@ class S {
 
   /// `Best Value`
   String get bestValue {
-    return Intl.message(
-      'Best Value',
-      name: 'bestValue',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Best Value', name: 'bestValue', desc: '', args: []);
   }
 
   /// `Savings`
   String get savings {
-    return Intl.message(
-      'Savings',
-      name: 'savings',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Savings', name: 'savings', desc: '', args: []);
   }
 
   /// `Annual Billing`
